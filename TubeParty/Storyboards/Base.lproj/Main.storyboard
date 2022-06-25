@@ -8,6 +8,11 @@
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="Mitr-Regular.ttf">
+            <string>Mitr-Regular</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--Main Login View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -20,14 +25,59 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eL8-sV-7Gq">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <subviews>
-                                    <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Q6g-Pc-C1N">
-                                        <rect key="frame" x="159" y="278" width="97" height="34"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="UkZ-jq-5Zg">
+                                        <rect key="frame" x="107" y="200" width="200" height="200"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="200" id="2s0-mD-NUy"/>
+                                            <constraint firstAttribute="width" secondItem="UkZ-jq-5Zg" secondAttribute="height" multiplier="1:1" id="lZ1-C8-NfB"/>
+                                        </constraints>
+                                    </imageView>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S8J-hG-ohD">
+                                        <rect key="frame" x="67" y="420" width="280" height="130"/>
+                                        <subviews>
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Your Name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Q6g-Pc-C1N">
+                                                <rect key="frame" x="15" y="15" width="250" height="45"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="45" id="7ao-0c-1Ar"/>
+                                                    <constraint firstAttribute="width" constant="250" id="rDt-Rq-eQZ"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="Mitr-Regular" family="Mitr" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T6V-Ku-ruJ">
+                                                <rect key="frame" x="15" y="70" width="250" height="45"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain" title="Enter"/>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstItem="T6V-Ku-ruJ" firstAttribute="centerX" secondItem="S8J-hG-ohD" secondAttribute="centerX" id="5dN-HZ-gAf"/>
+                                            <constraint firstItem="T6V-Ku-ruJ" firstAttribute="height" secondItem="Q6g-Pc-C1N" secondAttribute="height" id="BwX-hW-I86"/>
+                                            <constraint firstItem="T6V-Ku-ruJ" firstAttribute="top" secondItem="Q6g-Pc-C1N" secondAttribute="bottom" constant="10" id="Iov-bS-daS"/>
+                                            <constraint firstAttribute="bottom" secondItem="T6V-Ku-ruJ" secondAttribute="bottom" constant="15" id="KSO-87-UQp"/>
+                                            <constraint firstItem="Q6g-Pc-C1N" firstAttribute="leading" secondItem="S8J-hG-ohD" secondAttribute="leading" constant="15" id="TF5-VX-LaX"/>
+                                            <constraint firstItem="T6V-Ku-ruJ" firstAttribute="width" secondItem="Q6g-Pc-C1N" secondAttribute="width" id="nJv-5S-5B4"/>
+                                            <constraint firstAttribute="trailing" secondItem="Q6g-Pc-C1N" secondAttribute="trailing" constant="15" id="oah-Mb-syu"/>
+                                            <constraint firstItem="Q6g-Pc-C1N" firstAttribute="top" secondItem="S8J-hG-ohD" secondAttribute="top" constant="15" id="wTq-B2-H6T"/>
+                                        </constraints>
+                                    </view>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TubeParty" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oNa-gJ-tnb">
+                                        <rect key="frame" x="84.5" y="102" width="245" height="79"/>
+                                        <fontDescription key="fontDescription" name="Mitr-Regular" family="Mitr" pointSize="50"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="highlightedColor" red="0.77254901960784317" green="0.77254901960784317" blue="0.86274509803921573" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" red="0.52730727200000005" green="0.63872927430000004" blue="0.48080658910000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstItem="oNa-gJ-tnb" firstAttribute="top" secondItem="eL8-sV-7Gq" secondAttribute="top" constant="102" id="RYu-Ko-c7a"/>
+                                    <constraint firstItem="UkZ-jq-5Zg" firstAttribute="centerX" secondItem="eL8-sV-7Gq" secondAttribute="centerX" id="VJj-wv-Q8v"/>
+                                    <constraint firstItem="S8J-hG-ohD" firstAttribute="centerX" secondItem="eL8-sV-7Gq" secondAttribute="centerX" id="X5s-Qe-AA6"/>
+                                    <constraint firstItem="S8J-hG-ohD" firstAttribute="top" secondItem="UkZ-jq-5Zg" secondAttribute="bottom" constant="20" id="a6q-bt-7Uz"/>
+                                    <constraint firstItem="UkZ-jq-5Zg" firstAttribute="top" secondItem="oNa-gJ-tnb" secondAttribute="bottom" constant="19" id="b38-G9-K5X"/>
+                                    <constraint firstItem="oNa-gJ-tnb" firstAttribute="centerX" secondItem="eL8-sV-7Gq" secondAttribute="centerX" id="pWo-JM-ych"/>
+                                </constraints>
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -40,6 +90,13 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="rX8-I6-Qyk"/>
+                    <connections>
+                        <outlet property="loginView" destination="S8J-hG-ohD" id="VqY-9R-z4T"/>
+                        <outlet property="logoImage" destination="UkZ-jq-5Zg" id="onD-av-1Fs"/>
+                        <outlet property="mainView" destination="eL8-sV-7Gq" id="1gc-LF-KVk"/>
+                        <outlet property="nameTextfield" destination="Q6g-Pc-C1N" id="TEQ-Wj-5uu"/>
+                        <outlet property="submitButton" destination="T6V-Ku-ruJ" id="E2b-8C-jCs"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
