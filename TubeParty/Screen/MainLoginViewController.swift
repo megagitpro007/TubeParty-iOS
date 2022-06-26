@@ -16,8 +16,9 @@ class MainLoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUI()
-        bindViewModel()
+        self.setupUI()
+        self.setGradient()
+        self.bindViewModel()
     }
     
     private func setupUI() {
@@ -38,6 +39,16 @@ class MainLoginViewController: UIViewController {
         nameTextfield.layer.borderColor = UIColor.systemGrayButton.cgColor
         nameTextfield.tintColor = .systemGrayButton
         
+    }
+    
+    func setGradient() {
+        let gradient: CAGradientLayer = CAGradientLayer(
+            start: .topLeft,
+            end: .bottomRight,
+            colors: [UIColor.systemMainGreen.cgColor, UIColor.systemMainBlue.cgColor]
+        )
+        gradient.frame = mainView.layer.frame
+        mainView.layer.insertSublayer(gradient, at: 0)
     }
     
     private func bindViewModel() {
@@ -65,4 +76,3 @@ class MainLoginViewController: UIViewController {
     }
     
 }
-
