@@ -66,12 +66,13 @@ class MainLoginViewController: UIViewController, MainViewControllerDelegate {
     }
     
     func didTapEnterButton() {
-        let vc = ChatViewController()
-        let vm = ChatViewModel(userChatName: nameTextfield.text ?? "")
-        vc.viewModel = vm
-        vc.modalPresentationStyle = .overFullScreen
-        vc.modalTransitionStyle = .coverVertical
-        self.present(vc, animated: true)
+        if let registerVC = self.storyboard?.instantiateViewController(withIdentifier: "ChatViewController") as? ChatViewController {
+            let vm = ChatViewModel(userChatName: nameTextfield.text ?? "")
+            registerVC.viewModel = vm
+            registerVC.modalPresentationStyle = .overFullScreen
+            registerVC.modalTransitionStyle = .coverVertical
+            self.present(registerVC, animated: true)
+        }
     }
     
 }

@@ -58,7 +58,6 @@ public class MainLoginViewModel: MainLoginIOType, MainLoginInput, MainLoginOutpu
             self._showErrorState.accept(isValidName)
         }.disposed(by: bag)
         
-        
         didTapEnterButton.bind { [weak self] _ in
             guard let self = self else { return }
             self.delegate?.didTapEnterButton()
