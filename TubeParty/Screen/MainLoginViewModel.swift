@@ -35,10 +35,17 @@ class MainLoginViewModel: MainLoginIOType, MainLoginInput, MainLoginOutput {
     
     // Outputs
     
+    // Properties
+    let bag = DisposeBag()
+    
     init() {
         textFieldData.bind { txt in
             print("txt : \(txt)")
-        }
+        }.disposed(by: bag)
+        
+        didTapEnterButton.bind { _ in
+            
+        }.disposed(by: bag)
     }
     
 }

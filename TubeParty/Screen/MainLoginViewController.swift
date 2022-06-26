@@ -48,8 +48,13 @@ class MainLoginViewController: UIViewController {
             .rx.text.orEmpty
             .bind(to: viewModel.input.textFieldData)
             .disposed(by: bag)
+        
+        submitButton
+            .rx.tap
+            .bind(to: viewModel.input.didTapEnterButton)
+            .disposed(by: bag)
+        
     }
-
 
 }
 
