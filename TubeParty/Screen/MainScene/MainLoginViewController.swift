@@ -2,7 +2,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class MainLoginViewController: UIViewController {
+class MainLoginViewController: UIViewController, MainViewControllerDelegate {
     
     @IBOutlet weak var mainView: UIView!
     @IBOutlet weak var logoImage: UIImageView!
@@ -11,7 +11,7 @@ class MainLoginViewController: UIViewController {
     @IBOutlet weak var submitButton: UIButton!
     @IBOutlet weak var warningLabel: UILabel!
     
-    private let viewModel: MainLoginIOType = MainLoginViewModel()
+    private var viewModel: MainLoginIOType = MainLoginViewModel()
     private let bag = DisposeBag()
     
     override func viewDidLoad() {
@@ -19,10 +19,12 @@ class MainLoginViewController: UIViewController {
         self.setupUI()
         self.setGradient()
         self.bindViewModel()
+        self.viewModel.delegate = self
     }
     
     private func setupUI() {
         warningLabel.isHidden = true
+        submitButton.isEnabled = false
         self.logoImage.image = UIImage(systemName: "message.circle")?.withTintColor(.white, renderingMode: .alwaysOriginal)
         
         mainView.backgroundColor = UIColor.systemMainGreen
@@ -69,10 +71,19 @@ class MainLoginViewController: UIViewController {
             UIView.animate(withDuration: 0.1, delay: 0, options: .curveEaseOut) { [weak self] in
                 guard let self = self else { return }
                 self.warningLabel.isHidden = isErrorShow
+                self.submitButton.isEnabled = isErrorShow
             }
         }).disposed(by: bag)
-
-        
+    }
+    
+    func didTapEnterButton() {
+        if let registerVC = self.storyboard?.instantiateViewController(withIdentifier: "ChatViewController") as? ChatViewController {
+            let vm = ChatViewModel(userChatName: nameTextfield.text ?? "")
+            registerVC.viewModel = vm
+            registerVC.modalPresentationStyle = .overFullScreen
+            registerVC.modalTransitionStyle = .coverVertical
+            self.present(registerVC, animated: true)
+        }
     }
     
 }
