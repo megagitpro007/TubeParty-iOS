@@ -2,8 +2,8 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class MainLoginViewController: UIViewController {
-   
+class MainLoginViewController: UIViewController, MainViewControllerDelegate {
+    
     @IBOutlet weak var mainView: UIView!
     @IBOutlet weak var logoImage: UIImageView!
     @IBOutlet weak var nameTextfield: UITextField!
@@ -11,13 +11,14 @@ class MainLoginViewController: UIViewController {
     @IBOutlet weak var submitButton: UIButton!
     @IBOutlet weak var warningLabel: UILabel!
     
-    private let viewModel: MainLoginIOType = MainLoginViewModel()
+    private var viewModel: MainLoginIOType = MainLoginViewModel()
     private let bag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
         bindViewModel()
+        viewModel.delegate = self
     }
     
     private func setupUI() {
@@ -62,8 +63,15 @@ class MainLoginViewController: UIViewController {
                 self.submitButton.isEnabled = isErrorShow
             }
         }).disposed(by: bag)
-
-        
+    }
+    
+    func didTapEnterButton() {
+        let vc = ChatViewController()
+        let vm = ChatViewModel(userChatName: nameTextfield.text ?? "")
+        vc.viewModel = vm
+        vc.modalPresentationStyle = .overFullScreen
+        vc.modalTransitionStyle = .coverVertical
+        self.present(vc, animated: true)
     }
     
 }

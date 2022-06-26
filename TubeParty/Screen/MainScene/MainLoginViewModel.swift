@@ -9,9 +9,14 @@ import Foundation
 import RxSwift
 import RxCocoa
 
+protocol MainViewControllerDelegate {
+    func didTapEnterButton()
+}
+
 protocol MainLoginIOType {
     var input: MainLoginInput { get }
     var output: MainLoginOutput { get }
+    var delegate: MainViewControllerDelegate? { get set }
 }
 
 protocol MainLoginInput {
@@ -29,6 +34,7 @@ public class MainLoginViewModel: MainLoginIOType, MainLoginInput, MainLoginOutpu
     // IO Type
     var input: MainLoginInput { return self }
     var output: MainLoginOutput { return self }
+    var delegate: MainViewControllerDelegate?
     
     // Inputs
     var didTapEnterButton: PublishRelay<Void> = .init()
@@ -55,7 +61,7 @@ public class MainLoginViewModel: MainLoginIOType, MainLoginInput, MainLoginOutpu
         
         didTapEnterButton.bind { [weak self] _ in
             guard let self = self else { return }
-            
+            self.delegate?.didTapEnterButton()
         }.disposed(by: bag)
         
     }
