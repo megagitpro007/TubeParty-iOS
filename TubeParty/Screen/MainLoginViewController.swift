@@ -9,9 +9,10 @@ class MainLoginViewController: UIViewController {
     @IBOutlet weak var nameTextfield: UITextField!
     @IBOutlet weak var loginView: UIView!
     @IBOutlet weak var submitButton: UIButton!
+    @IBOutlet weak var warningLabel: UILabel!
     
-    let bag = DisposeBag()
-    let viewModel: MainLoginIOType = MainLoginViewModel()
+    private let viewModel: MainLoginIOType = MainLoginViewModel()
+    private let bag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,12 +20,8 @@ class MainLoginViewController: UIViewController {
         bindViewModel()
     }
     
-    func setupUI() {
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        self.navigationController?.navigationBar.shadowImage = UIImage()
-        self.navigationController?.navigationBar.isTranslucent = true
-        self.navigationController?.view.backgroundColor = .clear
-        
+    private func setupUI() {
+        warningLabel.isHidden = true
         self.logoImage.image = UIImage(systemName: "message.circle")?.withTintColor(.white, renderingMode: .alwaysOriginal)
         
         mainView.backgroundColor = UIColor.systemMainGreen
@@ -34,7 +31,7 @@ class MainLoginViewController: UIViewController {
         submitButton.setTitleColor(UIColor.white, for: .normal)
         submitButton.setTitleColor(UIColor.systemGrayButton, for: .highlighted)
         submitButton.layer.cornerRadius = 4
-        submitButton.titleLabel?.font =  UIFont.systemMedium
+        submitButton.titleLabel?.font =  UIFont.normalRegular
 
         nameTextfield.layer.cornerRadius = 4
         nameTextfield.layer.borderWidth = 2
@@ -42,7 +39,7 @@ class MainLoginViewController: UIViewController {
         nameTextfield.tintColor = .systemGrayButton
     }
     
-    func bindViewModel() {
+    private func bindViewModel() {
         
         nameTextfield
             .rx.text.orEmpty
@@ -56,5 +53,14 @@ class MainLoginViewController: UIViewController {
         
     }
 
+    @IBAction func testasdasd(_ sender: Any) {
+        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut) { [weak self] in
+            guard let self = self else { return }
+            self.warningLabel.isHidden = !self.warningLabel.isHidden
+        } completion: { _ in
+            
+        }
+
+    }
 }
 

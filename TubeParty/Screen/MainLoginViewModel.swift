@@ -9,6 +9,10 @@ import Foundation
 import RxSwift
 import RxCocoa
 
+enum ErrorStateType {
+    case empty
+}
+
 protocol MainLoginIOType {
     var input: MainLoginInput { get }
     var output: MainLoginOutput { get }
@@ -20,7 +24,7 @@ protocol MainLoginInput {
 }
 
 protocol MainLoginOutput {
-    
+    var errorState: Driver<ErrorStateType> { get }
 }
 
 class MainLoginViewModel: MainLoginIOType, MainLoginInput, MainLoginOutput {
@@ -34,6 +38,7 @@ class MainLoginViewModel: MainLoginIOType, MainLoginInput, MainLoginOutput {
     var textFieldData: PublishRelay<String> = .init()
     
     // Outputs
+    var errorState: Driver<ErrorStateType> { return .never() }
     
     // Properties
     let bag = DisposeBag()
