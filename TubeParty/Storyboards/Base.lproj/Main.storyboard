@@ -46,7 +46,7 @@
                                                         <fontDescription key="fontDescription" name="Mitr-Regular" family="Mitr" pointSize="14"/>
                                                         <textInputTraits key="textInputTraits"/>
                                                     </textField>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uum-Iw-aj5">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please, Type something." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uum-Iw-aj5">
                                                         <rect key="frame" x="0.0" y="50" width="250" height="40"/>
                                                         <fontDescription key="fontDescription" name="Mitr-Regular" family="Mitr" pointSize="14"/>
                                                         <color key="textColor" systemColor="systemRedColor"/>
@@ -56,9 +56,6 @@
                                                         <rect key="frame" x="0.0" y="100" width="250" height="40"/>
                                                         <state key="normal" title="Button"/>
                                                         <buttonConfiguration key="configuration" style="plain" title="Enter"/>
-                                                        <connections>
-                                                            <action selector="testasdasd:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Nsv-da-Wq8"/>
-                                                        </connections>
                                                     </button>
                                                 </subviews>
                                                 <constraints>

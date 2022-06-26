@@ -20,11 +20,11 @@ protocol MainLoginIOType {
 
 protocol MainLoginInput {
     var didTapEnterButton: PublishRelay<Void> { get }
-    var textFieldData: PublishRelay<String> { get }
+    var isValidName: PublishRelay<Bool> { get }
 }
 
 protocol MainLoginOutput {
-    var errorState: Driver<ErrorStateType> { get }
+    var showErrorState: Driver<Bool> { get }
 }
 
 class MainLoginViewModel: MainLoginIOType, MainLoginInput, MainLoginOutput {
@@ -35,18 +35,25 @@ class MainLoginViewModel: MainLoginIOType, MainLoginInput, MainLoginOutput {
     
     // Inputs
     var didTapEnterButton: PublishRelay<Void> = .init()
-    var textFieldData: PublishRelay<String> = .init()
+    var isValidName: PublishRelay<Bool> = .init()
     
     // Outputs
-    var errorState: Driver<ErrorStateType> { return .never() }
+    var showErrorState: Driver<Bool> {
+        return _showErrorState.asDriver(onErrorJustReturn: true)
+    }
     
     // Properties
+    var _showErrorState: PublishRelay<Bool> = .init()
+    
     let bag = DisposeBag()
     
     init() {
-        textFieldData.bind { txt in
-            print("txt : \(txt)")
+        
+        isValidName.bind { [weak self] isValidName in
+            guard let self = self else { return }
+            self._showErrorState.accept(isValidName)
         }.disposed(by: bag)
+        
         
         didTapEnterButton.bind { _ in
             

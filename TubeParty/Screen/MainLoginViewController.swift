@@ -37,30 +37,32 @@ class MainLoginViewController: UIViewController {
         nameTextfield.layer.borderWidth = 2
         nameTextfield.layer.borderColor = UIColor.systemGrayButton.cgColor
         nameTextfield.tintColor = .systemGrayButton
+        
     }
     
     private func bindViewModel() {
         
         nameTextfield
-            .rx.text.orEmpty
-            .bind(to: viewModel.input.textFieldData)
-            .disposed(by: bag)
+            .rx
+            .text.orEmpty.map({ text in
+                return !text.isEmpty
+            })
+            .bind(to: viewModel.input.isValidName).disposed(by: bag)
         
         submitButton
             .rx.tap
             .bind(to: viewModel.input.didTapEnterButton)
             .disposed(by: bag)
+
+        viewModel.output.showErrorState.distinctUntilChanged().drive(onNext: { isErrorShow in
+            UIView.animate(withDuration: 0.1, delay: 0, options: .curveEaseOut) { [weak self] in
+                guard let self = self else { return }
+                self.warningLabel.isHidden = isErrorShow
+            }
+        }).disposed(by: bag)
+
         
     }
-
-    @IBAction func testasdasd(_ sender: Any) {
-        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut) { [weak self] in
-            guard let self = self else { return }
-            self.warningLabel.isHidden = !self.warningLabel.isHidden
-        } completion: { _ in
-            
-        }
-
-    }
+    
 }
 
