@@ -3,7 +3,7 @@ import RxSwift
 import RxCocoa
 
 class MainLoginViewController: UIViewController {
-    
+   
     @IBOutlet weak var mainView: UIView!
     @IBOutlet weak var logoImage: UIImageView!
     @IBOutlet weak var nameTextfield: UITextField!
@@ -22,6 +22,7 @@ class MainLoginViewController: UIViewController {
     
     private func setupUI() {
         warningLabel.isHidden = true
+        submitButton.isEnabled = false
         self.logoImage.image = UIImage(systemName: "message.circle")?.withTintColor(.white, renderingMode: .alwaysOriginal)
         
         mainView.backgroundColor = UIColor.systemMainGreen
@@ -58,6 +59,7 @@ class MainLoginViewController: UIViewController {
             UIView.animate(withDuration: 0.1, delay: 0, options: .curveEaseOut) { [weak self] in
                 guard let self = self else { return }
                 self.warningLabel.isHidden = isErrorShow
+                self.submitButton.isEnabled = isErrorShow
             }
         }).disposed(by: bag)
 

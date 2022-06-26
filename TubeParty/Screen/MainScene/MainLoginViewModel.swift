@@ -9,10 +9,6 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-enum ErrorStateType {
-    case empty
-}
-
 protocol MainLoginIOType {
     var input: MainLoginInput { get }
     var output: MainLoginOutput { get }
@@ -21,13 +17,14 @@ protocol MainLoginIOType {
 protocol MainLoginInput {
     var didTapEnterButton: PublishRelay<Void> { get }
     var isValidName: PublishRelay<Bool> { get }
+    var userChatName: BehaviorRelay<String> { get }
 }
 
 protocol MainLoginOutput {
     var showErrorState: Driver<Bool> { get }
 }
 
-class MainLoginViewModel: MainLoginIOType, MainLoginInput, MainLoginOutput {
+public class MainLoginViewModel: MainLoginIOType, MainLoginInput, MainLoginOutput {
     
     // IO Type
     var input: MainLoginInput { return self }
@@ -36,6 +33,7 @@ class MainLoginViewModel: MainLoginIOType, MainLoginInput, MainLoginOutput {
     // Inputs
     var didTapEnterButton: PublishRelay<Void> = .init()
     var isValidName: PublishRelay<Bool> = .init()
+    var userChatName: BehaviorRelay<String> = .init(value: "")
     
     // Outputs
     var showErrorState: Driver<Bool> {
@@ -55,9 +53,11 @@ class MainLoginViewModel: MainLoginIOType, MainLoginInput, MainLoginOutput {
         }.disposed(by: bag)
         
         
-        didTapEnterButton.bind { _ in
+        didTapEnterButton.bind { [weak self] _ in
+            guard let self = self else { return }
             
         }.disposed(by: bag)
+        
     }
     
 }

@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		9897BDA9FC265AE0F5C43DC5 /* Pods_TubeParty.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B12F798D203A1045FB658687 /* Pods_TubeParty.framework */; };
+		E20285E3286854430006806B /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20285E2286854430006806B /* ChatViewController.swift */; };
+		E20285E5286854540006806B /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20285E4286854540006806B /* ChatViewModel.swift */; };
 		E21051FC286753DF007AEC7B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21051FB286753DF007AEC7B /* AppDelegate.swift */; };
 		E21051FE286753DF007AEC7B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21051FD286753DF007AEC7B /* SceneDelegate.swift */; };
 		E2105200286753DF007AEC7B /* MainLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21051FF286753DF007AEC7B /* MainLoginViewController.swift */; };
@@ -28,6 +30,8 @@
 		85D9AEFC018AC3F13BFE176F /* Pods-TubeParty.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TubeParty.release.xcconfig"; path = "Target Support Files/Pods-TubeParty/Pods-TubeParty.release.xcconfig"; sourceTree = "<group>"; };
 		96016B476017FAB0A6A03861 /* Pods-TubeParty.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TubeParty.debug.xcconfig"; path = "Target Support Files/Pods-TubeParty/Pods-TubeParty.debug.xcconfig"; sourceTree = "<group>"; };
 		B12F798D203A1045FB658687 /* Pods_TubeParty.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TubeParty.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E20285E2286854430006806B /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
+		E20285E4286854540006806B /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
 		E21051F8286753DF007AEC7B /* TubeParty.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TubeParty.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E21051FB286753DF007AEC7B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E21051FD286753DF007AEC7B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -75,6 +79,24 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		E20285E1286854210006806B /* ChatScene */ = {
+			isa = PBXGroup;
+			children = (
+				E20285E2286854430006806B /* ChatViewController.swift */,
+				E20285E4286854540006806B /* ChatViewModel.swift */,
+			);
+			path = ChatScene;
+			sourceTree = "<group>";
+		};
+		E20285E62868545C0006806B /* MainScene */ = {
+			isa = PBXGroup;
+			children = (
+				E21051FF286753DF007AEC7B /* MainLoginViewController.swift */,
+				E210522528677337007AEC7B /* MainLoginViewModel.swift */,
+			);
+			path = MainScene;
+			sourceTree = "<group>";
+		};
 		E21051EF286753DF007AEC7B = {
 			isa = PBXGroup;
 			children = (
@@ -120,8 +142,8 @@
 			isa = PBXGroup;
 			children = (
 				E210522928683A60007AEC7B /* RootViewController.swift */,
-				E21051FF286753DF007AEC7B /* MainLoginViewController.swift */,
-				E210522528677337007AEC7B /* MainLoginViewModel.swift */,
+				E20285E62868545C0006806B /* MainScene */,
+				E20285E1286854210006806B /* ChatScene */,
 			);
 			path = Screen;
 			sourceTree = "<group>";
@@ -276,10 +298,12 @@
 			files = (
 				E2105200286753DF007AEC7B /* MainLoginViewController.swift in Sources */,
 				E21051FC286753DF007AEC7B /* AppDelegate.swift in Sources */,
+				E20285E3286854430006806B /* ChatViewController.swift in Sources */,
 				E21051FE286753DF007AEC7B /* SceneDelegate.swift in Sources */,
 				E210522628677337007AEC7B /* MainLoginViewModel.swift in Sources */,
 				E210522428677224007AEC7B /* UIFont+Extensions.swift in Sources */,
 				E210522A28683A60007AEC7B /* RootViewController.swift in Sources */,
+				E20285E5286854540006806B /* ChatViewModel.swift in Sources */,
 				E210521528675AE0007AEC7B /* UIColor+Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
