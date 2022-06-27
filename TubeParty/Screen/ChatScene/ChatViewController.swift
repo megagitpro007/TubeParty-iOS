@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 import RxDataSources
 
-class ChatViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ChatViewController: UIViewController {
     
     @IBOutlet weak var chatBGView: UIView!
     @IBOutlet weak var sendButton: UIButton!
@@ -35,12 +35,13 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func registerCell() {
-        chatTableView.delegate = self
         chatTableView.dataSource = self
         chatTableView.register(UINib(nibName: "SenderViewCell", bundle: nil), forCellReuseIdentifier: "SenderViewCell")
     }
     
     func setupUI() {
+        
+        chatTableView.separatorStyle = .none
         
         // Set Title Style
         chatTitle.text = "Chat Screen"
@@ -70,6 +71,10 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.dismiss(animated: true)
     }
     
+}
+
+extension ChatViewController: UITableViewDataSource {
+    
     // Tableview Delegate
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         textList.count
@@ -77,13 +82,9 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell : SenderViewCell = chatTableView.dequeueReusableCell(withIdentifier: "SenderViewCell", for: indexPath) as! SenderViewCell
-        cell.senderProfileName.text = textList[indexPath.row]
-        cell.senderMSG.text = textList[indexPath.row]
+        cell.name.text = textList[indexPath.row]
+        cell.message.text = textList[indexPath.row]
         return cell
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 150
     }
     
 }

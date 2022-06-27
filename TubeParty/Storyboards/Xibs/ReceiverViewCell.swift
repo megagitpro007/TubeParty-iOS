@@ -9,17 +9,17 @@ import UIKit
 
 class ReceiverViewCell: UITableViewCell {
 
-    @IBOutlet weak var receiverIMG: UIImageView!
-    @IBOutlet weak var receiverName: UILabel!
-    @IBOutlet weak var receiverMSG: UILabel!
-    @IBOutlet weak var receiverMSGView: UIView!
+    @IBOutlet weak var profileIMG: UIImageView!
+    @IBOutlet weak var name: UILabel!
+    @IBOutlet weak var message: UILabel!
+    @IBOutlet weak var view: UIView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
         
-        receiverIMG.makeRounded(radius: receiverIMG.frame.height/2)
-        receiverMSGView.makeViewRounded(radius: 6)
+        profileIMG.makeRounded(radius: profileIMG.frame.height/2)
+//        view.makeViewRounded(radius: 6)
         
     }
 

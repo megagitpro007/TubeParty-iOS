@@ -9,16 +9,16 @@ import UIKit
 
 class SenderViewCell: UITableViewCell {
 
-    @IBOutlet weak var senderIMG: UIImageView!
-    @IBOutlet weak var senderProfileName: UILabel!
-    @IBOutlet weak var senderMSG: UILabel!
-    @IBOutlet weak var senderMSGView: UIView!
+    @IBOutlet weak var profileImage: UIImageView!
+    @IBOutlet weak var name: UILabel!
+    @IBOutlet weak var message: UILabel!
+    @IBOutlet weak var view: UIView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        senderIMG.makeRounded(radius: senderIMG.frame.height/2)
-        senderMSGView.makeViewRounded(radius: 6)
+        profileImage.makeRounded(radius: profileImage.frame.height/2)
+        view.roundCorners(corners: [.bottomLeft, .topLeft , .topRight], radius: 10)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -26,5 +26,5 @@ class SenderViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-
+    
 }

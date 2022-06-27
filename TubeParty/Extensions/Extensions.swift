@@ -9,7 +9,6 @@ import Foundation
 import UIKit
 
 extension UIImageView {
-    
     func makeRounded(radius: CGFloat) {
         layer.borderWidth = 1
         layer.masksToBounds = false
@@ -17,13 +16,13 @@ extension UIImageView {
         layer.cornerRadius = radius
         clipsToBounds = true
     }
-    
 }
 
 extension UIView {
-    
-    func makeViewRounded(radius: CGFloat) {
-        layer.cornerRadius = radius
-    }
-    
+    func roundCorners(corners: UIRectCorner, radius: CGFloat) {
+         let path = UIBezierPath(roundedRect: bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
+         let mask = CAShapeLayer()
+         mask.path = path.cgPath
+         layer.mask = mask
+     }
 }
