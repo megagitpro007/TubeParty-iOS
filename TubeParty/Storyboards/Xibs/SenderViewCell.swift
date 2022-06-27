@@ -19,6 +19,8 @@ class SenderViewCell: UITableViewCell {
         // Initialization code
         senderIMG.makeRounded(radius: senderIMG.frame.height/2)
         senderMSGView.makeViewRounded(radius: 6)
+        senderMSGView.backgroundColor = .systemMainBlue
+        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -26,5 +28,22 @@ class SenderViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    
+    private func prepare() {
+        // image
+        senderIMG.layer.cornerRadius = senderIMG.layer.cornerRadius / 2
+        
+        // profile name
+        senderProfileName.numberOfLines = 1
+        
+        // message background
+        senderMSGView.layer.cornerRadius = 6
+        
+        // message
+        senderMSG.numberOfLines = 0
+    }
 
+    func configure(_ text: String) {
+        self.senderMSG.text = text
+    }
 }
