@@ -24,7 +24,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="414" height="158"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SdI-2j-s3u" userLabel="SenderNameView">
-                            <rect key="frame" x="0.0" y="7" width="572" height="144"/>
+                            <rect key="frame" x="15" y="7" width="557" height="144"/>
                             <subviews>
                                 <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Aeh-bJ-ovb">
                                     <rect key="frame" x="8" y="8" width="224" height="50"/>
@@ -52,10 +52,10 @@
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9B2-VD-jTO" userLabel="SenderMSGView">
-                            <rect key="frame" x="0.0" y="73" width="266" height="85"/>
+                            <rect key="frame" x="15" y="73" width="251" height="85"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sender Message" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FS0-Bd-thN">
-                                    <rect key="frame" x="10" y="10" width="246" height="65"/>
+                                    <rect key="frame" x="10" y="10" width="231" height="65"/>
                                     <fontDescription key="fontDescription" name="Mitr-Regular" family="Mitr" pointSize="14"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
@@ -72,10 +72,10 @@
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstItem="SdI-2j-s3u" firstAttribute="leading" secondItem="Kiv-pv-vsV" secondAttribute="leading" id="6Bm-ne-83M"/>
+                        <constraint firstItem="SdI-2j-s3u" firstAttribute="leading" secondItem="Kiv-pv-vsV" secondAttribute="leading" constant="15" id="6Bm-ne-83M"/>
                         <constraint firstAttribute="bottom" secondItem="9B2-VD-jTO" secondAttribute="bottom" id="Cga-3r-C4a"/>
                         <constraint firstAttribute="trailing" secondItem="9B2-VD-jTO" secondAttribute="trailing" constant="148" id="OcO-35-jOP"/>
-                        <constraint firstItem="9B2-VD-jTO" firstAttribute="leading" secondItem="Kiv-pv-vsV" secondAttribute="leading" id="bD0-LB-6Ep"/>
+                        <constraint firstItem="9B2-VD-jTO" firstAttribute="leading" secondItem="Kiv-pv-vsV" secondAttribute="leading" constant="15" id="bD0-LB-6Ep"/>
                         <constraint firstItem="SdI-2j-s3u" firstAttribute="top" secondItem="Kiv-pv-vsV" secondAttribute="top" constant="7" id="dpD-aj-JUS"/>
                         <constraint firstItem="SdI-2j-s3u" firstAttribute="centerY" secondItem="Kiv-pv-vsV" secondAttribute="centerY" id="g84-RA-aQP"/>
                         <constraint firstItem="9B2-VD-jTO" firstAttribute="top" secondItem="Kiv-pv-vsV" secondAttribute="top" constant="73" id="msl-hp-4WR"/>
@@ -98,7 +98,7 @@
                 <outlet property="receiverMSGView" destination="9B2-VD-jTO" id="LBb-RQ-UAn"/>
                 <outlet property="receiverName" destination="PaA-fm-Krf" id="Wos-B6-Agv"/>
             </connections>
-            <point key="canvasLocation" x="137.68115942028987" y="-98.102678571428569"/>
+            <point key="canvasLocation" x="137.68115942028987" y="-98.4375"/>
         </view>
     </objects>
     <resources>

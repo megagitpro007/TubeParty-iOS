@@ -52,10 +52,10 @@
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fiF-wV-xOk" userLabel="SenderMSGView">
-                            <rect key="frame" x="148" y="73" width="266" height="85"/>
+                            <rect key="frame" x="148" y="73" width="251" height="85"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sender Message" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1cQ-l6-rbb">
-                                    <rect key="frame" x="10" y="10" width="246" height="65"/>
+                                    <rect key="frame" x="10" y="10" width="231" height="65"/>
                                     <fontDescription key="fontDescription" name="Mitr-Regular" family="Mitr" pointSize="14"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
@@ -72,7 +72,7 @@
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstAttribute="trailing" secondItem="fiF-wV-xOk" secondAttribute="trailing" id="14M-Xx-XQs"/>
+                        <constraint firstAttribute="trailing" secondItem="fiF-wV-xOk" secondAttribute="trailing" constant="15" id="14M-Xx-XQs"/>
                         <constraint firstAttribute="bottom" secondItem="fiF-wV-xOk" secondAttribute="bottom" id="8WA-ab-LGp"/>
                         <constraint firstItem="fiF-wV-xOk" firstAttribute="leading" secondItem="A8Q-8o-m89" secondAttribute="leading" constant="148" id="8yH-Tx-byA"/>
                         <constraint firstItem="YiW-Mo-vml" firstAttribute="leading" secondItem="A8Q-8o-m89" secondAttribute="leading" constant="166" id="A7e-bA-Evh"/>

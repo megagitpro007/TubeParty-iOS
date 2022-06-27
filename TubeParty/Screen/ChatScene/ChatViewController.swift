@@ -77,12 +77,13 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell : SenderViewCell = chatTableView.dequeueReusableCell(withIdentifier: "SenderViewCell", for: indexPath) as! SenderViewCell
+        cell.senderProfileName.text = textList[indexPath.row]
         cell.senderMSG.text = textList[indexPath.row]
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 00
+        return 150
     }
     
 }
