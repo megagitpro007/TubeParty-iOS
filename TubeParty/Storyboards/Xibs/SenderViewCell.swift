@@ -16,9 +16,9 @@ class SenderViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
         profileImage.makeRounded(radius: profileImage.frame.height/2)
-        view.roundCorners(corners: [.bottomLeft, .topLeft , .topRight], radius: 10)
+        view.layer.cornerRadius = 20
+        view.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMaxYCorner, .layerMinXMaxYCorner]
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

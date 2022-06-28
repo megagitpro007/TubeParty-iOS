@@ -10,6 +10,9 @@ import RxSwift
 import RxCocoa
 import RxDataSources
 
+fileprivate let senderTableViewCell = "SenderViewCell"
+fileprivate let receiverTableViewCell = "ReceiverViewCell"
+
 class ChatViewController: UIViewController {
     
     @IBOutlet weak var chatBGView: UIView!
@@ -19,7 +22,7 @@ class ChatViewController: UIViewController {
     @IBOutlet weak var chatTitle: UILabel!
     @IBOutlet weak var chatTableView: UITableView!
     
-    let textList = ["Hello", "Good", "Bye"]
+    let textList = ["Hello", "ReceiverViewCell", "Bye"]
     
     var viewModel: ChatIOType!
     
@@ -36,13 +39,17 @@ class ChatViewController: UIViewController {
     
     func registerCell() {
         chatTableView.dataSource = self
-        chatTableView.register(UINib(nibName: "SenderViewCell", bundle: nil), forCellReuseIdentifier: "SenderViewCell")
+        chatTableView.register(UINib(nibName: receiverTableViewCell, bundle: nil), forCellReuseIdentifier: receiverTableViewCell)
     }
     
     func setupUI() {
         
+        chatTableView.backgroundColor = .clear
         chatTableView.separatorStyle = .none
+        chatTableView.allowsSelection = false
         
+        chatBGView
+
         // Set Title Style
         chatTitle.text = "Chat Screen"
         chatTitle.textColor = .systemMainBlue
@@ -81,9 +88,13 @@ extension ChatViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell : SenderViewCell = chatTableView.dequeueReusableCell(withIdentifier: "SenderViewCell", for: indexPath) as! SenderViewCell
-        cell.name.text = textList[indexPath.row]
-        cell.message.text = textList[indexPath.row]
+        let cell = chatTableView.dequeueReusableCell(withIdentifier: receiverTableViewCell, for: indexPath)
+        
+        if let cell = cell as? ReceiverViewCell {
+            cell.name.text = textList[indexPath.row]
+            cell.message.text = textList[indexPath.row]
+        }
+        
         return cell
     }
     

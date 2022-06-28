@@ -16,11 +16,9 @@ class ReceiverViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
-        
         profileIMG.makeRounded(radius: profileIMG.frame.height/2)
-//        view.makeViewRounded(radius: 6)
-        
+        view.layer.cornerRadius = 20
+        view.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner, .layerMaxXMinYCorner]
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

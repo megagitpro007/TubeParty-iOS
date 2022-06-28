@@ -8,7 +8,8 @@ target 'TubeParty' do
   # Pods for TubeParty
 
 	pod 'RxSwift', '6.5.0'
-    	pod 'RxCocoa', '6.5.0'
+  pod 'RxCocoa', '6.5.0'
 	pod 'RxDataSources', '~> 5.0'
+  pod 'Kingfisher', '~> 7.0'
 
 end
