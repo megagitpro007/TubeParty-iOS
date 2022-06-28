@@ -166,10 +166,10 @@
                                         <rect key="frame" x="0.0" y="792" width="414" height="70"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pec-BO-4eq">
-                                                <rect key="frame" x="16" y="6" width="382" height="58"/>
+                                                <rect key="frame" x="16" y="10" width="382" height="50"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="zAE-LZ-ST8">
-                                                        <rect key="frame" x="16" y="14" width="350" height="30"/>
+                                                        <rect key="frame" x="16" y="10" width="350" height="30"/>
                                                         <subviews>
                                                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Type your message..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="E4n-zh-D8y">
                                                                 <rect key="frame" x="0.0" y="0.0" width="315" height="30"/>
@@ -197,17 +197,17 @@
                                                 <constraints>
                                                     <constraint firstAttribute="trailing" secondItem="zAE-LZ-ST8" secondAttribute="trailing" constant="16" id="4VH-ET-zkR"/>
                                                     <constraint firstItem="zAE-LZ-ST8" firstAttribute="leading" secondItem="pec-BO-4eq" secondAttribute="leading" constant="16" id="pT5-SY-t3F"/>
-                                                    <constraint firstItem="zAE-LZ-ST8" firstAttribute="top" secondItem="pec-BO-4eq" secondAttribute="top" constant="14" id="x1Z-xM-25S"/>
+                                                    <constraint firstItem="zAE-LZ-ST8" firstAttribute="top" secondItem="pec-BO-4eq" secondAttribute="top" constant="10" id="x1Z-xM-25S"/>
                                                 </constraints>
                                             </view>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstItem="pec-BO-4eq" firstAttribute="top" secondItem="gVW-0A-IfL" secondAttribute="top" constant="6" id="GiQ-ba-wgQ"/>
+                                            <constraint firstItem="pec-BO-4eq" firstAttribute="top" secondItem="gVW-0A-IfL" secondAttribute="top" constant="10" id="GiQ-ba-wgQ"/>
                                             <constraint firstAttribute="height" constant="70" id="XKI-iu-ilW"/>
                                             <constraint firstItem="pec-BO-4eq" firstAttribute="leading" secondItem="gVW-0A-IfL" secondAttribute="leading" constant="16" id="eSa-cH-lbp"/>
                                             <constraint firstAttribute="trailing" secondItem="pec-BO-4eq" secondAttribute="trailing" constant="16" id="li1-YK-tFR"/>
-                                            <constraint firstAttribute="bottom" secondItem="pec-BO-4eq" secondAttribute="bottom" constant="6" id="q2g-Ru-6ZJ"/>
+                                            <constraint firstAttribute="bottom" secondItem="pec-BO-4eq" secondAttribute="bottom" constant="10" id="q2g-Ru-6ZJ"/>
                                             <constraint firstItem="pec-BO-4eq" firstAttribute="centerX" secondItem="gVW-0A-IfL" secondAttribute="centerX" id="tk2-cw-TkE"/>
                                         </constraints>
                                     </view>

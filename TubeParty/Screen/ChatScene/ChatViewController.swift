@@ -26,6 +26,7 @@ class ChatViewController: UIViewController {
     let textList = ["Hello", "ReceiverViewCell", "Bye", "Prettymuch"]
     
     var viewModel: ChatIOType!
+    let bag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,7 +36,21 @@ class ChatViewController: UIViewController {
     }
     
     func bindViewModel() {
+        typingField
+            .rx
+            .text.orEmpty.map({ text in
+                return !text.isEmpty
+            })
+            .bind(to: viewModel.input.isValidText).disposed(by: bag)
         
+        viewModel.output.isDisableSendButton.distinctUntilChanged().drive(onNext: { isDisable in
+            UIView.animate(withDuration: 0.1, delay: 0, options: .curveEaseOut) { [weak self] in
+                guard let self = self else { return }
+                print("isDisable : \(isDisable)")
+                self.sendButton.isUserInteractionEnabled = isDisable
+                self.sendButton.isEnabled = isDisable
+            }
+        }).disposed(by: bag)
     }
     
     func registerCell() {
@@ -45,12 +60,14 @@ class ChatViewController: UIViewController {
     }
     
     func setupUI() {
+        chatBGView.backgroundColor = .tpGunmetal
+        
         chatTableView.separatorStyle = .none
         chatTableView.allowsSelection = false
 
         // Set Title Style
         chatTitle.text = "Chat Screen"
-        chatTitle.textColor = .tpMainBlue
+        chatTitle.textColor = .white
         
         // Set Send message button color
         let largeConfig = UIImage.SymbolConfiguration(pointSize: 20, weight: .bold, scale: .large)
@@ -60,7 +77,7 @@ class ChatViewController: UIViewController {
         
         // Set Back button color
         let backConfig = UIImage.SymbolConfiguration(pointSize: 20, weight: .bold, scale: .large)
-        let backBoldDoc = UIImage(systemName: "chevron.backward", withConfiguration: backConfig)?.withTintColor(.tpMainBlue, renderingMode: .alwaysOriginal)
+        let backBoldDoc = UIImage(systemName: "chevron.backward", withConfiguration: backConfig)?.withTintColor(.white, renderingMode: .alwaysOriginal)
         backButton.setImage(backBoldDoc, for: .normal)
         backButton.setTitle("", for: .normal)
         
@@ -92,11 +109,13 @@ extension ChatViewController: UITableViewDataSource {
         if let cell = cell as? SenderViewCell {
             cell.configure(name: textList[indexPath.row],
                            text: textList[indexPath.row],
-                           url: "https://static.wikia.nocookie.net/love-exalted/images/1/1c/Izuku_Midoriya.png/revision/latest?cb=20211011173004")
+                           url: "https://static.wikia.nocookie.net/love-exalted/images/1/1c/Izuku_Midoriya.png/revision/latest?cb=20211011173004",
+                           timeStamp: "11:11")
         } else if let cell = cell as? ReceiverViewCell {
             cell.configure(name: textList[indexPath.row],
                            text: textList[indexPath.row],
-                           url: "https://static.wikia.nocookie.net/love-exalted/images/1/1c/Izuku_Midoriya.png/revision/latest?cb=20211011173004")
+                           url: "https://static.wikia.nocookie.net/love-exalted/images/1/1c/Izuku_Midoriya.png/revision/latest?cb=20211011173004",
+                           timeStamp: "11:11")
         }
         
         return cell

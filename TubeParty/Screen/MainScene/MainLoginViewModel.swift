@@ -53,10 +53,10 @@ public class MainLoginViewModel: MainLoginIOType, MainLoginInput, MainLoginOutpu
     
     init() {
         
-        isValidName.bind { [weak self] isValidName in
-            guard let self = self else { return }
-            self._showErrorState.accept(isValidName)
-        }.disposed(by: bag)
+        isValidName
+            .map({$0})
+            .bind(to: _showErrorState)
+            .disposed(by: bag)
         
         didTapEnterButton.bind { [weak self] _ in
             guard let self = self else { return }

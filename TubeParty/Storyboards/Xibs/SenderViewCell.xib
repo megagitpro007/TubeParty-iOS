@@ -102,6 +102,7 @@
                 <outlet property="message" destination="1cQ-l6-rbb" id="VN1-IP-dOM"/>
                 <outlet property="name" destination="h9e-rY-PnZ" id="yBn-Vk-FoM"/>
                 <outlet property="profileImage" destination="yRj-qs-eNu" id="aU7-Y8-Err"/>
+                <outlet property="timeStamp" destination="tX4-3k-hMT" id="nmW-sQ-e4q"/>
                 <outlet property="view" destination="fiF-wV-xOk" id="Q0e-1f-v2k"/>
             </connections>
             <point key="canvasLocation" x="137.68115942028987" y="-109.15178571428571"/>
