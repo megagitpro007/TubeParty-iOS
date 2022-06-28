@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class SenderViewCell: UITableViewCell {
 
@@ -16,9 +17,18 @@ class SenderViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        
         profileImage.makeRounded(radius: profileImage.frame.height/2)
+        
+        view.backgroundColor = .systemMainGreen
         view.layer.cornerRadius = 20
         view.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMaxYCorner, .layerMinXMaxYCorner]
+        view.layer.applyCornerRadiusShadow(color: .systemMainGreen, alpha: 1, x: 0, y: 0, blur: 10.0)
+    }
+    
+    func setProfileImage(url: String) {
+        let imgURL = URL(string: url)
+        profileImage.kf.setImage(with: imgURL)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

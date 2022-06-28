@@ -39,16 +39,13 @@ class ChatViewController: UIViewController {
     
     func registerCell() {
         chatTableView.dataSource = self
-        chatTableView.register(UINib(nibName: receiverTableViewCell, bundle: nil), forCellReuseIdentifier: receiverTableViewCell)
+        chatTableView.register(UINib(nibName: senderTableViewCell, bundle: nil), forCellReuseIdentifier: senderTableViewCell)
     }
     
     func setupUI() {
-        
         chatTableView.backgroundColor = .clear
         chatTableView.separatorStyle = .none
         chatTableView.allowsSelection = false
-        
-        chatBGView
 
         // Set Title Style
         chatTitle.text = "Chat Screen"
@@ -71,7 +68,6 @@ class ChatViewController: UIViewController {
         typingField.layer.borderWidth = 2
         typingField.layer.borderColor = UIColor.systemGrayButton.cgColor
         typingField.tintColor = .systemGrayButton
-        
     }
     
     @IBAction func didTapBackButton(_ sender: Any) {
@@ -88,11 +84,12 @@ extension ChatViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = chatTableView.dequeueReusableCell(withIdentifier: receiverTableViewCell, for: indexPath)
+        let cell = chatTableView.dequeueReusableCell(withIdentifier: senderTableViewCell, for: indexPath)
         
-        if let cell = cell as? ReceiverViewCell {
+        if let cell = cell as? SenderViewCell {
             cell.name.text = textList[indexPath.row]
             cell.message.text = textList[indexPath.row]
+            cell.setProfileImage(url: "https://static.wikia.nocookie.net/love-exalted/images/1/1c/Izuku_Midoriya.png/revision/latest?cb=20211011173004")
         }
         
         return cell

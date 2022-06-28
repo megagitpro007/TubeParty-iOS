@@ -10,9 +10,6 @@ import UIKit
 
 extension UIImageView {
     func makeRounded(radius: CGFloat) {
-        layer.borderWidth = 1
-        layer.masksToBounds = false
-        layer.borderColor = UIColor.black.cgColor
         layer.cornerRadius = radius
         clipsToBounds = true
     }
@@ -26,3 +23,20 @@ extension UIView {
          layer.mask = mask
      }
 }
+
+extension CALayer {
+   
+    func applyCornerRadiusShadow(color: UIColor = .black,
+                                 alpha: Float = 0.5,
+                                 x: CGFloat = 0,
+                                 y: CGFloat = 2,
+                                 blur: CGFloat = 4) {
+        shadowColor = color.cgColor
+        shadowOpacity = alpha
+        shadowOffset = CGSize(width: x, height: y)
+        shadowRadius = blur / 2.0
+    }
+    
+}
+
+    
