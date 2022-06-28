@@ -13,23 +13,29 @@ class ReceiverViewCell: UITableViewCell {
     @IBOutlet weak var name: UILabel!
     @IBOutlet weak var message: UILabel!
     @IBOutlet weak var view: UIView!
-    
-    private var theShadowLayer: CAShapeLayer?
+    @IBOutlet weak var timeStamp: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        profileImage.makeRounded(radius: profileImage.frame.height/2)
-        
-        view.backgroundColor = .systemMainBlue
-        view.layer.cornerRadius = 20
-        view.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner, .layerMaxXMinYCorner]
-        view.layer.applyCornerRadiusShadow(color: .systemMainBlue, alpha: 1, x: 0, y: 0, blur: 10.0)
-        
+        setupUI()
     }
     
-    func setProfileImage(url: String) {
-        let url = URL(string: "https://static.wikia.nocookie.net/love-exalted/images/1/1c/Izuku_Midoriya.png/revision/latest?cb=20211011173004")
-        profileImage.kf.setImage(with: url)
+    func configure(name: String, text: String , url: String) {
+        self.name.text = name
+        self.message.text = text
+        let imgURL = URL(string: url)
+        profileImage.kf.setImage(with: imgURL)
+    }
+    
+    func setupUI() {
+        profileImage.makeRounded(radius: profileImage.frame.height/2)
+    
+        view.backgroundColor = .tpMainBlue
+        view.layer.cornerRadius = 20
+        view.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner, .layerMaxXMinYCorner]
+        view.layer.applyCornerRadiusShadow(color: .tpMainBlue, alpha: 1, x: 0, y: 0, blur: 10.0)
+        
+        timeStamp.textColor = .tpGray
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

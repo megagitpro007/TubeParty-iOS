@@ -27,19 +27,19 @@ class MainLoginViewController: UIViewController, MainViewControllerDelegate {
         submitButton.isEnabled = false
         self.logoImage.image = UIImage(systemName: "message.circle")?.withTintColor(.white, renderingMode: .alwaysOriginal)
         
-        mainView.backgroundColor = UIColor.systemMainGreen
+        mainView.backgroundColor = UIColor.tpMainGreen
         loginView.layer.cornerRadius = 6
         
-        submitButton.backgroundColor = UIColor.systemBlackButton
+        submitButton.backgroundColor = UIColor.tpBlack
         submitButton.setTitleColor(UIColor.white, for: .normal)
-        submitButton.setTitleColor(UIColor.systemGrayButton, for: .highlighted)
+        submitButton.setTitleColor(UIColor.tpGray, for: .highlighted)
         submitButton.layer.cornerRadius = 4
         submitButton.titleLabel?.font =  UIFont.normalRegular
 
         nameTextfield.layer.cornerRadius = 4
         nameTextfield.layer.borderWidth = 2
-        nameTextfield.layer.borderColor = UIColor.systemGrayButton.cgColor
-        nameTextfield.tintColor = .systemGrayButton
+        nameTextfield.layer.borderColor = UIColor.tpGray.cgColor
+        nameTextfield.tintColor = .tpGray
         
     }
     
@@ -47,7 +47,7 @@ class MainLoginViewController: UIViewController, MainViewControllerDelegate {
         let gradient: CAGradientLayer = CAGradientLayer(
             start: .topLeft,
             end: .bottomRight,
-            colors: [UIColor.systemMainGreen.cgColor, UIColor.systemMainBlue.cgColor]
+            colors: [UIColor.tpMainGreen.cgColor, UIColor.tpMainBlue.cgColor]
         )
         gradient.frame = mainView.layer.frame
         mainView.layer.insertSublayer(gradient, at: 0)

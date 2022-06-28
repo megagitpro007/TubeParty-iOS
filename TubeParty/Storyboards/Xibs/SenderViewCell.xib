@@ -9,6 +9,9 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
+        <array key="Mitr-Light.ttf">
+            <string>Mitr-Light</string>
+        </array>
         <array key="Mitr-Regular.ttf">
             <string>Mitr-Regular</string>
         </array>
@@ -62,16 +65,27 @@
                                 </imageView>
                             </subviews>
                         </stackView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="11:11" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tX4-3k-hMT">
+                            <rect key="frame" x="224" y="79" width="40" height="19"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="40" id="sJz-aH-fMN"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="Mitr-Light" family="Mitr" pointSize="12"/>
+                            <color key="textColor" red="0.77254901960784317" green="0.77254901960784317" blue="0.77254901960784317" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstItem="B4l-GS-78w" firstAttribute="top" secondItem="A8Q-8o-m89" secondAttribute="top" constant="4" id="0Z5-w9-rDA"/>
+                        <constraint firstItem="tX4-3k-hMT" firstAttribute="bottom" secondItem="fiF-wV-xOk" secondAttribute="bottom" id="1ee-Uf-uz3"/>
                         <constraint firstItem="B4l-GS-78w" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="A8Q-8o-m89" secondAttribute="leading" constant="16" id="9b6-xH-Ibh"/>
                         <constraint firstAttribute="trailing" secondItem="B4l-GS-78w" secondAttribute="trailing" constant="16" id="VjF-4O-AqI"/>
                         <constraint firstAttribute="bottom" secondItem="fiF-wV-xOk" secondAttribute="bottom" constant="4" id="Xg8-yA-8HO"/>
                         <constraint firstItem="fiF-wV-xOk" firstAttribute="trailing" secondItem="yRj-qs-eNu" secondAttribute="trailing" id="Y7c-96-8oI"/>
-                        <constraint firstItem="fiF-wV-xOk" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="A8Q-8o-m89" secondAttribute="leading" constant="16" id="fk4-aM-eUl"/>
+                        <constraint firstItem="fiF-wV-xOk" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="A8Q-8o-m89" secondAttribute="leading" constant="40" id="fk4-aM-eUl"/>
                         <constraint firstItem="fiF-wV-xOk" firstAttribute="top" secondItem="yRj-qs-eNu" secondAttribute="bottom" constant="4" id="ilr-BO-tcn"/>
+                        <constraint firstItem="fiF-wV-xOk" firstAttribute="leading" secondItem="tX4-3k-hMT" secondAttribute="trailing" constant="6" id="kXV-D8-Ny6"/>
                     </constraints>
                 </view>
             </subviews>

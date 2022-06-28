@@ -9,6 +9,9 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
+        <array key="Mitr-Light.ttf">
+            <string>Mitr-Light</string>
+        </array>
         <array key="Mitr-Regular.ttf">
             <string>Mitr-Regular</string>
         </array>
@@ -62,14 +65,22 @@
                                 <constraint firstItem="FS0-Bd-thN" firstAttribute="top" secondItem="9B2-VD-jTO" secondAttribute="top" constant="8" id="vQO-gz-qD6"/>
                             </constraints>
                         </view>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12:12" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="if0-1K-xUR">
+                            <rect key="frame" x="150" y="76" width="27.5" height="19"/>
+                            <fontDescription key="fontDescription" name="Mitr-Light" family="Mitr" pointSize="12"/>
+                            <color key="textColor" red="0.77254901960784317" green="0.77254901960784317" blue="0.77084792553111725" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstItem="DNt-yc-tCP" firstAttribute="top" secondItem="Kiv-pv-vsV" secondAttribute="top" constant="4" id="1Ay-1s-gG1"/>
+                        <constraint firstItem="if0-1K-xUR" firstAttribute="leading" secondItem="9B2-VD-jTO" secondAttribute="trailing" constant="6" id="8vF-2B-6CI"/>
                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="DNt-yc-tCP" secondAttribute="trailing" constant="16" id="9Dz-vV-gNL"/>
                         <constraint firstAttribute="bottom" secondItem="9B2-VD-jTO" secondAttribute="bottom" constant="4" id="EBs-t0-foa"/>
                         <constraint firstItem="9B2-VD-jTO" firstAttribute="leading" secondItem="DNt-yc-tCP" secondAttribute="leading" id="PFR-Dl-GWL"/>
-                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="9B2-VD-jTO" secondAttribute="trailing" constant="16" id="PoX-B8-uiV"/>
+                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="9B2-VD-jTO" secondAttribute="trailing" constant="40" id="PoX-B8-uiV"/>
+                        <constraint firstItem="if0-1K-xUR" firstAttribute="bottom" secondItem="9B2-VD-jTO" secondAttribute="bottom" id="Q3B-7w-R2w"/>
                         <constraint firstItem="9B2-VD-jTO" firstAttribute="top" secondItem="DNt-yc-tCP" secondAttribute="bottom" constant="4" id="UWl-ln-Vt1"/>
                         <constraint firstItem="DNt-yc-tCP" firstAttribute="leading" secondItem="Kiv-pv-vsV" secondAttribute="leading" constant="16" id="t4C-YK-AaN"/>
                     </constraints>
@@ -88,6 +99,7 @@
                 <outlet property="message" destination="FS0-Bd-thN" id="dDU-hs-pA7"/>
                 <outlet property="name" destination="PaA-fm-Krf" id="Wos-B6-Agv"/>
                 <outlet property="profileImage" destination="vGb-4J-iWU" id="SSL-md-cAa"/>
+                <outlet property="timeStamp" destination="if0-1K-xUR" id="O3c-EY-tyS"/>
                 <outlet property="view" destination="9B2-VD-jTO" id="LBb-RQ-UAn"/>
             </connections>
             <point key="canvasLocation" x="137.68115942028987" y="-118.19196428571428"/>
