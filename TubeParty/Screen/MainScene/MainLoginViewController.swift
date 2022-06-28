@@ -34,7 +34,7 @@ class MainLoginViewController: UIViewController, MainViewControllerDelegate {
         submitButton.setTitleColor(UIColor.white, for: .normal)
         submitButton.setTitleColor(UIColor.systemGrayButton, for: .highlighted)
         submitButton.layer.cornerRadius = 4
-        submitButton.titleLabel?.font =  UIFont.normalRegular
+        submitButton.titleLabel?.font =  UIFont.titleBold
 
         nameTextfield.layer.cornerRadius = 4
         nameTextfield.layer.borderWidth = 2

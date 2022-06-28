@@ -10,7 +10,8 @@ import RxSwift
 import RxCocoa
 import RxDataSources
 
-fileprivate let senderTableViewCell: String = "SenderViewCell"
+fileprivate let senderTableViewCell: String = "SenderTableViewCell"
+fileprivate let receiverTableViewCell: String = "ReceiverTableViewCell"
 
 class ChatViewController: UIViewController {
     
@@ -21,7 +22,7 @@ class ChatViewController: UIViewController {
     @IBOutlet weak var chatTitle: UILabel!
     @IBOutlet weak var chatTableView: UITableView!
     
-    let textList = ["Hello", "GoodHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHello", "Bye"]
+    let textList = ["สวัสดี", "ว่าไงจ๊ะ", "สบายดีมั้ย", "เสรือก อิสัส !"]
     
     var viewModel: ChatIOType!
     
@@ -37,10 +38,11 @@ class ChatViewController: UIViewController {
     }
     
     func registerCell() {
-        chatTableView.register(UINib(nibName: senderTableViewCell, bundle: nil), forCellReuseIdentifier: senderTableViewCell)
-        chatTableView.delegate = self
-        chatTableView.dataSource = self
-        chatTableView.separatorStyle = .none
+        self.chatTableView.separatorStyle = .none
+        self.chatTableView.delegate = self
+        self.chatTableView.dataSource = self
+        self.chatTableView.register(UINib(nibName: senderTableViewCell, bundle: nil), forCellReuseIdentifier: senderTableViewCell)
+        self.chatTableView.register(UINib(nibName: receiverTableViewCell, bundle: nil), forCellReuseIdentifier: receiverTableViewCell)
     }
     
     func setupUI() {
@@ -57,7 +59,7 @@ class ChatViewController: UIViewController {
         
         // Set Back button color
         let backConfig = UIImage.SymbolConfiguration(pointSize: 20, weight: .bold, scale: .large)
-        let backBoldDoc = UIImage(systemName: "arrowshape.turn.up.backward.circle", withConfiguration: backConfig)?.withTintColor(.systemMainBlue, renderingMode: .alwaysOriginal)
+        let backBoldDoc = UIImage(systemName: "chevron.backward", withConfiguration: backConfig)?.withTintColor(.systemMainBlue, renderingMode: .alwaysOriginal)
         backButton.setImage(backBoldDoc, for: .normal)
         backButton.setTitle("", for: .normal)
         
@@ -81,10 +83,18 @@ extension ChatViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = chatTableView.dequeueReusableCell(withIdentifier: senderTableViewCell, for: indexPath)
-        if let cell = cell as? SenderViewCell {
-            cell.senderMSG.text = textList[indexPath.row]
+        if (indexPath.row % 2) == 0 {
+            let cell = chatTableView.dequeueReusableCell(withIdentifier: senderTableViewCell, for: indexPath)
+            if let cell = cell as? SenderTableViewCell {
+                cell.configure(self.textList[indexPath.row], timeStamp: "11:30")
+            }
+            return cell
+        } else {
+            let cell = chatTableView.dequeueReusableCell(withIdentifier: receiverTableViewCell, for: indexPath)
+            if let cell = cell as? ReceiverTableViewCell {
+                cell.configure(self.textList[indexPath.row], timeStamp: "11:30")
+            }
+            return cell
         }
-        return cell
     }
 }

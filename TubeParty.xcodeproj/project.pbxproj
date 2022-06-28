@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		65D15CC82868604A0007D895 /* CAGradientLayer+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D15CC72868604A0007D895 /* CAGradientLayer+Extensions.swift */; };
+		65E2C1F0286B3C0300BDD5A4 /* SenderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E2C1EE286B3C0300BDD5A4 /* SenderTableViewCell.swift */; };
+		65E2C1F1286B3C0300BDD5A4 /* SenderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65E2C1EF286B3C0300BDD5A4 /* SenderTableViewCell.xib */; };
+		65E2C1F6286B3C6200BDD5A4 /* ReceiverTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E2C1F4286B3C6200BDD5A4 /* ReceiverTableViewCell.swift */; };
+		65E2C1F7286B3C6200BDD5A4 /* ReceiverTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65E2C1F5286B3C6200BDD5A4 /* ReceiverTableViewCell.xib */; };
 		9897BDA9FC265AE0F5C43DC5 /* Pods_TubeParty.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B12F798D203A1045FB658687 /* Pods_TubeParty.framework */; };
 		E20285E3286854430006806B /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20285E2286854430006806B /* ChatViewController.swift */; };
 		E20285E5286854540006806B /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20285E4286854540006806B /* ChatViewModel.swift */; };
@@ -25,15 +29,15 @@
 		E210522428677224007AEC7B /* UIFont+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E210522328677224007AEC7B /* UIFont+Extensions.swift */; };
 		E210522628677337007AEC7B /* MainLoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E210522528677337007AEC7B /* MainLoginViewModel.swift */; };
 		E210522A28683A60007AEC7B /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E210522928683A60007AEC7B /* RootViewController.swift */; };
-		E212CBD02869E206004AA7C7 /* SenderViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E212CBCF2869E206004AA7C7 /* SenderViewCell.xib */; };
-		E212CBD22869E68D004AA7C7 /* SenderViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E212CBD12869E68D004AA7C7 /* SenderViewCell.swift */; };
-		E212CBD42869E6FA004AA7C7 /* ReceiverViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E212CBD32869E6FA004AA7C7 /* ReceiverViewCell.xib */; };
-		E212CBD62869E71F004AA7C7 /* ReceiverViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E212CBD52869E71F004AA7C7 /* ReceiverViewCell.swift */; };
 		E212CBD82869E92A004AA7C7 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E212CBD72869E92A004AA7C7 /* Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		65D15CC72868604A0007D895 /* CAGradientLayer+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CAGradientLayer+Extensions.swift"; sourceTree = "<group>"; };
+		65E2C1EE286B3C0300BDD5A4 /* SenderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SenderTableViewCell.swift; sourceTree = "<group>"; };
+		65E2C1EF286B3C0300BDD5A4 /* SenderTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SenderTableViewCell.xib; sourceTree = "<group>"; };
+		65E2C1F4286B3C6200BDD5A4 /* ReceiverTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiverTableViewCell.swift; sourceTree = "<group>"; };
+		65E2C1F5286B3C6200BDD5A4 /* ReceiverTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReceiverTableViewCell.xib; sourceTree = "<group>"; };
 		85D9AEFC018AC3F13BFE176F /* Pods-TubeParty.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TubeParty.release.xcconfig"; path = "Target Support Files/Pods-TubeParty/Pods-TubeParty.release.xcconfig"; sourceTree = "<group>"; };
 		96016B476017FAB0A6A03861 /* Pods-TubeParty.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TubeParty.debug.xcconfig"; path = "Target Support Files/Pods-TubeParty/Pods-TubeParty.debug.xcconfig"; sourceTree = "<group>"; };
 		B12F798D203A1045FB658687 /* Pods_TubeParty.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TubeParty.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -55,10 +59,6 @@
 		E210522328677224007AEC7B /* UIFont+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extensions.swift"; sourceTree = "<group>"; };
 		E210522528677337007AEC7B /* MainLoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainLoginViewModel.swift; sourceTree = "<group>"; };
 		E210522928683A60007AEC7B /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
-		E212CBCF2869E206004AA7C7 /* SenderViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SenderViewCell.xib; sourceTree = "<group>"; };
-		E212CBD12869E68D004AA7C7 /* SenderViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SenderViewCell.swift; sourceTree = "<group>"; };
-		E212CBD32869E6FA004AA7C7 /* ReceiverViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReceiverViewCell.xib; sourceTree = "<group>"; };
-		E212CBD52869E71F004AA7C7 /* ReceiverViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiverViewCell.swift; sourceTree = "<group>"; };
 		E212CBD72869E92A004AA7C7 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -91,11 +91,39 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
-		E20285E1286854210006806B /* ChatScene */ = {
+		65E2C1EB286B3BA700BDD5A4 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				E20285E4286854540006806B /* ChatViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		65E2C1EC286B3BBE00BDD5A4 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
 				E20285E2286854430006806B /* ChatViewController.swift */,
-				E20285E4286854540006806B /* ChatViewModel.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		65E2C1ED286B3BC800BDD5A4 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				65E2C1EE286B3C0300BDD5A4 /* SenderTableViewCell.swift */,
+				65E2C1EF286B3C0300BDD5A4 /* SenderTableViewCell.xib */,
+				65E2C1F4286B3C6200BDD5A4 /* ReceiverTableViewCell.swift */,
+				65E2C1F5286B3C6200BDD5A4 /* ReceiverTableViewCell.xib */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		E20285E1286854210006806B /* ChatScene */ = {
+			isa = PBXGroup;
+			children = (
+				65E2C1ED286B3BC800BDD5A4 /* Views */,
+				65E2C1EC286B3BBE00BDD5A4 /* ViewController */,
+				65E2C1EB286B3BA700BDD5A4 /* ViewModel */,
 			);
 			path = ChatScene;
 			sourceTree = "<group>";
@@ -176,7 +204,6 @@
 			children = (
 				E2105201286753DF007AEC7B /* Main.storyboard */,
 				E2105206286753E0007AEC7B /* LaunchScreen.storyboard */,
-				E212CBCE2869E1EA004AA7C7 /* Xibs */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -190,17 +217,6 @@
 				E210521728676AD0007AEC7B /* Mitr-Regular.ttf */,
 			);
 			path = Fonts;
-			sourceTree = "<group>";
-		};
-		E212CBCE2869E1EA004AA7C7 /* Xibs */ = {
-			isa = PBXGroup;
-			children = (
-				E212CBCF2869E206004AA7C7 /* SenderViewCell.xib */,
-				E212CBD12869E68D004AA7C7 /* SenderViewCell.swift */,
-				E212CBD32869E6FA004AA7C7 /* ReceiverViewCell.xib */,
-				E212CBD52869E71F004AA7C7 /* ReceiverViewCell.swift */,
-			);
-			path = Xibs;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -267,11 +283,11 @@
 				E2105208286753E0007AEC7B /* LaunchScreen.storyboard in Resources */,
 				E2105205286753E0007AEC7B /* Assets.xcassets in Resources */,
 				E210522128676AD0007AEC7B /* Mitr-Bold.ttf in Resources */,
+				65E2C1F1286B3C0300BDD5A4 /* SenderTableViewCell.xib in Resources */,
 				E2105203286753DF007AEC7B /* Main.storyboard in Resources */,
+				65E2C1F7286B3C6200BDD5A4 /* ReceiverTableViewCell.xib in Resources */,
 				E210521D28676AD0007AEC7B /* Mitr-Regular.ttf in Resources */,
-				E212CBD42869E6FA004AA7C7 /* ReceiverViewCell.xib in Resources */,
 				E210522228676AD0007AEC7B /* Mitr-Medium.ttf in Resources */,
-				E212CBD02869E206004AA7C7 /* SenderViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -324,18 +340,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E212CBD22869E68D004AA7C7 /* SenderViewCell.swift in Sources */,
+				65E2C1F0286B3C0300BDD5A4 /* SenderTableViewCell.swift in Sources */,
 				E2105200286753DF007AEC7B /* MainLoginViewController.swift in Sources */,
 				E21051FC286753DF007AEC7B /* AppDelegate.swift in Sources */,
 				65D15CC82868604A0007D895 /* CAGradientLayer+Extensions.swift in Sources */,
 				E20285E3286854430006806B /* ChatViewController.swift in Sources */,
-				E212CBD62869E71F004AA7C7 /* ReceiverViewCell.swift in Sources */,
 				E21051FE286753DF007AEC7B /* SceneDelegate.swift in Sources */,
 				E210522628677337007AEC7B /* MainLoginViewModel.swift in Sources */,
 				E212CBD82869E92A004AA7C7 /* Extensions.swift in Sources */,
 				E210522428677224007AEC7B /* UIFont+Extensions.swift in Sources */,
 				E210522A28683A60007AEC7B /* RootViewController.swift in Sources */,
 				E20285E5286854540006806B /* ChatViewModel.swift in Sources */,
+				65E2C1F6286B3C6200BDD5A4 /* ReceiverTableViewCell.swift in Sources */,
 				E210521528675AE0007AEC7B /* UIColor+Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
