@@ -22,8 +22,13 @@ class ChatViewController: UIViewController {
     @IBOutlet weak var chatTitle: UILabel!
     @IBOutlet weak var chatTableView: UITableView!
     @IBOutlet weak var textFieldContainer: UIView!
+    @IBOutlet weak var bottomViewContainer: UIView!
     
-    let textList = ["Hello", "ReceiverViewCell", "Bye", "Prettymuch"]
+    @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
+    
+    let textList = ["Hello", "ReceiverViewCell", "Bye", "Prettymuch","Hello", "ReceiverViewCell", "Bye", "Prettymuch","Hello", "ReceiverViewCell", "Bye", "Prettymuch"]
+    
+    var isTextFieldSelected: Bool = false
     
     var viewModel: ChatIOType!
     let bag = DisposeBag()
@@ -33,6 +38,12 @@ class ChatViewController: UIViewController {
         bindViewModel()
         setupUI()
         registerCell()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        let indexPath = IndexPath(row: self.textList.count-1, section: 0)
+        self.chatTableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
     }
     
     func bindViewModel() {
@@ -51,6 +62,31 @@ class ChatViewController: UIViewController {
                 self.sendButton.isEnabled = isDisable
             }
         }).disposed(by: bag)
+        
+        NotificationCenter
+            .default
+            .rx
+            .notification(.keyboardWillShow).bind { [weak self] notification in
+                guard let self = self else { return }
+                guard self.isTextFieldSelected else { return }
+                if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+                    let size = keyboardSize.height - self.view.safeAreaInsets.bottom
+                    self.bottomViewContainer.transform = .init(translationX: 0, y: -size)
+                    self.chatTableView.contentInset = .init(top: 0, left: 0, bottom: size + 10, right: 0)
+                    
+                    let indexPath = IndexPath(row: self.textList.count-1, section: 0)
+                    self.chatTableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
+                    
+                }
+                print("🔥 : textFieldDidBeginEditing")
+            }.disposed(by: bag)
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action:#selector(dismissKeyboard))
+        view.addGestureRecognizer(tapGesture)
+        tapGesture.rx.event.bind(onNext: { recognizer in
+            // TODO:
+        }).disposed(by: bag)
+        
     }
     
     func registerCell() {
@@ -60,6 +96,9 @@ class ChatViewController: UIViewController {
     }
     
     func setupUI() {
+        typingField.delegate = self
+        
+        bottomViewContainer.backgroundColor = .tpGunmetal
         chatBGView.backgroundColor = .tpGunmetal
         
         chatTableView.separatorStyle = .none
@@ -93,6 +132,20 @@ class ChatViewController: UIViewController {
         self.dismiss(animated: true)
     }
     
+    @objc func dismissKeyboard() {
+        guard self.isTextFieldSelected else { return }
+        UIView.animate(withDuration: 0.3, animations: {
+            self.bottomViewContainer.transform = .identity
+            self.chatTableView.transform = .identity
+            
+            self.chatTableView.contentInset = .init(top: 0, left: 0, bottom: 0, right: 0)
+            let indexPath = IndexPath(row: self.textList.count-1, section: 0)
+            self.chatTableView.scrollToRow(at: indexPath, at: .top, animated: true)
+            self.view.endEditing(true)
+            
+        })
+    }
+
 }
 
 extension ChatViewController: UITableViewDataSource {
@@ -114,11 +167,23 @@ extension ChatViewController: UITableViewDataSource {
         } else if let cell = cell as? ReceiverViewCell {
             cell.configure(name: textList[indexPath.row],
                            text: textList[indexPath.row],
-                           url: "https://static.wikia.nocookie.net/love-exalted/images/1/1c/Izuku_Midoriya.png/revision/latest?cb=20211011173004",
-                           timeStamp: "11:11")
+                           url: "https://nntheblog.b-cdn.net/wp-content/uploads/2022/04/Arrangement-Katsuki-Bakugo.jpg",
+                           timeStamp: "12:12")
         }
         
         return cell
+    }
+    
+}
+
+extension ChatViewController: UITextFieldDelegate {
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        isTextFieldSelected = true
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        isTextFieldSelected = false
     }
     
 }

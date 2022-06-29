@@ -40,3 +40,7 @@ extension CALayer {
 }
 
     
+extension Notification.Name {
+    static let keyboardWillShow     = UIResponder.keyboardWillShowNotification
+    static let keyboardWillHide     = UIResponder.keyboardWillHideNotification
+}
