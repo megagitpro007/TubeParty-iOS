@@ -179,6 +179,7 @@
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="30" id="Noy-cB-eSQ"/>
                                                                 </constraints>
+                                                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <fontDescription key="fontDescription" name="Mitr-Regular" family="Mitr" pointSize="14"/>
                                                                 <textInputTraits key="textInputTraits"/>
                                                             </textField>

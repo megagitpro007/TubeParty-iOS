@@ -101,7 +101,7 @@ class ChatViewController: UIViewController {
         bottomViewContainer.backgroundColor = .tpGunmetal
         chatBGView.backgroundColor = .tpGunmetal
         
-        chatTableView.backgroundColor = .tpGunmetal
+        chatTableView.backgroundColor = .clear
         chatTableView.separatorStyle = .none
         chatTableView.allowsSelection = false
 
@@ -126,7 +126,16 @@ class ChatViewController: UIViewController {
         typingField.layer.cornerRadius = 4
         typingField.layer.borderWidth = 0
         typingField.layer.borderColor = UIColor.clear.cgColor
-        typingField.tintColor = .tpGray
+        typingField.tintColor = .white
+        typingField.textColor = .white
+        typingField.attributedPlaceholder = NSAttributedString(
+            string: "Type your message...",
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.tpGray]
+        )
+        
+        typingField.backgroundColor = .clear
+        textFieldContainer.backgroundColor = .tpArsenic
+        
     }
     
     @IBAction func didTapBackButton(_ sender: Any) {
