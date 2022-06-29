@@ -101,6 +101,7 @@ class ChatViewController: UIViewController {
         bottomViewContainer.backgroundColor = .tpGunmetal
         chatBGView.backgroundColor = .tpGunmetal
         
+        chatTableView.backgroundColor = .tpGunmetal
         chatTableView.separatorStyle = .none
         chatTableView.allowsSelection = false
 

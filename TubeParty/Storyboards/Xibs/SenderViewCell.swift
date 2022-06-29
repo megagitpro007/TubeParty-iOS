@@ -15,6 +15,7 @@ class SenderViewCell: UITableViewCell {
     @IBOutlet weak var message: UILabel!
     @IBOutlet weak var view: UIView!
     @IBOutlet weak var timeStamp: UILabel!
+    @IBOutlet weak var containerView: UIView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
