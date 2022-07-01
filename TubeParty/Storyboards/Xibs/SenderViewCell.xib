@@ -27,10 +27,10 @@
                     <rect key="frame" x="0.0" y="0.0" width="438" height="244"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="bottom" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="7oY-xf-nXi" userLabel="Container Stack View">
-                            <rect key="frame" x="0.0" y="0.0" width="422" height="234"/>
+                            <rect key="frame" x="0.0" y="4" width="422" height="236"/>
                             <subviews>
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="bottom" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="QnY-ou-VmG">
-                                    <rect key="frame" x="8" y="0.0" width="414" height="98"/>
+                                    <rect key="frame" x="8" y="0.0" width="414" height="100"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="B4l-GS-78w" userLabel="Profile Stack View">
                                             <rect key="frame" x="264" y="0.0" width="150" height="50"/>
@@ -54,10 +54,10 @@
                                             </subviews>
                                         </stackView>
                                         <stackView opaque="NO" contentMode="scaleToFill" alignment="bottom" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="tDv-2t-7po" userLabel="Msg Stack View">
-                                            <rect key="frame" x="16" y="56" width="398" height="42"/>
+                                            <rect key="frame" x="16" y="56" width="398" height="44"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="11:11" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tX4-3k-hMT">
-                                                    <rect key="frame" x="0.0" y="23" width="40" height="19"/>
+                                                    <rect key="frame" x="0.0" y="25" width="40" height="19"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="40" id="sJz-aH-fMN"/>
                                                     </constraints>
@@ -66,10 +66,10 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fiF-wV-xOk" userLabel="SenderMSGView">
-                                                    <rect key="frame" x="46" y="0.0" width="352" height="42"/>
+                                                    <rect key="frame" x="46" y="0.0" width="352" height="44"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sender Message" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1cQ-l6-rbb">
-                                                            <rect key="frame" x="8" y="8" width="336" height="26"/>
+                                                            <rect key="frame" x="8" y="8" width="336" height="28"/>
                                                             <fontDescription key="fontDescription" name="Mitr-Regular" family="Mitr" pointSize="14"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -92,7 +92,7 @@
                                     </constraints>
                                 </stackView>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="USV-VJ-NnE" userLabel="linkPreViewView">
-                                    <rect key="frame" x="182" y="106" width="240" height="128"/>
+                                    <rect key="frame" x="182" y="108" width="240" height="128"/>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="240" id="SvV-7J-wUI"/>
@@ -104,10 +104,10 @@
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstAttribute="bottom" secondItem="7oY-xf-nXi" secondAttribute="bottom" constant="10" id="24Z-Kd-JOe"/>
+                        <constraint firstAttribute="bottom" secondItem="7oY-xf-nXi" secondAttribute="bottom" constant="4" id="24Z-Kd-JOe"/>
                         <constraint firstItem="7oY-xf-nXi" firstAttribute="leading" secondItem="A8Q-8o-m89" secondAttribute="leading" id="5In-IS-2gI"/>
                         <constraint firstAttribute="trailing" secondItem="7oY-xf-nXi" secondAttribute="trailing" constant="16" id="G3Y-z6-aeb"/>
-                        <constraint firstItem="7oY-xf-nXi" firstAttribute="top" secondItem="A8Q-8o-m89" secondAttribute="top" id="MqL-r3-vbJ"/>
+                        <constraint firstItem="7oY-xf-nXi" firstAttribute="top" secondItem="A8Q-8o-m89" secondAttribute="top" constant="4" id="MqL-r3-vbJ"/>
                     </constraints>
                 </view>
             </subviews>
