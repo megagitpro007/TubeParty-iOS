@@ -14,7 +14,6 @@ class SenderViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         setupUI()
-        linkPreviewView.isHidden = true
     }
     
     func setupUI() {
@@ -29,7 +28,8 @@ class SenderViewCell: UITableViewCell {
         linkPreviewView.layer.cornerRadius = 20
     }
     
-    func configure(name: String, text: String, url: String, timeStamp: String) {
+    func configure(name: String, text: String, url: String, timeStamp: String, isHiddenPreview: Bool) {
+        linkPreviewView.isHidden = isHiddenPreview
         self.name.text = name
         self.message.text = text
         self.timeStamp.text = timeStamp
@@ -38,7 +38,6 @@ class SenderViewCell: UITableViewCell {
     }
 
     func setPreviewLink(urlPreview: String) {
-        linkPreviewView.isHidden = false
         let provider = LPMetadataProvider()
         guard let url = URL(string: urlPreview) else { return }
         //Link Preview

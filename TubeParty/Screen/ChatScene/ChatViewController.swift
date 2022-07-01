@@ -19,15 +19,12 @@ class ChatViewController: UIViewController {
     @IBOutlet weak var chatBGView: UIView!
     @IBOutlet weak var sendButton: UIButton!
     @IBOutlet weak var typingField: UITextField!
-    @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var chatTitle: UILabel!
     @IBOutlet weak var chatTableView: UITableView!
     @IBOutlet weak var textFieldContainer: UIView!
     @IBOutlet weak var bottomViewContainer: UIView!
     
-    @IBOutlet weak var previewView: UIView!
-    
-    let textList = ["Hello", "ReceiverViewCell", "Bye", "Prettymuch","Hello", "ReceiverViewCell", "Bye", "Prettymuch","Hello", "ReceiverViewCell", "Bye",
+    let textList = ["1", "2", "3", "4","5", "6", "7", "8","9", "ReceiverViewCell", "Bye",
                     "Prettymuch https://www.prettymuch.com/ ",
                     "ReceiverViewCell https://www.google.com"]
     
@@ -118,12 +115,6 @@ class ChatViewController: UIViewController {
         sendButton.setImage(largeBoldDoc, for: .normal)
         sendButton.setTitle("", for: .normal)
         
-        // Set Back button color
-        let backConfig = UIImage.SymbolConfiguration(pointSize: 20, weight: .bold, scale: .large)
-        let backBoldDoc = UIImage(systemName: "chevron.backward", withConfiguration: backConfig)?.withTintColor(.white, renderingMode: .alwaysOriginal)
-        backButton.setImage(backBoldDoc, for: .normal)
-        backButton.setTitle("", for: .normal)
-        
         // Set typing field style
         textFieldContainer.layer.cornerRadius = textFieldContainer.bounds.height / 2
         typingField.layer.cornerRadius = 4
@@ -139,10 +130,6 @@ class ChatViewController: UIViewController {
         typingField.backgroundColor = .clear
         textFieldContainer.backgroundColor = .tpArsenic
         
-    }
-    
-    @IBAction func didTapBackButton(_ sender: Any) {
-        self.dismiss(animated: true)
     }
     
     @objc func dismissKeyboard() {
@@ -171,13 +158,28 @@ extension ChatViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = chatTableView.dequeueReusableCell(withIdentifier: indexPath.row%2 == 0 ? senderTableViewCell : receiverTableViewCell, for: indexPath)
+        var isHiddenPreview = true
         
         if let cell = cell as? SenderViewCell {
+            // Detect URL in Text
+            let input = textList[indexPath.row]
+            let detector = try! NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
+            let matches = detector.matches(in: input, options: [], range: NSRange(location: 0, length: input.utf16.count))
+
+            for match in matches {
+                guard let range = Range(match.range, in: input) else { continue }
+                let url = input[range]
+                cell.setPreviewLink(urlPreview: String(url))
+                isHiddenPreview = false
+            }
+            
             cell.configure(name: textList[indexPath.row],
                            text: textList[indexPath.row],
                            url: "https://static.wikia.nocookie.net/love-exalted/images/1/1c/Izuku_Midoriya.png/revision/latest?cb=20211011173004",
-                           timeStamp: "11:11")
+                           timeStamp: "11:11",
+                           isHiddenPreview: isHiddenPreview)
             
+        } else if let cell = cell as? ReceiverViewCell {
             // Detect URL in Text
             let input = textList[indexPath.row]
             let detector = try! NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
@@ -187,24 +189,15 @@ extension ChatViewController: UITableViewDataSource {
                 guard let range = Range(match.range, in: input) else { continue }
                 let url = input[range]
                 cell.setPreviewLink(urlPreview: String(url))
+                isHiddenPreview = false
             }
             
-        } else if let cell = cell as? ReceiverViewCell {
             cell.configure(name: textList[indexPath.row],
                            text: textList[indexPath.row],
                            url: "https://nntheblog.b-cdn.net/wp-content/uploads/2022/04/Arrangement-Katsuki-Bakugo.jpg",
-                           timeStamp: "12:12")
+                           timeStamp: "12:12",
+                           isHiddenPreview: isHiddenPreview)
             
-            // Detect URL in Text
-            let input = textList[indexPath.row]
-            let detector = try! NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
-            let matches = detector.matches(in: input, options: [], range: NSRange(location: 0, length: input.utf16.count))
-
-            for match in matches {
-                guard let range = Range(match.range, in: input) else { continue }
-                let url = input[range]
-                cell.setPreviewLink(urlPreview: String(url))
-            }
         }
         
         return cell
