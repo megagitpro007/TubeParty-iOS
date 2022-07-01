@@ -7,6 +7,7 @@
 
 import UIKit
 import Kingfisher
+import LinkPresentation
 
 class SenderViewCell: UITableViewCell {
 
@@ -20,6 +21,7 @@ class SenderViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         setupUI()
+        testMetaData(urlPreview: "https://apkpure.com/th/mha-the-strongest-hero/com.mhatsh.eu")
     }
     
     func setupUI() {
@@ -41,6 +43,27 @@ class SenderViewCell: UITableViewCell {
         profileImage.kf.setImage(with: imgURL)
     }
 
+    func testMetaData(urlPreview: String) {
+        var provider = LPMetadataProvider()
+        guard let url = URL(string: urlPreview) else { return }
+        //Link Preview
+        var linkView = LPLinkView()
+        linkView = LPLinkView(url: url)
+        linkView.removeFromSuperview()
+        
+        provider.startFetchingMetadata(for: url) { metadata, error in
+          guard let metadata = metadata, error == nil else { return }
+          DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            linkView.metadata = metadata
+          }
+        }
+        
+//        linkView.frame = self.previewView.bounds
+//        self.previewView.addSubview(linkView)
+//        self.previewView.sizeToFit()
+    }
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 

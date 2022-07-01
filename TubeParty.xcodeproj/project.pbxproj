@@ -33,6 +33,7 @@
 		E212CBD42869E6FA004AA7C7 /* ReceiverViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E212CBD32869E6FA004AA7C7 /* ReceiverViewCell.xib */; };
 		E212CBD62869E71F004AA7C7 /* ReceiverViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E212CBD52869E71F004AA7C7 /* ReceiverViewCell.swift */; };
 		E212CBD82869E92A004AA7C7 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E212CBD72869E92A004AA7C7 /* Extensions.swift */; };
+		E22B3877286F389B00E7BC6F /* NewSenderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E22B3876286F389B00E7BC6F /* NewSenderTableViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -66,6 +67,7 @@
 		E212CBD32869E6FA004AA7C7 /* ReceiverViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReceiverViewCell.xib; sourceTree = "<group>"; };
 		E212CBD52869E71F004AA7C7 /* ReceiverViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiverViewCell.swift; sourceTree = "<group>"; };
 		E212CBD72869E92A004AA7C7 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		E22B3876286F389B00E7BC6F /* NewSenderTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewSenderTableViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -224,6 +226,7 @@
 				E212CBD12869E68D004AA7C7 /* SenderViewCell.swift */,
 				E212CBD32869E6FA004AA7C7 /* ReceiverViewCell.xib */,
 				E212CBD52869E71F004AA7C7 /* ReceiverViewCell.swift */,
+				E22B3876286F389B00E7BC6F /* NewSenderTableViewCell.xib */,
 			);
 			path = Xibs;
 			sourceTree = "<group>";
@@ -295,6 +298,7 @@
 				E2105203286753DF007AEC7B /* Main.storyboard in Resources */,
 				E210521D28676AD0007AEC7B /* Mitr-Regular.ttf in Resources */,
 				E212CBD42869E6FA004AA7C7 /* ReceiverViewCell.xib in Resources */,
+				E22B3877286F389B00E7BC6F /* NewSenderTableViewCell.xib in Resources */,
 				E210522228676AD0007AEC7B /* Mitr-Medium.ttf in Resources */,
 				E212CBD02869E206004AA7C7 /* SenderViewCell.xib in Resources */,
 			);

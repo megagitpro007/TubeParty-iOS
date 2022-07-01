@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import Kingfisher
+import LinkPresentation
 
 class ReceiverViewCell: UITableViewCell {
 
@@ -24,10 +26,10 @@ class ReceiverViewCell: UITableViewCell {
         profileImage.makeRounded(radius: profileImage.frame.height/2)
         name.textColor = .white
         message.textColor = .white
-        view.backgroundColor = .tpMainBlue
+        view.backgroundColor = .tpBlack
         view.layer.cornerRadius = 20
         view.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner, .layerMaxXMinYCorner]
-        view.layer.applyCornerRadiusShadow(color: .tpMainBlue, alpha: 1, x: 0, y: 0, blur: 10.0)
+        view.layer.applyCornerRadiusShadow(color: .tpBlack, alpha: 1, x: 0, y: 0, blur: 10.0)
         timeStamp.textColor = .tpGray
         
         self.backgroundColor = .clear

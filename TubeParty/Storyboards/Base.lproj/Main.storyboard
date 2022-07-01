@@ -273,7 +273,6 @@
                     <navigationItem key="navigationItem" id="My6-Fj-TVR"/>
                     <connections>
                         <outlet property="backButton" destination="9nI-xr-sD3" id="Cxn-bi-TV6"/>
-                        <outlet property="bottomConstraint" destination="5gd-2D-lEZ" id="1aw-U0-XTR"/>
                         <outlet property="bottomViewContainer" destination="gVW-0A-IfL" id="Dl6-bU-eE6"/>
                         <outlet property="chatBGView" destination="xwR-7C-Bbq" id="Xns-RF-bba"/>
                         <outlet property="chatTableView" destination="bEk-aC-lAA" id="okg-r7-0PR"/>
