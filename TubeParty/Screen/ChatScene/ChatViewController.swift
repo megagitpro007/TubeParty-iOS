@@ -27,7 +27,8 @@ class ChatViewController: UIViewController {
     
     @IBOutlet weak var previewView: UIView!
     
-    let textList = ["Hello", "ReceiverViewCell", "Bye", "Prettymuch","Hello", "ReceiverViewCell", "Bye", "Prettymuch","Hello", "ReceiverViewCell", "Bye", "Prettymuch"]
+    let textList = ["Hello", "ReceiverViewCell", "Bye", "Prettymuch","Hello", "ReceiverViewCell", "Bye", "Prettymuch","Hello", "ReceiverViewCell", "Bye", "Prettymuch",
+                    "ReceiverViewCellReceiverViewCellReceiverViewCellReceiverViewCellReceiverViewCellReceiverViewCellReceiverViewCell"]
     
     var isTextFieldSelected: Bool = false
     
