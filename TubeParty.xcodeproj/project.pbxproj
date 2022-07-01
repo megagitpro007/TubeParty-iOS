@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		65150F34286F3045005B9AF3 /* DetermineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65150F33286F3045005B9AF3 /* DetermineViewController.swift */; };
+		65150F38286F4061005B9AF3 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65150F37286F4061005B9AF3 /* UserDefaults.swift */; };
+		65150F3A286F44BC005B9AF3 /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65150F39286F44BC005B9AF3 /* UIViewController+Extensions.swift */; };
+		65150F3D286F4D25005B9AF3 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65150F3C286F4D25005B9AF3 /* LoadingView.swift */; };
 		65D15CC82868604A0007D895 /* CAGradientLayer+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D15CC72868604A0007D895 /* CAGradientLayer+Extensions.swift */; };
 		9897BDA9FC265AE0F5C43DC5 /* Pods_TubeParty.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B12F798D203A1045FB658687 /* Pods_TubeParty.framework */; };
 		E20285E3286854430006806B /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20285E2286854430006806B /* ChatViewController.swift */; };
@@ -24,7 +28,6 @@
 		E210522228676AD0007AEC7B /* Mitr-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E210521C28676AD0007AEC7B /* Mitr-Medium.ttf */; };
 		E210522428677224007AEC7B /* UIFont+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E210522328677224007AEC7B /* UIFont+Extensions.swift */; };
 		E210522628677337007AEC7B /* MainLoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E210522528677337007AEC7B /* MainLoginViewModel.swift */; };
-		E210522A28683A60007AEC7B /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E210522928683A60007AEC7B /* RootViewController.swift */; };
 		E212CBD02869E206004AA7C7 /* SenderViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E212CBCF2869E206004AA7C7 /* SenderViewCell.xib */; };
 		E212CBD22869E68D004AA7C7 /* SenderViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E212CBD12869E68D004AA7C7 /* SenderViewCell.swift */; };
 		E212CBD42869E6FA004AA7C7 /* ReceiverViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E212CBD32869E6FA004AA7C7 /* ReceiverViewCell.xib */; };
@@ -34,6 +37,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		65150F33286F3045005B9AF3 /* DetermineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetermineViewController.swift; sourceTree = "<group>"; };
+		65150F37286F4061005B9AF3 /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
+		65150F39286F44BC005B9AF3 /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
+		65150F3C286F4D25005B9AF3 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		65D15CC72868604A0007D895 /* CAGradientLayer+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CAGradientLayer+Extensions.swift"; sourceTree = "<group>"; };
 		85D9AEFC018AC3F13BFE176F /* Pods-TubeParty.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TubeParty.release.xcconfig"; path = "Target Support Files/Pods-TubeParty/Pods-TubeParty.release.xcconfig"; sourceTree = "<group>"; };
 		96016B476017FAB0A6A03861 /* Pods-TubeParty.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TubeParty.debug.xcconfig"; path = "Target Support Files/Pods-TubeParty/Pods-TubeParty.debug.xcconfig"; sourceTree = "<group>"; };
@@ -55,7 +62,6 @@
 		E210521C28676AD0007AEC7B /* Mitr-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Mitr-Medium.ttf"; sourceTree = "<group>"; };
 		E210522328677224007AEC7B /* UIFont+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extensions.swift"; sourceTree = "<group>"; };
 		E210522528677337007AEC7B /* MainLoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainLoginViewModel.swift; sourceTree = "<group>"; };
-		E210522928683A60007AEC7B /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		E212CBCF2869E206004AA7C7 /* SenderViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SenderViewCell.xib; sourceTree = "<group>"; };
 		E212CBD12869E68D004AA7C7 /* SenderViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SenderViewCell.swift; sourceTree = "<group>"; };
 		E212CBD32869E6FA004AA7C7 /* ReceiverViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReceiverViewCell.xib; sourceTree = "<group>"; };
@@ -91,6 +97,22 @@
 				85D9AEFC018AC3F13BFE176F /* Pods-TubeParty.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		65150F36286F4024005B9AF3 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				65150F37286F4061005B9AF3 /* UserDefaults.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		65150F3B286F4D0F005B9AF3 /* CustomViews */ = {
+			isa = PBXGroup;
+			children = (
+				65150F3C286F4D25005B9AF3 /* LoadingView.swift */,
+			);
+			path = CustomViews;
 			sourceTree = "<group>";
 		};
 		E20285E1286854210006806B /* ChatScene */ = {
@@ -133,8 +155,10 @@
 			isa = PBXGroup;
 			children = (
 				E210521328675ABA007AEC7B /* Storyboards */,
+				65150F36286F4024005B9AF3 /* Utilities */,
 				E210521228675AA0007AEC7B /* Delegate */,
 				E210521028675A74007AEC7B /* Screen */,
+				65150F3B286F4D0F005B9AF3 /* CustomViews */,
 				E210520F28675A67007AEC7B /* Extensions */,
 				E210521628676ABA007AEC7B /* Fonts */,
 				E2105204286753E0007AEC7B /* Assets.xcassets */,
@@ -149,6 +173,7 @@
 				E210521428675AE0007AEC7B /* UIColor+Extensions.swift */,
 				E210522328677224007AEC7B /* UIFont+Extensions.swift */,
 				65D15CC72868604A0007D895 /* CAGradientLayer+Extensions.swift */,
+				65150F39286F44BC005B9AF3 /* UIViewController+Extensions.swift */,
 				E212CBD72869E92A004AA7C7 /* Extensions.swift */,
 			);
 			path = Extensions;
@@ -157,7 +182,7 @@
 		E210521028675A74007AEC7B /* Screen */ = {
 			isa = PBXGroup;
 			children = (
-				E210522928683A60007AEC7B /* RootViewController.swift */,
+				65150F33286F3045005B9AF3 /* DetermineViewController.swift */,
 				E20285E62868545C0006806B /* MainScene */,
 				E20285E1286854210006806B /* ChatScene */,
 			);
@@ -328,9 +353,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				65150F34286F3045005B9AF3 /* DetermineViewController.swift in Sources */,
 				E212CBD22869E68D004AA7C7 /* SenderViewCell.swift in Sources */,
 				E2105200286753DF007AEC7B /* MainLoginViewController.swift in Sources */,
 				E21051FC286753DF007AEC7B /* AppDelegate.swift in Sources */,
+				65150F3D286F4D25005B9AF3 /* LoadingView.swift in Sources */,
 				65D15CC82868604A0007D895 /* CAGradientLayer+Extensions.swift in Sources */,
 				E20285E3286854430006806B /* ChatViewController.swift in Sources */,
 				E212CBD62869E71F004AA7C7 /* ReceiverViewCell.swift in Sources */,
@@ -338,7 +365,8 @@
 				E210522628677337007AEC7B /* MainLoginViewModel.swift in Sources */,
 				E212CBD82869E92A004AA7C7 /* Extensions.swift in Sources */,
 				E210522428677224007AEC7B /* UIFont+Extensions.swift in Sources */,
-				E210522A28683A60007AEC7B /* RootViewController.swift in Sources */,
+				65150F38286F4061005B9AF3 /* UserDefaults.swift in Sources */,
+				65150F3A286F44BC005B9AF3 /* UIViewController+Extensions.swift in Sources */,
 				E20285E5286854540006806B /* ChatViewModel.swift in Sources */,
 				E210521528675AE0007AEC7B /* UIColor+Extensions.swift in Sources */,
 			);
