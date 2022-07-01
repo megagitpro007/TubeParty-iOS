@@ -28,8 +28,8 @@ class ChatViewController: UIViewController {
     @IBOutlet weak var previewView: UIView!
     
     let textList = ["Hello", "ReceiverViewCell", "Bye", "Prettymuch","Hello", "ReceiverViewCell", "Bye", "Prettymuch","Hello", "ReceiverViewCell", "Bye",
-                    "PrettymuchPrettymuchPrettymuchPrettymuchPrettymuchPrettymuchPrettymuchPrettymuchPrettymuchPrettymuchPrettymuchPrettymuch",
-                    "ReceiverViewCellReceiverViewCellReceiverViewCellReceiverViewCellReceiverViewCellReceiverViewCellReceiverViewCell"]
+                    "Prettymuch https://www.prettymuch.com/ ",
+                    "ReceiverViewCell https://www.google.com"]
     
     var isTextFieldSelected: Bool = false
     
@@ -177,11 +177,34 @@ extension ChatViewController: UITableViewDataSource {
                            text: textList[indexPath.row],
                            url: "https://static.wikia.nocookie.net/love-exalted/images/1/1c/Izuku_Midoriya.png/revision/latest?cb=20211011173004",
                            timeStamp: "11:11")
+            
+            // Detect URL in Text
+            let input = textList[indexPath.row]
+            let detector = try! NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
+            let matches = detector.matches(in: input, options: [], range: NSRange(location: 0, length: input.utf16.count))
+
+            for match in matches {
+                guard let range = Range(match.range, in: input) else { continue }
+                let url = input[range]
+                cell.setPreviewLink(urlPreview: String(url))
+            }
+            
         } else if let cell = cell as? ReceiverViewCell {
             cell.configure(name: textList[indexPath.row],
                            text: textList[indexPath.row],
                            url: "https://nntheblog.b-cdn.net/wp-content/uploads/2022/04/Arrangement-Katsuki-Bakugo.jpg",
                            timeStamp: "12:12")
+            
+            // Detect URL in Text
+            let input = textList[indexPath.row]
+            let detector = try! NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
+            let matches = detector.matches(in: input, options: [], range: NSRange(location: 0, length: input.utf16.count))
+
+            for match in matches {
+                guard let range = Range(match.range, in: input) else { continue }
+                let url = input[range]
+                cell.setPreviewLink(urlPreview: String(url))
+            }
         }
         
         return cell

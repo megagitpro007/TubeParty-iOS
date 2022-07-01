@@ -121,7 +121,6 @@
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
-                <outlet property="containerView" destination="A8Q-8o-m89" id="eet-Wk-NPO"/>
                 <outlet property="linkPreviewView" destination="USV-VJ-NnE" id="awh-tg-3s5"/>
                 <outlet property="message" destination="1cQ-l6-rbb" id="VN1-IP-dOM"/>
                 <outlet property="name" destination="h9e-rY-PnZ" id="yBn-Vk-FoM"/>

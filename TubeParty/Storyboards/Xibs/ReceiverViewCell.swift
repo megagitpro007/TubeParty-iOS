@@ -1,10 +1,3 @@
-//
-//  ReceiverViewCell.swift
-//  TubeParty
-//
-//  Created by iZE Appsynth on 27/6/2565 BE.
-//
-
 import UIKit
 import Kingfisher
 import LinkPresentation
@@ -21,7 +14,7 @@ class ReceiverViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         setupUI()
-        setPreviewLink(urlPreview: "https://apkpure.com/th/mha-the-strongest-hero/com.mhatsh.eu")
+        linkPreviewView.isHidden = true
     }
     
     func setupUI() {
@@ -46,6 +39,7 @@ class ReceiverViewCell: UITableViewCell {
     }
     
     func setPreviewLink(urlPreview: String) {
+        linkPreviewView.isHidden = false
         let provider = LPMetadataProvider()
         guard let url = URL(string: urlPreview) else { return }
         //Link Preview

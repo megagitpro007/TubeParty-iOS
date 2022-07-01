@@ -1,10 +1,3 @@
-//
-//  SenderViewCell.swift
-//  TubeParty
-//
-//  Created by iZE Appsynth on 27/6/2565 BE.
-//
-
 import UIKit
 import Kingfisher
 import LinkPresentation
@@ -16,13 +9,12 @@ class SenderViewCell: UITableViewCell {
     @IBOutlet weak var message: UILabel!
     @IBOutlet weak var view: UIView!
     @IBOutlet weak var timeStamp: UILabel!
-    @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var linkPreviewView: UIView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         setupUI()
-        setPreviewLink(urlPreview: "https://apkpure.com/th/mha-the-strongest-hero/com.mhatsh.eu")
+        linkPreviewView.isHidden = true
     }
     
     func setupUI() {
@@ -46,6 +38,7 @@ class SenderViewCell: UITableViewCell {
     }
 
     func setPreviewLink(urlPreview: String) {
+        linkPreviewView.isHidden = false
         let provider = LPMetadataProvider()
         guard let url = URL(string: urlPreview) else { return }
         //Link Preview
