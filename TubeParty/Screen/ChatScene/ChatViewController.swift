@@ -9,6 +9,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 import RxDataSources
+import LinkPresentation
 
 fileprivate let senderTableViewCell = "SenderViewCell"
 fileprivate let receiverTableViewCell = "ReceiverViewCell"
@@ -24,7 +25,7 @@ class ChatViewController: UIViewController {
     @IBOutlet weak var textFieldContainer: UIView!
     @IBOutlet weak var bottomViewContainer: UIView!
     
-    @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var previewView: UIView!
     
     let textList = ["Hello", "ReceiverViewCell", "Bye", "Prettymuch","Hello", "ReceiverViewCell", "Bye", "Prettymuch","Hello", "ReceiverViewCell", "Bye", "Prettymuch"]
     
