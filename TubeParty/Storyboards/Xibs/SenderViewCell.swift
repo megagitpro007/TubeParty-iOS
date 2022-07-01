@@ -17,11 +17,12 @@ class SenderViewCell: UITableViewCell {
     @IBOutlet weak var view: UIView!
     @IBOutlet weak var timeStamp: UILabel!
     @IBOutlet weak var containerView: UIView!
+    @IBOutlet weak var linkPreviewView: UIView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         setupUI()
-        testMetaData(urlPreview: "https://apkpure.com/th/mha-the-strongest-hero/com.mhatsh.eu")
+        setPreviewLink(urlPreview: "https://apkpure.com/th/mha-the-strongest-hero/com.mhatsh.eu")
     }
     
     func setupUI() {
@@ -33,6 +34,7 @@ class SenderViewCell: UITableViewCell {
         view.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMaxYCorner, .layerMinXMaxYCorner]
         view.layer.applyCornerRadiusShadow(color: .tpMainGreen, alpha: 1, x: 0, y: 0, blur: 10.0)
         self.backgroundColor = .clear
+        linkPreviewView.layer.cornerRadius = 20
     }
     
     func configure(name: String, text: String, url: String, timeStamp: String) {
@@ -43,25 +45,24 @@ class SenderViewCell: UITableViewCell {
         profileImage.kf.setImage(with: imgURL)
     }
 
-    func testMetaData(urlPreview: String) {
-        var provider = LPMetadataProvider()
+    func setPreviewLink(urlPreview: String) {
+        let provider = LPMetadataProvider()
         guard let url = URL(string: urlPreview) else { return }
         //Link Preview
         var linkView = LPLinkView()
         linkView = LPLinkView(url: url)
         linkView.removeFromSuperview()
-        
         provider.startFetchingMetadata(for: url) { metadata, error in
           guard let metadata = metadata, error == nil else { return }
           DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
+            guard let _ = self else { return }
             linkView.metadata = metadata
           }
         }
         
-//        linkView.frame = self.previewView.bounds
-//        self.previewView.addSubview(linkView)
-//        self.previewView.sizeToFit()
+        linkView.frame = self.linkPreviewView.bounds
+        self.linkPreviewView.addSubview(linkView)
+        self.linkPreviewView.sizeToFit()
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
