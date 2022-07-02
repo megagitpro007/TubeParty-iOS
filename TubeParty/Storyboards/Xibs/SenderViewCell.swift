@@ -9,7 +9,9 @@ class SenderViewCell: UITableViewCell {
     @IBOutlet weak var message: UILabel!
     @IBOutlet weak var view: UIView!
     @IBOutlet weak var timeStamp: UILabel!
-    @IBOutlet weak var linkPreviewView: UIView!
+    @IBOutlet weak var linkContainerView: UIView!
+    
+    private var linkPreviewView: LPLinkView = LPLinkView(metadata: LPLinkMetadata())
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -17,50 +19,43 @@ class SenderViewCell: UITableViewCell {
     }
     
     func setupUI() {
-        profileImage.makeRounded(radius: profileImage.frame.height/2)
-        name.textColor = .white
-        message.textColor = .white
-        view.backgroundColor = .tpMainGreen
-        view.layer.cornerRadius = 20
-        view.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMaxYCorner, .layerMinXMaxYCorner]
-        view.layer.applyCornerRadiusShadow(color: .tpMainGreen, alpha: 1, x: 0, y: 0, blur: 10.0)
         self.backgroundColor = .clear
-        linkPreviewView.layer.cornerRadius = 20
+        self.view.backgroundColor = .tpMainGreen
+        self.view.layer.cornerRadius = 20
+        self.view.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMaxYCorner, .layerMinXMaxYCorner]
+        self.profileImage.makeRounded(radius: profileImage.frame.height/2)
+        self.name.textColor = .white
+        self.message.textColor = .white
+        self.linkContainerView.layer.cornerRadius = 20
+        
+        self.linkContainerView.addSubview(self.linkPreviewView)
+        self.linkPreviewView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            linkPreviewView.centerXAnchor.constraint(equalTo: linkContainerView.centerXAnchor),
+            linkPreviewView.centerYAnchor.constraint(equalTo: linkContainerView.centerYAnchor),
+            linkPreviewView.widthAnchor.constraint(equalToConstant: linkContainerView.frame.width),
+            linkPreviewView.heightAnchor.constraint(equalToConstant: linkContainerView.frame.height),
+        ])
     }
     
-    func configure(name: String, text: String, url: String, timeStamp: String, isHiddenPreview: Bool) {
-        linkPreviewView.isHidden = isHiddenPreview
+    func configure(name: String, text: String, url: String, timeStamp: String, linkPreview: URL? = nil) {
         self.name.text = name
         self.message.text = text
         self.timeStamp.text = timeStamp
-        let imgURL = URL(string: url)
-        profileImage.kf.setImage(with: imgURL)
-    }
-
-    func setPreviewLink(urlPreview: String) {
-        let provider = LPMetadataProvider()
-        guard let url = URL(string: urlPreview) else { return }
-        //Link Preview
-        var linkView = LPLinkView()
-        linkView = LPLinkView(url: url)
-        linkView.removeFromSuperview()
-        provider.startFetchingMetadata(for: url) { metadata, error in
-          guard let metadata = metadata, error == nil else { return }
-          DispatchQueue.main.async { [weak self] in
-            guard let _ = self else { return }
-            linkView.metadata = metadata
-          }
+        self.profileImage.kf.setImage(with: URL(string: url))
+        self.linkContainerView.isHidden = linkPreview == nil
+    
+        if let lplink = linkPreview {
+            self.getMetaData(url: lplink)
         }
-        
-        linkView.frame = self.linkPreviewView.bounds
-        self.linkPreviewView.addSubview(linkView)
-        self.linkPreviewView.sizeToFit()
     }
-    
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
 
-        // Configure the view for the selected state
+    private func getMetaData(url: URL) {
+        LPMetadataProvider().startFetchingMetadata(for: url) { [weak self] metadata, error in
+            guard let self = self, let metadata = metadata, error == nil else { return }
+            DispatchQueue.main.async {
+                self.linkPreviewView.metadata = metadata
+            }
+        }
     }
-    
 }

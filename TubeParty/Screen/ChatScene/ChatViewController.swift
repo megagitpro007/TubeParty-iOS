@@ -24,9 +24,9 @@ class ChatViewController: UIViewController {
     @IBOutlet weak var textFieldContainer: UIView!
     @IBOutlet weak var bottomViewContainer: UIView!
     
-    let textList = ["1", "2", "3", "4","5", "6", "7", "8","9", "ReceiverViewCell", "Bye",
+    let textList = ["message1", "message2", "message3", "message4","message5", "message6", "message7", "message8","message9", "ReceiverViewCell", "youtube https://www.youtube.com/watch?v=dRfafqSvoF8&ab_channel=UAStudios",
                     "Prettymuch https://www.prettymuch.com/ ",
-                    "ReceiverViewCell https://www.google.com"]
+                    "google https://www.google.com"]
     
     var isTextFieldSelected: Bool = false
     
@@ -156,31 +156,22 @@ extension ChatViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         let cell = chatTableView.dequeueReusableCell(withIdentifier: indexPath.row%2 == 0 ? senderTableViewCell : receiverTableViewCell, for: indexPath)
-        var isHiddenPreview = true
-        
         if let cell = cell as? SenderViewCell {
-            // Detect URL in Text
-            let input = textList[indexPath.row]
-            let detector = try! NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
-            let matches = detector.matches(in: input, options: [], range: NSRange(location: 0, length: input.utf16.count))
-
-            for match in matches {
-                guard let range = Range(match.range, in: input) else { continue }
-                let url = input[range]
-                cell.setPreviewLink(urlPreview: String(url))
-                isHiddenPreview = false
-            }
-            
-            cell.configure(name: textList[indexPath.row],
-                           text: textList[indexPath.row],
-                           url: "https://static.wikia.nocookie.net/love-exalted/images/1/1c/Izuku_Midoriya.png/revision/latest?cb=20211011173004",
-                           timeStamp: "11:11",
-                           isHiddenPreview: isHiddenPreview)
+            // Should to be `model`
+            let text = textList[indexPath.row]
+            cell.configure(
+                name: "ice",
+                text: text,
+                url: "https://static.wikia.nocookie.net/love-exalted/images/1/1c/Izuku_Midoriya.png/revision/latest?cb=20211011173004",
+                timeStamp: "11:11",
+                linkPreview: text.formatURL()
+            )
             
         } else if let cell = cell as? ReceiverViewCell {
-            // Detect URL in Text
+            
+            
+            // FIXME: refactor to clean agitechture
             let input = textList[indexPath.row]
             let detector = try! NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
             let matches = detector.matches(in: input, options: [], range: NSRange(location: 0, length: input.utf16.count))
@@ -189,15 +180,13 @@ extension ChatViewController: UITableViewDataSource {
                 guard let range = Range(match.range, in: input) else { continue }
                 let url = input[range]
                 cell.setPreviewLink(urlPreview: String(url))
-                isHiddenPreview = false
             }
             
             cell.configure(name: textList[indexPath.row],
                            text: textList[indexPath.row],
                            url: "https://nntheblog.b-cdn.net/wp-content/uploads/2022/04/Arrangement-Katsuki-Bakugo.jpg",
                            timeStamp: "12:12",
-                           isHiddenPreview: isHiddenPreview)
-            
+                           isHiddenPreview: false)
         }
         
         return cell
