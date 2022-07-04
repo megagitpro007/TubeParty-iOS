@@ -1,6 +1,7 @@
 import UIKit
 import Kingfisher
 import LinkPresentation
+import RxSwift
 
 class SenderViewCell: UITableViewCell {
     
@@ -12,10 +13,16 @@ class SenderViewCell: UITableViewCell {
     @IBOutlet weak var linkContainerView: UIView!
     
     private var linkPreviewView: LPLinkView = LPLinkView(metadata: LPLinkMetadata())
+    private var bag = DisposeBag()
     
     override func awakeFromNib() {
         super.awakeFromNib()
         setupUI()
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        bag = DisposeBag()
     }
     
     func setupUI() {
@@ -26,6 +33,7 @@ class SenderViewCell: UITableViewCell {
         self.profileImage.makeRounded(radius: profileImage.frame.height/2)
         self.name.textColor = .white
         self.message.textColor = .white
+        self.timeStamp.textColor = .tpGray
         self.linkContainerView.layer.cornerRadius = 20
         
         self.linkContainerView.addSubview(self.linkPreviewView)
@@ -46,16 +54,16 @@ class SenderViewCell: UITableViewCell {
         self.linkContainerView.isHidden = linkPreview == nil
     
         if let lplink = linkPreview {
-            self.getMetaData(url: lplink)
-        }
-    }
+            self.getMeta(url: lplink).subscribe { [weak self] metaData in
+                guard let self = self else { return }
+                DispatchQueue.main.async {
+                    self.linkPreviewView.metadata = metaData
+                }
+            } onFailure: { error in
+                debugPrint("error : \(error.localizedDescription)")
+            }.disposed(by: bag)
 
-    private func getMetaData(url: URL) {
-        LPMetadataProvider().startFetchingMetadata(for: url) { [weak self] metadata, error in
-            guard let self = self, let metadata = metadata, error == nil else { return }
-            DispatchQueue.main.async {
-                self.linkPreviewView.metadata = metadata
-            }
         }
     }
+    
 }
