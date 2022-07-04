@@ -35,6 +35,7 @@
 		E212CBD62869E71F004AA7C7 /* ReceiverViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E212CBD52869E71F004AA7C7 /* ReceiverViewCell.swift */; };
 		E212CBD82869E92A004AA7C7 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E212CBD72869E92A004AA7C7 /* Extensions.swift */; };
 		E22B3877286F389B00E7BC6F /* NewSenderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E22B3876286F389B00E7BC6F /* NewSenderTableViewCell.xib */; };
+		E29DF3AD28733E9B0048FB34 /* MessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29DF3AC28733E9A0048FB34 /* MessageModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -70,6 +71,7 @@
 		E212CBD52869E71F004AA7C7 /* ReceiverViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiverViewCell.swift; sourceTree = "<group>"; };
 		E212CBD72869E92A004AA7C7 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		E22B3876286F389B00E7BC6F /* NewSenderTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewSenderTableViewCell.xib; sourceTree = "<group>"; };
+		E29DF3AC28733E9A0048FB34 /* MessageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -156,12 +158,12 @@
 		E21051FA286753DF007AEC7B /* TubeParty */ = {
 			isa = PBXGroup;
 			children = (
-				E29DF3AA287329860048FB34 /* New Group */,
 				E210521328675ABA007AEC7B /* Storyboards */,
 				65150F36286F4024005B9AF3 /* Utilities */,
 				E210521228675AA0007AEC7B /* Delegate */,
 				E210521028675A74007AEC7B /* Screen */,
 				65150F3B286F4D0F005B9AF3 /* CustomViews */,
+				E29DF3AB28733DC70048FB34 /* Model */,
 				E210520F28675A67007AEC7B /* Extensions */,
 				E210521628676ABA007AEC7B /* Fonts */,
 				E2105204286753E0007AEC7B /* Assets.xcassets */,
@@ -235,11 +237,12 @@
 			path = Xibs;
 			sourceTree = "<group>";
 		};
-		E29DF3AA287329860048FB34 /* New Group */ = {
+		E29DF3AB28733DC70048FB34 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				E29DF3AC28733E9A0048FB34 /* MessageModel.swift */,
 			);
-			path = "New Group";
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -371,6 +374,7 @@
 				E21051FC286753DF007AEC7B /* AppDelegate.swift in Sources */,
 				65150F3D286F4D25005B9AF3 /* LoadingView.swift in Sources */,
 				65D15CC82868604A0007D895 /* CAGradientLayer+Extensions.swift in Sources */,
+				E29DF3AD28733E9B0048FB34 /* MessageModel.swift in Sources */,
 				E20285E3286854430006806B /* ChatViewController.swift in Sources */,
 				E212CBD62869E71F004AA7C7 /* ReceiverViewCell.swift in Sources */,
 				E21051FE286753DF007AEC7B /* SceneDelegate.swift in Sources */,

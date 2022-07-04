@@ -43,7 +43,6 @@ class ReceiverViewCell: UITableViewCell {
             linkPreviewView.widthAnchor.constraint(equalToConstant: linkContainerView.frame.width),
             linkPreviewView.heightAnchor.constraint(equalToConstant: linkContainerView.frame.height),
         ])
-        
     }
     
     func configure(name: String, text: String , url: String, timeStamp: String, linkPreview: URL? = nil) {
@@ -63,7 +62,6 @@ class ReceiverViewCell: UITableViewCell {
                 debugPrint("error : \(error.localizedDescription)")
             }.disposed(by: bag)
         }
-        
     }
 
 }
