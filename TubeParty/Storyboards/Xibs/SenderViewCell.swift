@@ -26,6 +26,7 @@ class SenderViewCell: UITableViewCell {
         self.profileImage.makeRounded(radius: profileImage.frame.height/2)
         self.name.textColor = .white
         self.message.textColor = .white
+        self.timeStamp.textColor = .tpGray
         self.linkContainerView.layer.cornerRadius = 20
         
         self.linkContainerView.addSubview(self.linkPreviewView)
@@ -58,4 +59,5 @@ class SenderViewCell: UITableViewCell {
             }
         }
     }
+    
 }

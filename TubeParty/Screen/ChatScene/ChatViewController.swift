@@ -26,7 +26,7 @@ class ChatViewController: UIViewController {
     
     let textList = ["message1", "message2", "message3", "message4","message5", "message6", "message7", "message8","message9", "ReceiverViewCell", "youtube https://www.youtube.com/watch?v=dRfafqSvoF8&ab_channel=UAStudios",
                     "Prettymuch https://www.prettymuch.com/ ",
-                    "google https://www.google.com"]
+                    "google https://www.facebook.com"]
     
     var isTextFieldSelected: Bool = false
     
@@ -169,24 +169,14 @@ extension ChatViewController: UITableViewDataSource {
             )
             
         } else if let cell = cell as? ReceiverViewCell {
-            
-            
-            // FIXME: refactor to clean agitechture
-            let input = textList[indexPath.row]
-            let detector = try! NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
-            let matches = detector.matches(in: input, options: [], range: NSRange(location: 0, length: input.utf16.count))
-
-            for match in matches {
-                guard let range = Range(match.range, in: input) else { continue }
-                let url = input[range]
-                cell.setPreviewLink(urlPreview: String(url))
-            }
-            
-            cell.configure(name: textList[indexPath.row],
-                           text: textList[indexPath.row],
-                           url: "https://nntheblog.b-cdn.net/wp-content/uploads/2022/04/Arrangement-Katsuki-Bakugo.jpg",
-                           timeStamp: "12:12",
-                           isHiddenPreview: false)
+            let text = textList[indexPath.row]
+            cell.configure(
+                name: "toney",
+                text: text,
+                url: "https://nntheblog.b-cdn.net/wp-content/uploads/2022/04/Arrangement-Katsuki-Bakugo.jpg",
+                timeStamp: "11:11",
+                linkPreview: text.formatURL()
+            )
         }
         
         return cell
