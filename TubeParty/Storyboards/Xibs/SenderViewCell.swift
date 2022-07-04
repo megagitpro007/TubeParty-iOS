@@ -4,7 +4,7 @@ import LinkPresentation
 import RxSwift
 
 class SenderViewCell: UITableViewCell {
-
+    
     @IBOutlet weak var profileImage: UIImageView!
     @IBOutlet weak var name: UILabel!
     @IBOutlet weak var message: UILabel!
