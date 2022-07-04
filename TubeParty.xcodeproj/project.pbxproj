@@ -156,6 +156,7 @@
 		E21051FA286753DF007AEC7B /* TubeParty */ = {
 			isa = PBXGroup;
 			children = (
+				E29DF3AA287329860048FB34 /* New Group */,
 				E210521328675ABA007AEC7B /* Storyboards */,
 				65150F36286F4024005B9AF3 /* Utilities */,
 				E210521228675AA0007AEC7B /* Delegate */,
@@ -232,6 +233,13 @@
 				E22B3876286F389B00E7BC6F /* NewSenderTableViewCell.xib */,
 			);
 			path = Xibs;
+			sourceTree = "<group>";
+		};
+		E29DF3AA287329860048FB34 /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "New Group";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
