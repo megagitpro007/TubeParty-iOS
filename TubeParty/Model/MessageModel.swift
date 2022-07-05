@@ -12,15 +12,19 @@ class MessageModel {
     var profileName: String
     var profileURL: URL
     var message: String
-    var linkPreView: String?
+    var linkPreView: URL?
     var timeStamp: String
     
-    init(profileName: String, profileURL: String, message: String, timeStamp: String, linkPreView: String? = nil ) {
+    init(profileName: String, profileURL: String, message: String, timeStamp: String) {
         self.profileName = profileName
         self.message = message
         self.timeStamp = timeStamp
-        self.linkPreView = linkPreView
         self.profileURL = URL(string: profileURL)!
+        
+        if let linkPreView = self.message.formatURL() {
+            self.linkPreView = linkPreView
+        }
+        
     }
     
 }

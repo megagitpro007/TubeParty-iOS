@@ -47,6 +47,9 @@ class ChatViewController: UIViewController {
     }
     
     func bindViewModel() {
+        //input
+        viewModel.input.viewDidload.accept(())
+        
         typingField
             .rx
             .text.orEmpty.map({ text in
@@ -54,6 +57,7 @@ class ChatViewController: UIViewController {
             })
             .bind(to: viewModel.input.isValidText).disposed(by: bag)
         
+        //output
         viewModel.output.isDisableSendButton.distinctUntilChanged().drive(onNext: { isDisable in
             UIView.animate(withDuration: 0.1, delay: 0, options: .curveEaseOut) { [weak self] in
                 guard let self = self else { return }
