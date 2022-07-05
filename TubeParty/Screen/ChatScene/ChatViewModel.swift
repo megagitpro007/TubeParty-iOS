@@ -49,7 +49,8 @@ class ChatViewModel: ChatIOType, ChatInput, ChatOutput {
     
     // Properties
     var _isDisableSendButton: BehaviorRelay<Bool> = .init(value: true)
-    var _getChatMessage: BehaviorRelay<SectionModel> = .init(value: SectionModel(header: "", items: []))
+    
+    var _getChatMessage: PublishRelay<SectionModel> = .init()
     
     var chatList = [MessageModel(profileName: "ize",
                                  profileURL: "https://static.wikia.nocookie.net/love-exalted/images/1/1c/Izuku_Midoriya.png/revision/latest?cb=20211011173004",
