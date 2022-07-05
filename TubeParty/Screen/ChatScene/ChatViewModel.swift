@@ -17,6 +17,8 @@ protocol ChatIOType {
 protocol ChatInput {
     var viewDidload: PublishRelay<Void> { get }
     var isValidText: PublishRelay<Bool> { get }
+    var messageInput: PublishRelay<String> { get }
+    var didTabEnterButton: PublishRelay<Void> { get }
 }
 
 protocol ChatOutput {
@@ -33,6 +35,8 @@ class ChatViewModel: ChatIOType, ChatInput, ChatOutput {
     // Inputs
     var viewDidload: PublishRelay<Void> = .init()
     var isValidText: PublishRelay<Bool> = .init()
+    var messageInput: PublishRelay<String> = .init()
+    var didTabEnterButton: PublishRelay<Void> = .init()
     
     // Outputs
     var isDisableSendButton: Driver<Bool> {
@@ -47,7 +51,7 @@ class ChatViewModel: ChatIOType, ChatInput, ChatOutput {
     var _isDisableSendButton: BehaviorRelay<Bool> = .init(value: true)
     var _getChatMessage: BehaviorRelay<SectionModel> = .init(value: SectionModel(header: "", items: []))
     
-    let chatList = [MessageModel(profileName: "ize",
+    var chatList = [MessageModel(profileName: "ize",
                                  profileURL: "https://static.wikia.nocookie.net/love-exalted/images/1/1c/Izuku_Midoriya.png/revision/latest?cb=20211011173004",
                                  message: "message1",
                                  timeStamp: "11:11"),
@@ -71,15 +75,8 @@ class ChatViewModel: ChatIOType, ChatInput, ChatOutput {
     
     init(userChatName: String) {
         
-        isValidText
-            .map({$0})
-            .bind(to: _isDisableSendButton)
-            .disposed(by: bag)
-        
         viewDidload.map { [weak self] _ -> SectionModel in
-
             guard let self = self else { return SectionModel(header: "", items: []) }
-
             var messageModel: [MessageModel] = []
 
             for data in self.chatList {
@@ -90,9 +87,17 @@ class ChatViewModel: ChatIOType, ChatInput, ChatOutput {
             }
             return SectionModel(header: "ChatMessageHeader", items: messageModel)
         }
-
         .bind(to: _getChatMessage)
         .disposed(by: bag)
+        
+        isValidText
+            .map({$0})
+            .bind(to: _isDisableSendButton)
+            .disposed(by: bag)
+        
+        didTabEnterButton.withLatestFrom(messageInput).bind { message in
+            print("message: \(message)")
+        }.disposed(by: bag)
         
     }
 }

@@ -96,6 +96,14 @@ class ChatViewController: UIViewController {
             })
             .bind(to: viewModel.input.isValidText).disposed(by: bag)
         
+//        typingField.rx.text
+//            .bind(to: viewModel.input.messageInput)
+//            .disposed(by: bag)
+        
+        sendButton.rx.tap
+            .bind(to: viewModel.input.didTabEnterButton)
+            .disposed(by: bag)
+        
         //output
         viewModel.output.isDisableSendButton.distinctUntilChanged().drive(onNext: { isDisable in
             UIView.animate(withDuration: 0.1, delay: 0, options: .curveEaseOut) { [weak self] in
