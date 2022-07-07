@@ -63,13 +63,3 @@ extension UITableViewCell {
     }
     
 }
-
-extension Date {
-    func getStringFromDateFormat() -> String {
-        let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "th-TH")
-        formatter.dateFormat = "hh:mm a"
-        let time12 = formatter.string(from: self)
-        return time12
-    }
-}

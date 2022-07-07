@@ -10,18 +10,13 @@ import RxDataSources
 
 struct SectionModel {
     var header: String
-    var items: [MessageModel]
+    var items: [ChatItem]
 }
 
 extension SectionModel: SectionModelType {
-    
-    var identify: String {
-        header
-    }
-    
-    init(original: SectionModel, items: [MessageModel]) {
+    var identify: String { header }
+    init(original: SectionModel, items: [ChatItem]) {
         self = original
         self.items = items
     }
-    
 }

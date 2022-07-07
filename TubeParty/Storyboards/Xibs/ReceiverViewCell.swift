@@ -45,11 +45,11 @@ class ReceiverViewCell: UITableViewCell {
         ])
     }
     
-    func configure(name: String, text: String , url: String, timeStamp: String, linkPreview: URL? = nil) {
+    func configure(name: String, text: String, url: URL?, timeStamp: Date, linkPreview: URL? = nil) {
         self.name.text = name
         self.message.text = text
-        self.timeStamp.text = timeStamp
-        self.profileImage.kf.setImage(with: URL(string: url))
+        self.timeStamp.text = timeStamp.chatTimeFormat()
+        self.profileImage.kf.setImage(with: url)
         self.linkContainerView.isHidden = linkPreview == nil
     
         if let lplink = linkPreview {
@@ -61,6 +61,7 @@ class ReceiverViewCell: UITableViewCell {
             } onFailure: { error in
                 debugPrint("error : \(error.localizedDescription)")
             }.disposed(by: bag)
+
         }
     }
 

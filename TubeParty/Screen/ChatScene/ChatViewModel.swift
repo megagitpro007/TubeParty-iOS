@@ -8,6 +8,7 @@
 import Foundation
 import RxSwift
 import RxCocoa
+import RxDataSources
 
 protocol ChatIOType {
     var input: ChatInput { get }
@@ -25,6 +26,28 @@ protocol ChatOutput {
     var isDisableSendButton: Driver<Bool> { get }
     var getChatMessage: Driver<[SectionModel]> { get }
     var getChatCount: Int { get }
+}
+
+enum ChatItem {
+    case sender(model: MessageModel)
+    case reciever(model: MessageModel)
+}
+
+extension ChatItem: IdentifiableType, Hashable {
+    var identity: UUID {
+        switch self {
+        case .reciever(let model): return model.id
+        case .sender(let model): return model.id
+        }
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        return hasher.combine(identity)
+    }
+    
+    static func == (lhs: ChatItem, rhs: ChatItem) -> Bool {
+        return lhs.identity == rhs.identity
+    }
 }
 
 class ChatViewModel: ChatIOType, ChatInput, ChatOutput {
@@ -54,47 +77,19 @@ class ChatViewModel: ChatIOType, ChatInput, ChatOutput {
         return _getChatMessage.value.count
     }
     // Properties
-    var _isDisableSendButton: BehaviorRelay<Bool> = .init(value: true)
-    
-    var _getChatMessage: BehaviorRelay<[MessageModel]> = .init(value: [])
-    
-    var chatList = [MessageModel(profileName: "ize",
-                                 profileURL: "https://static.wikia.nocookie.net/love-exalted/images/1/1c/Izuku_Midoriya.png/revision/latest?cb=20211011173004",
-                                 message: "message1",
-                                 dateTime: "11:11 AM"),
-                    
-                    MessageModel(profileName: "Toney",
-                                 profileURL: "https://nntheblog.b-cdn.net/wp-content/uploads/2022/04/Arrangement-Katsuki-Bakugo.jpg",
-                                 message: "message2",
-                                 dateTime: "11:11 AM"),
-                    
-                    MessageModel(profileName: "ize",
-                                 profileURL: "https://static.wikia.nocookie.net/love-exalted/images/1/1c/Izuku_Midoriya.png/revision/latest?cb=20211011173004",
-                                 message: "message3",
-                                 dateTime: "11:11 AM"),
-                    
-                    MessageModel(profileName: "Toney",
-                                 profileURL: "https://nntheblog.b-cdn.net/wp-content/uploads/2022/04/Arrangement-Katsuki-Bakugo.jpg",
-                                 message: "message4 Prettymuch https://www.prettymuch.com/ ",
-                                 dateTime: "11:11 AM")]
-    
-    let bag = DisposeBag()
+    private let _isDisableSendButton: BehaviorRelay<Bool> = .init(value: true)
+    private let _getChatMessage: BehaviorRelay<[ChatItem]> = .init(value: [])
+    private var currentName: String = ""
+    private let bag = DisposeBag()
     
     init(userChatName: String) {
         
-        viewDidload.map { [weak self] _ -> [MessageModel] in
-            guard let self = self else { return [MessageModel(profileName: "",
-                                                              profileURL: "",
-                                                              message: "",
-                                                              dateTime: "")] }
-            var messageModel: [MessageModel] = []
-            for data in self.chatList {
-                messageModel.append(MessageModel(profileName: data.profileName,
-                                                 profileURL: data.profileURL.absoluteString,
-                                                 message: data.message,
-                                                 dateTime: data.dateTime))
+        viewDidload.map { [weak self] _ -> [ChatItem] in
+            guard let self = self else { return [] }
+            if let displayName: String = UserDefaultsManager.get(by:.displayName) {
+                self.currentName = displayName
             }
-            return messageModel
+            return []
         }
         .bind(to: _getChatMessage)
         .disposed(by: bag)
@@ -104,27 +99,25 @@ class ChatViewModel: ChatIOType, ChatInput, ChatOutput {
             .bind(to: _isDisableSendButton)
             .disposed(by: bag)
         
-        didTabEnterButton
-            .withLatestFrom(_getChatMessage)
-            .withLatestFrom(messageInput) { (messageList, messageInput) -> [MessageModel] in
+        messageInput
+            .map { [weak self] text -> [ChatItem] in
+                guard let self = self, !text.isEmpty else {
+                    return self?._getChatMessage.value ?? []
+                }
                 
-                print("🔥 \(Date().getStringFromDateFormat()) ")
+                let newMessage = MessageModel(
+                    // TODO - profile url need to save to user default, maybe create profile settings scene
+                    profileName: self.currentName,
+                    profileURL: URL(string: "https://1409791524.rsc.cdn77.org/data/images/full/614902/aespa-karina-accused-of-sliding-into-man-s-dms-pre-debut.jpg?w=600?w=430"),
+                    message: text,
+                    timeStamp: Date()
+                )
                 
-                var name = ""
-                if let displayName: String = UserDefaultsManager.get(by: .displayName) { name = displayName }
-                
-                let newMessage = MessageModel(profileName: name,
-                                              profileURL: "https://static.wikia.nocookie.net/love-exalted/images/1/1c/Izuku_Midoriya.png/revision/latest?cb=20211011173004",
-                                              message: "\(messageInput)",
-                                              dateTime: Date().getStringFromDateFormat())
-                var newList = messageList
-                newList.append(newMessage)
-                
-                return newList
-    
+                var newInstance = self._getChatMessage.value
+                newInstance.append(.sender(model: newMessage))
+                return newInstance
             }
             .bind(to: _getChatMessage)
             .disposed(by: bag)
-                                              
     }
 }

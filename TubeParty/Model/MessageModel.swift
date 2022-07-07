@@ -7,24 +7,21 @@
 
 import Foundation
 
-class MessageModel {
-    
+struct MessageModel {
+    var id: UUID
     var profileName: String
-    var profileURL: URL
+    var profileURL: URL?
     var message: String
     var linkPreView: URL?
-    var dateTime: String
+    var timeStamp: Date
     
-    init(profileName: String, profileURL: String, message: String, dateTime: String) {
+    init(profileName: String, profileURL: URL?, message: String, timeStamp: Date) {
+        self.id = UUID()
         self.profileName = profileName
         self.message = message
-        self.dateTime = dateTime
-        self.profileURL = URL(string: profileURL)!
-        
-        if let linkPreView = self.message.formatURL() {
-            self.linkPreView = linkPreView
-        }
-        
+        self.timeStamp = timeStamp
+        self.profileURL = profileURL
+        self.linkPreView = message.formatURL()
     }
     
 }

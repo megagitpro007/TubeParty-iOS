@@ -89,20 +89,15 @@ class ChatViewController: UIViewController {
             })
             .bind(to: viewModel.input.isValidText).disposed(by: bag)
         
-        typingField
-            .rx
-            .text
-            .orEmpty
-            .bind(to: viewModel.input.messageInput)
-            .disposed(by: bag)
-        
         sendButton
             .rx
             .tap
+            .map { self.typingField.text ?? "" }
             .do(onNext: { _ in
+                self.typingField.text = ""
                 self.scrollToBottom()
             })
-            .bind(to: viewModel.input.didTabEnterButton)
+            .bind(to: viewModel.input.messageInput)
             .disposed(by: bag)
         
         //output
@@ -141,34 +136,33 @@ class ChatViewController: UIViewController {
         //Datasource
         dataSource = RxTableViewSectionedReloadDataSource<SectionModel>(configureCell: { [weak self] (datasource, tableview, indexpath, item) -> UITableViewCell in
             guard let self = self else { return UITableViewCell() }
-            
-            var identifyCellName = receiverTableViewCell
-            
-            if let displayName: String = UserDefaultsManager.get(by: .displayName), displayName == item.profileName {
-                identifyCellName = senderTableViewCell
+            switch item {
+            case .sender(model: let model):
+                let cell = self.chatTableView.dequeueReusableCell(withIdentifier: senderTableViewCell, for: indexpath)
+                if let cell = cell as? SenderViewCell {
+                    cell.configure(
+                        name: model.profileName,
+                        text: model.message,
+                        url: model.profileURL,
+                        timeStamp: model.timeStamp,
+                        linkPreview: model.message.formatURL()
+                    )
+                    
+                }
+                return cell
+            case .reciever(model: let model):
+                let cell = self.chatTableView.dequeueReusableCell(withIdentifier: receiverTableViewCell, for: indexpath)
+                if let cell = cell as? ReceiverViewCell {
+                    cell.configure(
+                        name: model.profileName,
+                        text: model.message,
+                        url: model.profileURL,
+                        timeStamp: model.timeStamp,
+                        linkPreview: model.message.formatURL()
+                    )
+                }
+                return cell
             }
-            
-            let cell = self.chatTableView.dequeueReusableCell(withIdentifier: identifyCellName, for: indexpath)
-            
-            if let cell = cell as? SenderViewCell {
-                cell.configure(
-                    name: item.profileName,
-                    text: item.message,
-                    url: item.profileURL.absoluteString,
-                    timeStamp: item.dateTime,
-                    linkPreview: item.message.formatURL()
-                )
-                
-            } else if let cell = cell as? ReceiverViewCell {
-                cell.configure(
-                    name: item.profileName,
-                    text: item.message,
-                    url: item.profileURL.absoluteString,
-                    timeStamp: item.dateTime,
-                    linkPreview: item.message.formatURL()
-                )
-            }
-            return cell
         })
         
         viewModel
@@ -186,7 +180,8 @@ class ChatViewController: UIViewController {
     
     func scrollToBottom(){
         DispatchQueue.main.async {
-            let indexPath = IndexPath(row: self.viewModel.output.getChatCount-1, section: 0)
+            guard self.viewModel.output.getChatCount > 0 else { return }
+            let indexPath = IndexPath(row: self.viewModel.output.getChatCount - 1, section: 0)
             self.chatTableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
         }
     }

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		650B35F12877343700FCD991 /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650B35F02877343700FCD991 /* Date+Extensions.swift */; };
 		65150F34286F3045005B9AF3 /* DetermineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65150F33286F3045005B9AF3 /* DetermineViewController.swift */; };
 		65150F38286F4061005B9AF3 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65150F37286F4061005B9AF3 /* UserDefaults.swift */; };
 		65150F3A286F44BC005B9AF3 /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65150F39286F44BC005B9AF3 /* UIViewController+Extensions.swift */; };
@@ -40,6 +41,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		650B35F02877343700FCD991 /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
 		65150F33286F3045005B9AF3 /* DetermineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetermineViewController.swift; sourceTree = "<group>"; };
 		65150F37286F4061005B9AF3 /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		65150F39286F44BC005B9AF3 /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
@@ -177,6 +179,7 @@
 		E210520F28675A67007AEC7B /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				650B35F02877343700FCD991 /* Date+Extensions.swift */,
 				E210521428675AE0007AEC7B /* UIColor+Extensions.swift */,
 				E210522328677224007AEC7B /* UIFont+Extensions.swift */,
 				65D15CC72868604A0007D895 /* CAGradientLayer+Extensions.swift */,
@@ -383,6 +386,7 @@
 				E212CBD62869E71F004AA7C7 /* ReceiverViewCell.swift in Sources */,
 				E21051FE286753DF007AEC7B /* SceneDelegate.swift in Sources */,
 				E210522628677337007AEC7B /* MainLoginViewModel.swift in Sources */,
+				650B35F12877343700FCD991 /* Date+Extensions.swift in Sources */,
 				E212CBD82869E92A004AA7C7 /* Extensions.swift in Sources */,
 				E210522428677224007AEC7B /* UIFont+Extensions.swift in Sources */,
 				65150F38286F4061005B9AF3 /* UserDefaults.swift in Sources */,
