@@ -52,10 +52,6 @@ extension UITableViewCell {
     func getMeta(url: URL) -> Single<LPLinkMetadata> {
         return Single<LPLinkMetadata>.create { prom in
             LPMetadataProvider().startFetchingMetadata(for: url) { metadata, error in
-//                guard let self = self, let metadata = metadata, error == nil else { return }
-//                DispatchQueue.main.async {
-//                    self.linkPreviewView.metadata = metadata
-//                }
                 if let meta = metadata {
                     prom(.success(meta))
                 } else if let error = error {
@@ -66,4 +62,14 @@ extension UITableViewCell {
         }
     }
     
+}
+
+extension Date {
+    func getStringFromDateFormat() -> String {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "th-TH")
+        formatter.dateFormat = "hh:mm a"
+        let time12 = formatter.string(from: self)
+        return time12
+    }
 }

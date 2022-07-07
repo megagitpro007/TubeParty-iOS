@@ -30,7 +30,7 @@
                             <rect key="frame" x="16" y="4" width="403" height="362"/>
                             <subviews>
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="U0q-3t-ljL">
-                                    <rect key="frame" x="0.0" y="0.0" width="398" height="104"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="403" height="104"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="DNt-yc-tCP">
                                             <rect key="frame" x="0.0" y="0.0" width="150" height="50"/>
@@ -54,13 +54,13 @@
                                             </subviews>
                                         </stackView>
                                         <stackView opaque="NO" contentMode="scaleToFill" alignment="bottom" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="43T-hr-3sa">
-                                            <rect key="frame" x="0.0" y="54" width="382" height="50"/>
+                                            <rect key="frame" x="0.0" y="54" width="387" height="50"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9B2-VD-jTO" userLabel="SenderMSGView">
-                                                    <rect key="frame" x="0.0" y="0.0" width="338" height="50"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="333" height="50"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sender Message" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FS0-Bd-thN">
-                                                            <rect key="frame" x="8" y="8" width="322" height="34"/>
+                                                            <rect key="frame" x="8" y="8" width="317" height="34"/>
                                                             <fontDescription key="fontDescription" name="Mitr-Regular" family="Mitr" pointSize="14"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -74,10 +74,10 @@
                                                         <constraint firstItem="FS0-Bd-thN" firstAttribute="top" secondItem="9B2-VD-jTO" secondAttribute="top" constant="8" id="vQO-gz-qD6"/>
                                                     </constraints>
                                                 </view>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12:12" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="if0-1K-xUR">
-                                                    <rect key="frame" x="342" y="31" width="40" height="19"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12:12" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="if0-1K-xUR">
+                                                    <rect key="frame" x="337" y="31" width="50" height="19"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="40" id="GVM-Ox-eai"/>
+                                                        <constraint firstAttribute="width" constant="50" id="GVM-Ox-eai"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" name="Mitr-Light" family="Mitr" pointSize="12"/>
                                                     <color key="textColor" red="0.77254901960784317" green="0.77254901960784317" blue="0.77084792553111725" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

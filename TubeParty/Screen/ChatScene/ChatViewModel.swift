@@ -23,7 +23,8 @@ protocol ChatInput {
 
 protocol ChatOutput {
     var isDisableSendButton: Driver<Bool> { get }
-    var getChatMessage: Driver<SectionModel> { get }
+    var getChatMessage: Driver<[SectionModel]> { get }
+    var getChatCount: Int { get }
 }
 
 class ChatViewModel: ChatIOType, ChatInput, ChatOutput {
@@ -43,50 +44,57 @@ class ChatViewModel: ChatIOType, ChatInput, ChatOutput {
         return _isDisableSendButton.asDriver(onErrorJustReturn: true)
     }
     
-    var getChatMessage: Driver<SectionModel> {
-        _getChatMessage.asDriver(onErrorDriveWith: .never())
+    var getChatMessage: Driver<[SectionModel]> {
+        return _getChatMessage
+                .map({ [SectionModel(header: "ChatMessageHeader", items: $0)] })
+                .asDriver(onErrorDriveWith: .never())
     }
     
+    var getChatCount: Int {
+        return _getChatMessage.value.count
+    }
     // Properties
     var _isDisableSendButton: BehaviorRelay<Bool> = .init(value: true)
     
-    var _getChatMessage: PublishRelay<SectionModel> = .init()
+    var _getChatMessage: BehaviorRelay<[MessageModel]> = .init(value: [])
     
     var chatList = [MessageModel(profileName: "ize",
                                  profileURL: "https://static.wikia.nocookie.net/love-exalted/images/1/1c/Izuku_Midoriya.png/revision/latest?cb=20211011173004",
                                  message: "message1",
-                                 timeStamp: "11:11"),
+                                 dateTime: "11:11 AM"),
                     
                     MessageModel(profileName: "Toney",
                                  profileURL: "https://nntheblog.b-cdn.net/wp-content/uploads/2022/04/Arrangement-Katsuki-Bakugo.jpg",
                                  message: "message2",
-                                 timeStamp: "11:11"),
+                                 dateTime: "11:11 AM"),
                     
                     MessageModel(profileName: "ize",
                                  profileURL: "https://static.wikia.nocookie.net/love-exalted/images/1/1c/Izuku_Midoriya.png/revision/latest?cb=20211011173004",
                                  message: "message3",
-                                 timeStamp: "11:11"),
+                                 dateTime: "11:11 AM"),
                     
                     MessageModel(profileName: "Toney",
                                  profileURL: "https://nntheblog.b-cdn.net/wp-content/uploads/2022/04/Arrangement-Katsuki-Bakugo.jpg",
                                  message: "message4 Prettymuch https://www.prettymuch.com/ ",
-                                 timeStamp: "11:11")]
+                                 dateTime: "11:11 AM")]
     
     let bag = DisposeBag()
     
     init(userChatName: String) {
         
-        viewDidload.map { [weak self] _ -> SectionModel in
-            guard let self = self else { return SectionModel(header: "", items: []) }
+        viewDidload.map { [weak self] _ -> [MessageModel] in
+            guard let self = self else { return [MessageModel(profileName: "",
+                                                              profileURL: "",
+                                                              message: "",
+                                                              dateTime: "")] }
             var messageModel: [MessageModel] = []
-
             for data in self.chatList {
                 messageModel.append(MessageModel(profileName: data.profileName,
                                                  profileURL: data.profileURL.absoluteString,
                                                  message: data.message,
-                                                 timeStamp: data.timeStamp))
+                                                 dateTime: data.dateTime))
             }
-            return SectionModel(header: "ChatMessageHeader", items: messageModel)
+            return messageModel
         }
         .bind(to: _getChatMessage)
         .disposed(by: bag)
@@ -96,9 +104,27 @@ class ChatViewModel: ChatIOType, ChatInput, ChatOutput {
             .bind(to: _isDisableSendButton)
             .disposed(by: bag)
         
-        didTabEnterButton.withLatestFrom(messageInput).bind { message in
-            print("message: \(message)")
-        }.disposed(by: bag)
-        
+        didTabEnterButton
+            .withLatestFrom(_getChatMessage)
+            .withLatestFrom(messageInput) { (messageList, messageInput) -> [MessageModel] in
+                
+                print("🔥 \(Date().getStringFromDateFormat()) ")
+                
+                var name = ""
+                if let displayName: String = UserDefaultsManager.get(by: .displayName) { name = displayName }
+                
+                let newMessage = MessageModel(profileName: name,
+                                              profileURL: "https://static.wikia.nocookie.net/love-exalted/images/1/1c/Izuku_Midoriya.png/revision/latest?cb=20211011173004",
+                                              message: "\(messageInput)",
+                                              dateTime: Date().getStringFromDateFormat())
+                var newList = messageList
+                newList.append(newMessage)
+                
+                return newList
+    
+            }
+            .bind(to: _getChatMessage)
+            .disposed(by: bag)
+                                              
     }
 }

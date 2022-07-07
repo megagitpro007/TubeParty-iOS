@@ -99,6 +99,9 @@ class ChatViewController: UIViewController {
         sendButton
             .rx
             .tap
+            .do(onNext: { _ in
+                self.scrollToBottom()
+            })
             .bind(to: viewModel.input.didTabEnterButton)
             .disposed(by: bag)
         
@@ -127,6 +130,7 @@ class ChatViewController: UIViewController {
                     let size = keyboardSize.height - self.view.safeAreaInsets.bottom
                     self.bottomViewContainer.transform = .init(translationX: 0, y: -size)
                     self.chatTableView.contentInset = .init(top: 0, left: 0, bottom: size + 10, right: 0)
+                    self.scrollToBottom()
                 }
                 print("🔥 : textFieldDidBeginEditing")
             }.disposed(by: bag)
@@ -137,13 +141,21 @@ class ChatViewController: UIViewController {
         //Datasource
         dataSource = RxTableViewSectionedReloadDataSource<SectionModel>(configureCell: { [weak self] (datasource, tableview, indexpath, item) -> UITableViewCell in
             guard let self = self else { return UITableViewCell() }
-            let cell = self.chatTableView.dequeueReusableCell(withIdentifier: indexpath.row%2 == 0 ? senderTableViewCell : receiverTableViewCell, for: indexpath)
+            
+            var identifyCellName = receiverTableViewCell
+            
+            if let displayName: String = UserDefaultsManager.get(by: .displayName), displayName == item.profileName {
+                identifyCellName = senderTableViewCell
+            }
+            
+            let cell = self.chatTableView.dequeueReusableCell(withIdentifier: identifyCellName, for: indexpath)
+            
             if let cell = cell as? SenderViewCell {
                 cell.configure(
                     name: item.profileName,
                     text: item.message,
                     url: item.profileURL.absoluteString,
-                    timeStamp: item.timeStamp,
+                    timeStamp: item.dateTime,
                     linkPreview: item.message.formatURL()
                 )
                 
@@ -152,7 +164,7 @@ class ChatViewController: UIViewController {
                     name: item.profileName,
                     text: item.message,
                     url: item.profileURL.absoluteString,
-                    timeStamp: item.timeStamp,
+                    timeStamp: item.dateTime,
                     linkPreview: item.message.formatURL()
                 )
             }
@@ -162,7 +174,6 @@ class ChatViewController: UIViewController {
         viewModel
             .output
             .getChatMessage
-            .map{[$0]}
             .drive(chatTableView.rx.items(dataSource: dataSource))
             .disposed(by: bag)
         
@@ -173,6 +184,13 @@ class ChatViewController: UIViewController {
         
     }
     
+    func scrollToBottom(){
+        DispatchQueue.main.async {
+            let indexPath = IndexPath(row: self.viewModel.output.getChatCount-1, section: 0)
+            self.chatTableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
+        }
+    }
+    
     @objc func dismissKeyboard() {
         guard self.isTextFieldSelected else { return }
         UIView.animate(withDuration: 0.3, animations: {
@@ -181,6 +199,7 @@ class ChatViewController: UIViewController {
             
             self.chatTableView.contentInset = .init(top: 0, left: 0, bottom: 0, right: 0)
             self.view.endEditing(true)
+            self.scrollToBottom()
             
         })
     }
