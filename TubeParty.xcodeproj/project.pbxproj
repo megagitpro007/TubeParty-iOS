@@ -43,6 +43,7 @@
 		E2EDD3C9287C686E00FDBB07 /* TubePartyUseCaseDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EDD3C8287C686E00FDBB07 /* TubePartyUseCaseDomain.swift */; };
 		E2EDD3CB287C69F800FDBB07 /* TubePartyUseCaseProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EDD3CA287C69F800FDBB07 /* TubePartyUseCaseProvider.swift */; };
 		E2EDD3CD287C6AA600FDBB07 /* TubePartyUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EDD3CC287C6AA600FDBB07 /* TubePartyUseCase.swift */; };
+		E2EDD3CF287C72AD00FDBB07 /* Codable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EDD3CE287C72AD00FDBB07 /* Codable+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -86,6 +87,7 @@
 		E2EDD3C8287C686E00FDBB07 /* TubePartyUseCaseDomain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TubePartyUseCaseDomain.swift; sourceTree = "<group>"; };
 		E2EDD3CA287C69F800FDBB07 /* TubePartyUseCaseProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TubePartyUseCaseProvider.swift; sourceTree = "<group>"; };
 		E2EDD3CC287C6AA600FDBB07 /* TubePartyUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TubePartyUseCase.swift; sourceTree = "<group>"; };
+		E2EDD3CE287C72AD00FDBB07 /* Codable+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Codable+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -198,6 +200,7 @@
 				65150F39286F44BC005B9AF3 /* UIViewController+Extensions.swift */,
 				65AAC4EB28700B4400DB178E /* String+Extensions.swift */,
 				E212CBD72869E92A004AA7C7 /* Extensions.swift */,
+				E2EDD3CE287C72AD00FDBB07 /* Codable+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -423,6 +426,7 @@
 				650B35F12877343700FCD991 /* Date+Extensions.swift in Sources */,
 				E2EDD3C7287C686200FDBB07 /* TubePartyUseCaseProviderDomain.swift in Sources */,
 				E212CBD82869E92A004AA7C7 /* Extensions.swift in Sources */,
+				E2EDD3CF287C72AD00FDBB07 /* Codable+Extensions.swift in Sources */,
 				E2EDD3CD287C6AA600FDBB07 /* TubePartyUseCase.swift in Sources */,
 				E210522428677224007AEC7B /* UIFont+Extensions.swift in Sources */,
 				65150F38286F4061005B9AF3 /* UserDefaults.swift in Sources */,

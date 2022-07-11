@@ -121,6 +121,7 @@ class ChatViewModel: ChatIOType, ChatInput, ChatOutput {
                 )
 
                 privider.sendMessage(newMessage: newMessage)
+                privider.getMessageList()
                 
                 var newInstance = self._getChatMessage.value
                 newInstance.append(.sender(model: newMessage))
