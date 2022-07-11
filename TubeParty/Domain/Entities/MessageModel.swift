@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct MessageModel {
+struct MessageModel: Codable {
     var id: UUID
     var profileName: String
     var profileURL: URL?
@@ -24,4 +24,12 @@ struct MessageModel {
         self.linkPreView = message.formatURL()
     }
     
+}
+
+struct MessageFromFireStore: Codable {
+    var id: String
+    var message: String
+    var profileName: String
+    var profileURL: String
+    var timeStamp: String
 }

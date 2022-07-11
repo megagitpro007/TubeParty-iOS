@@ -10,6 +10,7 @@ import RxSwift
 import RxCocoa
 import RxDataSources
 import LinkPresentation
+import FirebaseRemoteConfig
 
 fileprivate let senderTableViewCell = "SenderViewCell"
 fileprivate let receiverTableViewCell = "ReceiverViewCell"

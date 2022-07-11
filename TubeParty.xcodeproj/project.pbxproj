@@ -37,6 +37,7 @@
 		E212CBD82869E92A004AA7C7 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E212CBD72869E92A004AA7C7 /* Extensions.swift */; };
 		E22B3877286F389B00E7BC6F /* NewSenderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E22B3876286F389B00E7BC6F /* NewSenderTableViewCell.xib */; };
 		E29DF3AD28733E9B0048FB34 /* MessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29DF3AC28733E9A0048FB34 /* MessageModel.swift */; };
+		E2B34E0128772B6B00B73069 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E2B34E0028772B6B00B73069 /* GoogleService-Info.plist */; };
 		E2BA1E4D28747C9B0067AFCB /* SectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BA1E4C28747C9B0067AFCB /* SectionModel.swift */; };
 /* End PBXBuildFile section */
 
@@ -75,6 +76,7 @@
 		E212CBD72869E92A004AA7C7 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		E22B3876286F389B00E7BC6F /* NewSenderTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewSenderTableViewCell.xib; sourceTree = "<group>"; };
 		E29DF3AC28733E9A0048FB34 /* MessageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageModel.swift; sourceTree = "<group>"; };
+		E2B34E0028772B6B00B73069 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E2BA1E4C28747C9B0067AFCB /* SectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -167,11 +169,13 @@
 				E210521228675AA0007AEC7B /* Delegate */,
 				E210521028675A74007AEC7B /* Screen */,
 				65150F3B286F4D0F005B9AF3 /* CustomViews */,
-				E29DF3AB28733DC70048FB34 /* Model */,
+				E2EDD3C4287C664C00FDBB07 /* Domain */,
+				E2EDD3C5287C666C00FDBB07 /* Platform */,
 				E210520F28675A67007AEC7B /* Extensions */,
 				E210521628676ABA007AEC7B /* Fonts */,
 				E2105204286753E0007AEC7B /* Assets.xcassets */,
 				E2105209286753E0007AEC7B /* Info.plist */,
+				E2B34E0028772B6B00B73069 /* GoogleService-Info.plist */,
 			);
 			path = TubeParty;
 			sourceTree = "<group>";
@@ -242,13 +246,28 @@
 			path = Xibs;
 			sourceTree = "<group>";
 		};
-		E29DF3AB28733DC70048FB34 /* Model */ = {
+		E29DF3AB28733DC70048FB34 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
 				E2BA1E4C28747C9B0067AFCB /* SectionModel.swift */,
 				E29DF3AC28733E9A0048FB34 /* MessageModel.swift */,
 			);
-			path = Model;
+			path = Entities;
+			sourceTree = "<group>";
+		};
+		E2EDD3C4287C664C00FDBB07 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				E29DF3AB28733DC70048FB34 /* Entities */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		E2EDD3C5287C666C00FDBB07 /* Platform */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Platform;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -319,6 +338,7 @@
 				E210521D28676AD0007AEC7B /* Mitr-Regular.ttf in Resources */,
 				E212CBD42869E6FA004AA7C7 /* ReceiverViewCell.xib in Resources */,
 				E22B3877286F389B00E7BC6F /* NewSenderTableViewCell.xib in Resources */,
+				E2B34E0128772B6B00B73069 /* GoogleService-Info.plist in Resources */,
 				E210522228676AD0007AEC7B /* Mitr-Medium.ttf in Resources */,
 				E212CBD02869E206004AA7C7 /* SenderViewCell.xib in Resources */,
 			);
@@ -554,7 +574,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = tparty.TubeParty;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tparty.TubeParty;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -584,7 +604,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = tparty.TubeParty;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tparty.TubeParty;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

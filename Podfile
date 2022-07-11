@@ -11,5 +11,10 @@ target 'TubeParty' do
   pod 'RxCocoa', '6.5.0'
 	pod 'RxDataSources', '~> 5.0'
   pod 'Kingfisher', '~> 7.0'
+  
+  pod 'Firebase/RemoteConfig'
+  pod 'FirebaseAnalytics'
+  pod 'FirebaseAuth'
+  pod 'FirebaseFirestore'
 
 end

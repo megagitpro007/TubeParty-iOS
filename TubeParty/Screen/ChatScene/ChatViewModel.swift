@@ -9,6 +9,8 @@ import Foundation
 import RxSwift
 import RxCocoa
 import RxDataSources
+import FirebaseRemoteConfig
+import FirebaseFirestore
 
 protocol ChatIOType {
     var input: ChatInput { get }
@@ -80,6 +82,9 @@ class ChatViewModel: ChatIOType, ChatInput, ChatOutput {
     private let _isDisableSendButton: BehaviorRelay<Bool> = .init(value: true)
     private let _getChatMessage: BehaviorRelay<[ChatItem]> = .init(value: [])
     private var currentName: String = ""
+    private let remoteConfig = RemoteConfig.remoteConfig()
+    private let firebaseDB = Firestore.firestore()
+    private var ref: DocumentReference? = nil
     private let bag = DisposeBag()
     
     init(userChatName: String) {
@@ -112,6 +117,50 @@ class ChatViewModel: ChatIOType, ChatInput, ChatOutput {
                     message: text,
                     timeStamp: Date()
                 )
+                
+                self.ref = self.firebaseDB.collection("message_list")
+                    .addDocument(data: ["id": newMessage.id.uuidString,
+                                        "profileName": newMessage.profileName,
+                                        "profileURL": newMessage.profileURL?.absoluteString ?? "",
+                                        "message": newMessage.message,
+                                        "timeStamp": "\(newMessage.timeStamp)"
+                                       ]) { error in
+                        if let error = error  {
+                            print("🔥 \(error.localizedDescription)")
+                        } else {
+                            print("🔥 update success")
+                        }
+                    }
+
+                self.firebaseDB.collection("message_list").getDocuments { query, error in
+                    if let error = error {
+                        print("🔥 \(error.localizedDescription)")
+                    } else {
+                        for document in query!.documents {
+                            let dict = document.data()
+
+                            do {
+                                let jsonData = try JSONSerialization.data(withJSONObject: dict, options: .prettyPrinted)
+
+                                do {
+                                    let decoder = JSONDecoder()
+                                    decoder.keyDecodingStrategy = .convertFromSnakeCase
+                                    decoder.dateDecodingStrategy = .secondsSince1970
+                                    let obj = try decoder.decode(MessageFromFireStore.self, from: jsonData)
+
+                                    print("🔥 \(obj.message)")
+                                } catch {
+                                    print("🔥 obj fail")
+                                }
+
+                            } catch {
+                                print(error.localizedDescription)
+                            }
+
+                        }
+
+                    }
+                }
                 
                 var newInstance = self._getChatMessage.value
                 newInstance.append(.sender(model: newMessage))
