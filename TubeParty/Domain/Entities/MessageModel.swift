@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct MessageModel: Codable {
+public struct MessageModel: Codable {
     var id: UUID
     var profileName: String
     var profileURL: URL?
@@ -26,7 +26,7 @@ struct MessageModel: Codable {
     
 }
 
-struct MessageFromFireStore: Codable {
+public struct MessageFromFireStore: Codable {
     var id: String
     var message: String
     var profileName: String

@@ -39,6 +39,10 @@
 		E29DF3AD28733E9B0048FB34 /* MessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29DF3AC28733E9A0048FB34 /* MessageModel.swift */; };
 		E2B34E0128772B6B00B73069 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E2B34E0028772B6B00B73069 /* GoogleService-Info.plist */; };
 		E2BA1E4D28747C9B0067AFCB /* SectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BA1E4C28747C9B0067AFCB /* SectionModel.swift */; };
+		E2EDD3C7287C686200FDBB07 /* TubePartyUseCaseProviderDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EDD3C6287C686200FDBB07 /* TubePartyUseCaseProviderDomain.swift */; };
+		E2EDD3C9287C686E00FDBB07 /* TubePartyUseCaseDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EDD3C8287C686E00FDBB07 /* TubePartyUseCaseDomain.swift */; };
+		E2EDD3CB287C69F800FDBB07 /* TubePartyUseCaseProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EDD3CA287C69F800FDBB07 /* TubePartyUseCaseProvider.swift */; };
+		E2EDD3CD287C6AA600FDBB07 /* TubePartyUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EDD3CC287C6AA600FDBB07 /* TubePartyUseCase.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -78,6 +82,10 @@
 		E29DF3AC28733E9A0048FB34 /* MessageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageModel.swift; sourceTree = "<group>"; };
 		E2B34E0028772B6B00B73069 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E2BA1E4C28747C9B0067AFCB /* SectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionModel.swift; sourceTree = "<group>"; };
+		E2EDD3C6287C686200FDBB07 /* TubePartyUseCaseProviderDomain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TubePartyUseCaseProviderDomain.swift; sourceTree = "<group>"; };
+		E2EDD3C8287C686E00FDBB07 /* TubePartyUseCaseDomain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TubePartyUseCaseDomain.swift; sourceTree = "<group>"; };
+		E2EDD3CA287C69F800FDBB07 /* TubePartyUseCaseProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TubePartyUseCaseProvider.swift; sourceTree = "<group>"; };
+		E2EDD3CC287C6AA600FDBB07 /* TubePartyUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TubePartyUseCase.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -259,6 +267,8 @@
 			isa = PBXGroup;
 			children = (
 				E29DF3AB28733DC70048FB34 /* Entities */,
+				E2EDD3C6287C686200FDBB07 /* TubePartyUseCaseProviderDomain.swift */,
+				E2EDD3C8287C686E00FDBB07 /* TubePartyUseCaseDomain.swift */,
 			);
 			path = Domain;
 			sourceTree = "<group>";
@@ -266,6 +276,8 @@
 		E2EDD3C5287C666C00FDBB07 /* Platform */ = {
 			isa = PBXGroup;
 			children = (
+				E2EDD3CA287C69F800FDBB07 /* TubePartyUseCaseProvider.swift */,
+				E2EDD3CC287C6AA600FDBB07 /* TubePartyUseCase.swift */,
 			);
 			path = Platform;
 			sourceTree = "<group>";
@@ -393,6 +405,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E2EDD3C9287C686E00FDBB07 /* TubePartyUseCaseDomain.swift in Sources */,
 				65150F34286F3045005B9AF3 /* DetermineViewController.swift in Sources */,
 				65AAC4EC28700B4400DB178E /* String+Extensions.swift in Sources */,
 				E212CBD22869E68D004AA7C7 /* SenderViewCell.swift in Sources */,
@@ -401,13 +414,16 @@
 				65150F3D286F4D25005B9AF3 /* LoadingView.swift in Sources */,
 				65D15CC82868604A0007D895 /* CAGradientLayer+Extensions.swift in Sources */,
 				E2BA1E4D28747C9B0067AFCB /* SectionModel.swift in Sources */,
+				E2EDD3CB287C69F800FDBB07 /* TubePartyUseCaseProvider.swift in Sources */,
 				E29DF3AD28733E9B0048FB34 /* MessageModel.swift in Sources */,
 				E20285E3286854430006806B /* ChatViewController.swift in Sources */,
 				E212CBD62869E71F004AA7C7 /* ReceiverViewCell.swift in Sources */,
 				E21051FE286753DF007AEC7B /* SceneDelegate.swift in Sources */,
 				E210522628677337007AEC7B /* MainLoginViewModel.swift in Sources */,
 				650B35F12877343700FCD991 /* Date+Extensions.swift in Sources */,
+				E2EDD3C7287C686200FDBB07 /* TubePartyUseCaseProviderDomain.swift in Sources */,
 				E212CBD82869E92A004AA7C7 /* Extensions.swift in Sources */,
+				E2EDD3CD287C6AA600FDBB07 /* TubePartyUseCase.swift in Sources */,
 				E210522428677224007AEC7B /* UIFont+Extensions.swift in Sources */,
 				65150F38286F4061005B9AF3 /* UserDefaults.swift in Sources */,
 				65150F3A286F44BC005B9AF3 /* UIViewController+Extensions.swift in Sources */,

@@ -89,6 +89,8 @@ class ChatViewModel: ChatIOType, ChatInput, ChatOutput {
     
     init(userChatName: String) {
         
+        let privider = TubePartyUseCaseProvider(fireStore: firebaseDB).makeTubePartyUseCaseDomain()
+        
         viewDidload.map { [weak self] _ -> [ChatItem] in
             guard let self = self else { return [] }
             if let displayName: String = UserDefaultsManager.get(by:.displayName) {
@@ -117,50 +119,8 @@ class ChatViewModel: ChatIOType, ChatInput, ChatOutput {
                     message: text,
                     timeStamp: Date()
                 )
-                
-                self.ref = self.firebaseDB.collection("message_list")
-                    .addDocument(data: ["id": newMessage.id.uuidString,
-                                        "profileName": newMessage.profileName,
-                                        "profileURL": newMessage.profileURL?.absoluteString ?? "",
-                                        "message": newMessage.message,
-                                        "timeStamp": "\(newMessage.timeStamp)"
-                                       ]) { error in
-                        if let error = error  {
-                            print("🔥 \(error.localizedDescription)")
-                        } else {
-                            print("🔥 update success")
-                        }
-                    }
 
-                self.firebaseDB.collection("message_list").getDocuments { query, error in
-                    if let error = error {
-                        print("🔥 \(error.localizedDescription)")
-                    } else {
-                        for document in query!.documents {
-                            let dict = document.data()
-
-                            do {
-                                let jsonData = try JSONSerialization.data(withJSONObject: dict, options: .prettyPrinted)
-
-                                do {
-                                    let decoder = JSONDecoder()
-                                    decoder.keyDecodingStrategy = .convertFromSnakeCase
-                                    decoder.dateDecodingStrategy = .secondsSince1970
-                                    let obj = try decoder.decode(MessageFromFireStore.self, from: jsonData)
-
-                                    print("🔥 \(obj.message)")
-                                } catch {
-                                    print("🔥 obj fail")
-                                }
-
-                            } catch {
-                                print(error.localizedDescription)
-                            }
-
-                        }
-
-                    }
-                }
+                privider.sendMessage(newMessage: newMessage)
                 
                 var newInstance = self._getChatMessage.value
                 newInstance.append(.sender(model: newMessage))
