@@ -29,19 +29,11 @@ final public class TubePartyUseCase: TubePartyUseCaseDomain {
             } else {
                 for document in query!.documents {
                     let dict = document.data()
-                    do {
-                        let jsonData = try JSONSerialization.data(withJSONObject: dict, options: .prettyPrinted)
-                        let decoder = JSONDecoder()
-                        decoder.keyDecodingStrategy = .convertFromSnakeCase
-                        decoder.dateDecodingStrategy = .secondsSince1970
-                        let newObject = try decoder.decode(MessageModel.self, from: jsonData)
-
-                        print("🔥 \(newObject.message)")
-                        messageList.append(newObject)
-                    } catch {
-                        print("🔥 obj fail")
-                    }
-
+                    let decoder = JSONDecoder()
+                    guard let jsonData = try? JSONSerialization.data(withJSONObject: dict, options: .prettyPrinted),
+                          let newObject = try? decoder.decode(MessageModel.self, from: jsonData) else { return }
+                    messageList.append(newObject)
+                    print("🔥 \(newObject.message)")
                 }
             }
         }

@@ -51,8 +51,8 @@ public struct MessageModel: Codable {
             id = UUID()
         }
         
-        profileName = try container.decode(String.self, forKey: .profileName)
         message = try container.decode(String.self, forKey: .message)
+        profileName = try container.decode(String.self, forKey: .profileName)
         
         let _profileURL = try? container.decode(String.self, forKey: .profileURL)
         if let url = URL(string: _profileURL ?? "") {
