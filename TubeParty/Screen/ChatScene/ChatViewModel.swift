@@ -12,6 +12,8 @@ import RxDataSources
 import FirebaseRemoteConfig
 import FirebaseFirestore
 
+fileprivate let imageProfileURL = "https://assets.coingecko.com/coins/images/24155/large/zoro.png?1646565848"
+
 protocol ChatIOType {
     var input: ChatInput { get }
     var output: ChatOutput { get }
@@ -103,6 +105,20 @@ class ChatViewModel: ChatIOType, ChatInput, ChatOutput {
         .bind(to: _getChatMessage)
         .disposed(by: bag)
         
+        getUseCase.getMessageList().map { chatList -> [ChatItem] in
+            var newInstance = self._getChatMessage.value
+            for data in chatList {
+                if data.profileName == self.currentName {
+                    newInstance.append(.sender(model: data))
+                } else {
+                    newInstance.append(.reciever(model: data))
+                }
+            }
+            return newInstance
+        }
+        .bind(to: _getChatMessage)
+        .disposed(by: bag)
+        
         isValidText
             .map({$0})
             .bind(to: _isDisableSendButton)
@@ -117,7 +133,7 @@ class ChatViewModel: ChatIOType, ChatInput, ChatOutput {
                 let newMessage = MessageModel(
                     // TODO - profile url need to save to user default, maybe create profile settings scene
                     profileName: self.currentName,
-                    profileURL: URL(string: "https://1409791524.rsc.cdn77.org/data/images/full/614902/aespa-karina-accused-of-sliding-into-man-s-dms-pre-debut.jpg?w=600?w=430"),
+                    profileURL: URL(string: imageProfileURL),
                     message: text,
                     timeStamp: Date()
                 )
@@ -130,12 +146,6 @@ class ChatViewModel: ChatIOType, ChatInput, ChatOutput {
             }
             .bind(to: _getChatMessage)
             .disposed(by: bag)
-        
-        getUseCase.getMessageList().bind { text in
-            for i in text {
-                print("text \(i.message)")
-            }
-        }.disposed(by: bag)
         
     }
 }
