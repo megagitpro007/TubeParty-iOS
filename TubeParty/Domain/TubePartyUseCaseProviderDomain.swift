@@ -1,3 +1,4 @@
 public protocol TubePartyUseCaseProviderDomain {
-    func makeTubePartyUseCaseDomain() -> TubePartyUseCaseDomain
+    func makeSendMessageUseCaseDomain() -> SendMessageUseCaseDomain
+    func makeGetMessageUseCaseDomain() -> GetMesaageUseCaseDomain
 }

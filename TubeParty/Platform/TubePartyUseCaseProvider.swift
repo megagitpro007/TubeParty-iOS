@@ -2,14 +2,18 @@ import FirebaseFirestore
 
 final public class TubePartyUseCaseProvider: TubePartyUseCaseProviderDomain {
     
-    private let fireStore: Firestore
+    private let repo: TubePartyRepositories
     
-    init(fireStore: Firestore) {
-        self.fireStore = fireStore
+    init(repo: TubePartyRepositories) {
+        self.repo = repo
     }
     
-    public func makeTubePartyUseCaseDomain() -> TubePartyUseCaseDomain {
-        return TubePartyUseCase(fireStore: fireStore)
+    public func makeSendMessageUseCaseDomain() -> SendMessageUseCaseDomain {
+        return SendMessageUseCase(repo: repo)
+    }
+    
+    public func makeGetMessageUseCaseDomain() -> GetMesaageUseCaseDomain {
+        return GetMessageUseCase(repo: repo)
     }
     
 }

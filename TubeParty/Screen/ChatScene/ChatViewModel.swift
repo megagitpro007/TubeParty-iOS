@@ -89,7 +89,9 @@ class ChatViewModel: ChatIOType, ChatInput, ChatOutput {
     
     init(userChatName: String) {
         
-        let privider = TubePartyUseCaseProvider(fireStore: firebaseDB).makeTubePartyUseCaseDomain()
+        let repository = TubePartyRepository(fireStore: firebaseDB)
+        let sendUseCase = TubePartyUseCaseProvider(repo: repository).makeSendMessageUseCaseDomain()
+        let getUseCase = TubePartyUseCaseProvider(repo: repository).makeGetMessageUseCaseDomain()
         
         viewDidload.map { [weak self] _ -> [ChatItem] in
             guard let self = self else { return [] }
@@ -119,8 +121,8 @@ class ChatViewModel: ChatIOType, ChatInput, ChatOutput {
                     message: text,
                     timeStamp: Date()
                 )
-
-                privider.sendMessage(newMessage: newMessage)
+                
+                sendUseCase.sendMessage(newMessage: newMessage)
                 
                 var newInstance = self._getChatMessage.value
                 newInstance.append(.sender(model: newMessage))
@@ -128,8 +130,8 @@ class ChatViewModel: ChatIOType, ChatInput, ChatOutput {
             }
             .bind(to: _getChatMessage)
             .disposed(by: bag)
-    
-        privider.getMessageList().bind { text in
+        
+        getUseCase.getMessageList().bind { text in
             for i in text {
                 print("text \(i.message)")
             }

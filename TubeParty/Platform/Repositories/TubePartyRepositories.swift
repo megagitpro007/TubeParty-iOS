@@ -1,7 +1,20 @@
-import FirebaseFirestore
-import RxSwift
+//
+//  TubePartyRepositories.swift
+//  TubeParty
+//
+//  Created by iZE Appsynth on 12/7/2565 BE.
+//
 
-final public class TubePartyUseCase: TubePartyUseCaseDomain {
+import Foundation
+import RxSwift
+import FirebaseFirestore
+
+protocol TubePartyRepositories {
+    func sendMessage(newMessage: MessageModel)
+    func getMessageList() -> Observable<[MessageModel]>
+}
+
+public class TubePartyRepository: TubePartyRepositories {
     
     private let fireStore: Firestore
     private var ref: DocumentReference? = nil
@@ -44,3 +57,4 @@ final public class TubePartyUseCase: TubePartyUseCaseDomain {
     }
     
 }
+
