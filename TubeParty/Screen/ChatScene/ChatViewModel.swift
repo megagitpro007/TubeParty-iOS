@@ -32,35 +32,6 @@ protocol ChatOutput {
     var getChatCount: Int { get }
 }
 
-enum ChatItem {
-    case sender(model: MessageModel)
-    case reciever(model: MessageModel)
-    
-    var timestamp: Date {
-        switch self {
-        case .sender(let model): return model.timeStamp
-        case .reciever(let model): return model.timeStamp
-        }
-    }
-}
-
-extension ChatItem: IdentifiableType, Hashable {
-    var identity: UUID {
-        switch self {
-        case .reciever(let model): return model.id
-        case .sender(let model): return model.id
-        }
-    }
-    
-    func hash(into hasher: inout Hasher) {
-        return hasher.combine(identity)
-    }
-    
-    static func == (lhs: ChatItem, rhs: ChatItem) -> Bool {
-        return lhs.identity == rhs.identity
-    }
-}
-
 class ChatViewModel: ChatIOType, ChatInput, ChatOutput {
     
     // IO Type
@@ -93,10 +64,6 @@ class ChatViewModel: ChatIOType, ChatInput, ChatOutput {
     private let _getChatMessage: BehaviorRelay<[ChatItem]> = .init(value: [])
     private var currentName: String = ""
     
-    // TODO - remove me
-    private let remoteConfig = RemoteConfig.remoteConfig()
-    private var ref: DocumentReference? = nil
-    
     // TODO - usecase
     // new instance use case
     let sendMessageUseCase: SendMessageUseCaseDomain
@@ -112,26 +79,21 @@ class ChatViewModel: ChatIOType, ChatInput, ChatOutput {
     }
     
     private func binding() {
-        viewDidload
-            // FIXME
-            .map { [weak self] _ -> [ChatItem] in
-                guard let self = self else { return [] }
-                if let displayName: String = UserDefaultsManager.get(by:.displayName) {
-                    self.currentName = displayName
-                }
-                return []
+        
+        viewDidload.bind { [weak self] _ in
+            guard let self = self else { return }
+            if let displayName: String = UserDefaultsManager.get(by:.displayName) {
+                self.currentName = displayName
             }
-            .bind(to: _getChatMessage)
-            .disposed(by: bag)
+        }.disposed(by: bag)
         
         getMessageUseCase
             .getMessageList()
             .map { chatItem -> [ChatItem] in
-                return chatItem.map {
+                return chatItem.map({
                     return $0.profileName == self.currentName ? .sender(model: $0) : .reciever(model: $0)
-                }.sorted(by: { $0.timestamp < $1.timestamp })
-            }
-            .bind(to: _getChatMessage)
+                }).sorted(by: { $0.timestamp < $1.timestamp })
+            }.bind(to: _getChatMessage)
             .disposed(by: bag)
         
         isValidText

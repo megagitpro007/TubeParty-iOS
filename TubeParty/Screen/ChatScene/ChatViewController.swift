@@ -38,6 +38,11 @@ class ChatViewController: UIViewController {
         registerCell()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.scrollToBottom()
+    }
+    
     func registerCell() {
         chatTableView.register(UINib(nibName: senderTableViewCell, bundle: nil), forCellReuseIdentifier: senderTableViewCell)
         chatTableView.register(UINib(nibName: receiverTableViewCell, bundle: nil), forCellReuseIdentifier: receiverTableViewCell)
@@ -128,7 +133,6 @@ class ChatViewController: UIViewController {
                     self.chatTableView.contentInset = .init(top: 0, left: 0, bottom: size + 10, right: 0)
                     self.scrollToBottom()
                 }
-                print("🔥 : textFieldDidBeginEditing")
             }.disposed(by: bag)
         
         let tapGesture = UITapGestureRecognizer(target: self, action:#selector(dismissKeyboard))
@@ -179,11 +183,11 @@ class ChatViewController: UIViewController {
         
     }
     
-    func scrollToBottom(){
+    func scrollToBottom(isAnimated: Bool = true){
         DispatchQueue.main.async {
             guard self.viewModel.output.getChatCount > 0 else { return }
             let indexPath = IndexPath(row: self.viewModel.output.getChatCount - 1, section: 0)
-            self.chatTableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
+            self.chatTableView.scrollToRow(at: indexPath, at: .bottom, animated: isAnimated)
         }
     }
     
