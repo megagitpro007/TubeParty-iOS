@@ -19,7 +19,7 @@ public class TubePartyRepository: TubePartyRepositories {
     private let fireStore: Firestore
     private var ref: DocumentReference? = nil
     
-    init(fireStore: Firestore) {
+    init(fireStore: Firestore = Firestore.firestore()) {
         self.fireStore = fireStore
     }
     
@@ -55,6 +55,68 @@ public class TubePartyRepository: TubePartyRepositories {
             return Disposables.create()
         }
     }
-    
 }
+
+
+//
+//public protocol TubePartyRepositoryProtocol {
+//    func getMessageList() -> Observable<[MessageModel]>
+//}
+//
+//public class TubePartyRepository: BaseFirebaseRepository, TubePartyRepositoryProtocol {
+//
+//    public func getMessageList() -> Observable<[MessageModel]> {
+//        return self.getDocumentsListener(collection: "message_list")
+//    }
+//
+//}
+//
+//open class BaseFirebaseRepository {
+//
+//    private let fireStore: Firestore
+//
+//    init(fireStore: Firestore = Firestore.firestore()) {
+//        self.fireStore = fireStore
+//    }
+//
+//    open func getDocuments<T: Decodable>(collection: String) -> Observable<[T]> {
+//        return Observable<[T]>.create { observer in
+//            self.fireStore.collection(collection).getDocuments { snapshot, error in
+//                guard let snapshot = snapshot else {
+//                    observer.onError(error!)
+//                    return
+//                }
+//                let datas: [T] = snapshot.documents.compactMap { document -> T? in
+//                    guard
+//                        let json = try? JSONSerialization.data(withJSONObject: document.data(), options: .prettyPrinted),
+//                        let object = try? JSONDecoder().decode(T.self, from: json)
+//                    else { return nil }
+//                    return object
+//                }
+//                observer.onNext(datas)
+//            }
+//            return Disposables.create()
+//        }
+//    }
+//
+//    open func getDocumentsListener<T: Decodable>(collection: String) -> Observable<[T]> {
+//        return Observable<[T]>.create { observer in
+//            self.fireStore.collection(collection).addSnapshotListener { snapshot, error in
+//                guard let snapshot = snapshot else {
+//                    observer.onError(error!)
+//                    return
+//                }
+//                let datas: [T] = snapshot.documents.compactMap { document -> T? in
+//                    guard
+//                        let json = try? JSONSerialization.data(withJSONObject: document.data(), options: .prettyPrinted),
+//                        let object = try? JSONDecoder().decode(T.self, from: json)
+//                    else { return nil }
+//                    return object
+//                }
+//                observer.onNext(datas)
+//            }
+//            return Disposables.create()
+//        }
+//    }
+//}
 

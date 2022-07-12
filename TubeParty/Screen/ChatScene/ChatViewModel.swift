@@ -35,6 +35,13 @@ protocol ChatOutput {
 enum ChatItem {
     case sender(model: MessageModel)
     case reciever(model: MessageModel)
+    
+    var timestamp: Date {
+        switch self {
+        case .sender(let model): return model.timeStamp
+        case .reciever(let model): return model.timeStamp
+        }
+    }
 }
 
 extension ChatItem: IdentifiableType, Hashable {
@@ -80,44 +87,52 @@ class ChatViewModel: ChatIOType, ChatInput, ChatOutput {
     var getChatCount: Int {
         return _getChatMessage.value.count
     }
+    
     // Properties
     private let _isDisableSendButton: BehaviorRelay<Bool> = .init(value: true)
     private let _getChatMessage: BehaviorRelay<[ChatItem]> = .init(value: [])
     private var currentName: String = ""
+    
+    // TODO - remove me
     private let remoteConfig = RemoteConfig.remoteConfig()
-    private let firebaseDB = Firestore.firestore()
     private var ref: DocumentReference? = nil
+    
+    // TODO - usecase
+    // new instance use case
+    let sendMessageUseCase: SendMessageUseCaseDomain
+    let getMessageUseCase: GetMesaageUseCaseDomain
+    
     private let bag = DisposeBag()
     
     init(userChatName: String) {
+        sendMessageUseCase = TubePartyUseCaseProvider(repo: TubePartyRepository()).makeSendMessageUseCaseDomain()
+        getMessageUseCase = TubePartyUseCaseProvider(repo: TubePartyRepository()).makeGetMessageUseCaseDomain()
         
-        let repository = TubePartyRepository(fireStore: firebaseDB)
-        let sendUseCase = TubePartyUseCaseProvider(repo: repository).makeSendMessageUseCaseDomain()
-        let getUseCase = TubePartyUseCaseProvider(repo: repository).makeGetMessageUseCaseDomain()
-        
-        viewDidload.map { [weak self] _ -> [ChatItem] in
-            guard let self = self else { return [] }
-            if let displayName: String = UserDefaultsManager.get(by:.displayName) {
-                self.currentName = displayName
+        self.binding()
+    }
+    
+    private func binding() {
+        viewDidload
+            // FIXME
+            .map { [weak self] _ -> [ChatItem] in
+                guard let self = self else { return [] }
+                if let displayName: String = UserDefaultsManager.get(by:.displayName) {
+                    self.currentName = displayName
+                }
+                return []
             }
-            return []
-        }
-        .bind(to: _getChatMessage)
-        .disposed(by: bag)
+            .bind(to: _getChatMessage)
+            .disposed(by: bag)
         
-        getUseCase.getMessageList().map { chatList -> [ChatItem] in
-            var newInstance = self._getChatMessage.value
-//            for data in chatList {
-//                if data.profileName == self.currentName {
-//                    newInstance.append(.sender(model: data))
-//                } else {
-//                    newInstance.append(.reciever(model: data))
-//                }
-//            }
-//            return newInstance
-        }
-        .bind(to: _getChatMessage)
-        .disposed(by: bag)
+        getMessageUseCase
+            .getMessageList()
+            .map { chatItem -> [ChatItem] in
+                return chatItem.map {
+                    return $0.profileName == self.currentName ? .sender(model: $0) : .reciever(model: $0)
+                }.sorted(by: { $0.timestamp < $1.timestamp })
+            }
+            .bind(to: _getChatMessage)
+            .disposed(by: bag)
         
         isValidText
             .map({$0})
@@ -138,7 +153,7 @@ class ChatViewModel: ChatIOType, ChatInput, ChatOutput {
                     timeStamp: Date()
                 )
                 
-                sendUseCase.sendMessage(newMessage: newMessage)
+                self.sendMessageUseCase.sendMessage(newMessage: newMessage)
                 
                 var newInstance = self._getChatMessage.value
                 newInstance.append(.sender(model: newMessage))
@@ -146,6 +161,5 @@ class ChatViewModel: ChatIOType, ChatInput, ChatOutput {
             }
             .bind(to: _getChatMessage)
             .disposed(by: bag)
-        
     }
 }
