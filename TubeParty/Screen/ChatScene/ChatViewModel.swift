@@ -121,7 +121,6 @@ class ChatViewModel: ChatIOType, ChatInput, ChatOutput {
                 )
 
                 privider.sendMessage(newMessage: newMessage)
-                privider.getMessageList()
                 
                 var newInstance = self._getChatMessage.value
                 newInstance.append(.sender(model: newMessage))
@@ -129,5 +128,12 @@ class ChatViewModel: ChatIOType, ChatInput, ChatOutput {
             }
             .bind(to: _getChatMessage)
             .disposed(by: bag)
+    
+        privider.getMessageList().bind { text in
+            for i in text {
+                print("text \(i.message)")
+            }
+        }.disposed(by: bag)
+        
     }
 }

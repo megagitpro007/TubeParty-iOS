@@ -69,11 +69,3 @@ public struct MessageModel: Codable {
     }
     
 }
-
-public struct MessageFromFireStore: Codable {
-    var id: String
-    var message: String
-    var profileName: String
-    var profileURL: String
-    var timeStamp: String
-}
