@@ -107,14 +107,14 @@ class ChatViewModel: ChatIOType, ChatInput, ChatOutput {
         
         getUseCase.getMessageList().map { chatList -> [ChatItem] in
             var newInstance = self._getChatMessage.value
-            for data in chatList {
-                if data.profileName == self.currentName {
-                    newInstance.append(.sender(model: data))
-                } else {
-                    newInstance.append(.reciever(model: data))
-                }
-            }
-            return newInstance
+//            for data in chatList {
+//                if data.profileName == self.currentName {
+//                    newInstance.append(.sender(model: data))
+//                } else {
+//                    newInstance.append(.reciever(model: data))
+//                }
+//            }
+//            return newInstance
         }
         .bind(to: _getChatMessage)
         .disposed(by: bag)
