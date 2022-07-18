@@ -27,12 +27,12 @@ class SenderViewCell: UITableViewCell {
     
     func setupUI() {
         self.backgroundColor = .clear
-        self.view.backgroundColor = .tpMainGreen
+        self.view.backgroundColor = .tpCelticBlue
         self.view.layer.cornerRadius = 20
         self.view.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMaxYCorner, .layerMinXMaxYCorner]
         self.profileImage.makeRounded(radius: profileImage.frame.height/2)
         self.name.textColor = .white
-        self.message.textColor = .white
+        self.message.textColor = .tpWhite
         self.timeStamp.textColor = .tpGray
         self.linkContainerView.layer.cornerRadius = 20
         

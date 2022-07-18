@@ -26,12 +26,12 @@ class ReceiverViewCell: UITableViewCell {
     
     func setupUI() {
         self.backgroundColor = .clear
-        self.view.backgroundColor = .clear
+        self.view.backgroundColor = .tpLightSilver
         self.view.layer.cornerRadius = 20
         self.view.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner, .layerMaxXMinYCorner]
         self.profileImage.makeRounded(radius: self.profileImage.frame.height/2)
         self.name.textColor = .white
-        self.message.textColor = .white
+        self.message.textColor = .tpChineseBlack
         self.timeStamp.textColor = .tpGray
         self.linkContainerView.layer.cornerRadius = 20
         

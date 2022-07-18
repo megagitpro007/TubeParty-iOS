@@ -17,13 +17,14 @@ fileprivate let receiverTableViewCell = "ReceiverViewCell"
 
 class ChatViewController: UIViewController {
     
-    @IBOutlet weak var chatBGView: UIView!
-    @IBOutlet weak var sendButton: UIButton!
-    @IBOutlet weak var typingField: UITextField!
-    @IBOutlet weak var chatTitle: UILabel!
-    @IBOutlet weak var chatTableView: UITableView!
-    @IBOutlet weak var textFieldContainer: UIView!
-    @IBOutlet weak var bottomViewContainer: UIView!
+    @IBOutlet private var chatBGView: UIView!
+    @IBOutlet private var sendButton: UIButton!
+    @IBOutlet private var typingField: UITextField!
+    @IBOutlet private var chatTitle: UILabel!
+    @IBOutlet private var chatTableView: UITableView!
+    @IBOutlet private var textFieldContainer: UIView!
+    @IBOutlet private var bottomViewContainer: UIView!
+    @IBOutlet private var settingButton: UIButton!
     
     var isTextFieldSelected: Bool = false
     
@@ -36,11 +37,6 @@ class ChatViewController: UIViewController {
         bindViewModel()
         setupUI()
         registerCell()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        self.scrollToBottom()
     }
     
     func registerCell() {
@@ -67,6 +63,12 @@ class ChatViewController: UIViewController {
         let largeBoldDoc = UIImage(systemName: "chevron.forward.circle.fill", withConfiguration: largeConfig)?.withTintColor(.tpMainBlue, renderingMode: .alwaysOriginal)
         sendButton.setImage(largeBoldDoc, for: .normal)
         sendButton.setTitle("", for: .normal)
+        
+        // Set Setting button color
+        let settingIconConfig = UIImage.SymbolConfiguration(pointSize: 14, weight: .bold, scale: .large)
+        let settingIconConfigDoc = UIImage(systemName: "gearshape.fill", withConfiguration: settingIconConfig)?.withTintColor(.white, renderingMode: .alwaysOriginal)
+        settingButton.setImage(settingIconConfigDoc, for: .normal)
+        settingButton.setTitle("", for: .normal)
         
         // Set typing field style
         textFieldContainer.layer.cornerRadius = textFieldContainer.bounds.height / 2
@@ -105,6 +107,12 @@ class ChatViewController: UIViewController {
             })
             .bind(to: viewModel.input.messageInput)
             .disposed(by: bag)
+                
+        settingButton
+            .rx
+            .tap
+            .bind(to: viewModel.input.didTapSettingButton)
+            .disposed(by: bag)
         
         //output
         viewModel
@@ -114,7 +122,6 @@ class ChatViewController: UIViewController {
             .drive(onNext: { isDisable in
                 UIView.animate(withDuration: 0.1, delay: 0, options: .curveEaseOut) { [weak self] in
                     guard let self = self else { return }
-                    print("isDisable : \(isDisable)")
                     self.sendButton.isUserInteractionEnabled = isDisable
                     self.sendButton.isEnabled = isDisable
                 }

@@ -24,6 +24,7 @@ protocol ChatInput {
     var isValidText: PublishRelay<Bool> { get }
     var messageInput: PublishRelay<String> { get }
     var didTabEnterButton: PublishRelay<Void> { get }
+    var didTapSettingButton: PublishRelay<Void> { get }
 }
 
 protocol ChatOutput {
@@ -43,6 +44,7 @@ class ChatViewModel: ChatIOType, ChatInput, ChatOutput {
     var isValidText: PublishRelay<Bool> = .init()
     var messageInput: PublishRelay<String> = .init()
     var didTabEnterButton: PublishRelay<Void> = .init()
+    var didTapSettingButton: PublishRelay<Void> = .init()
     
     // Outputs
     var isDisableSendButton: Driver<Bool> {
@@ -86,6 +88,11 @@ class ChatViewModel: ChatIOType, ChatInput, ChatOutput {
                 self.currentName = displayName
             }
         }.disposed(by: bag)
+        
+        didTapSettingButton.bind { [weak self] _ in
+            guard let self = self else { return }
+            print("didTapSettingButton")
+        }
         
         getMessageUseCase
             .getMessageList()

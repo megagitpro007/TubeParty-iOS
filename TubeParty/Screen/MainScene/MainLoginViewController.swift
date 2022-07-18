@@ -4,12 +4,12 @@ import RxCocoa
 
 class MainLoginViewController: UIViewController, MainViewControllerDelegate {
     
-    @IBOutlet weak var mainView: UIView!
-    @IBOutlet weak var logoImage: UIImageView!
-    @IBOutlet weak var nameTextfield: UITextField!
-    @IBOutlet weak var loginView: UIView!
-    @IBOutlet weak var submitButton: UIButton!
-    @IBOutlet weak var warningLabel: UILabel!
+    @IBOutlet private var mainView: UIView!
+    @IBOutlet private var logoImage: UIImageView!
+    @IBOutlet private var nameTextfield: UITextField!
+    @IBOutlet private var loginView: UIView!
+    @IBOutlet private var submitButton: UIButton!
+    @IBOutlet private var warningLabel: UILabel!
     
     private var viewModel: MainLoginIOType = MainLoginViewModel()
     private let bag = DisposeBag()
