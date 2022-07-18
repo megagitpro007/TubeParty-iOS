@@ -23,11 +23,13 @@ class DetermineViewController: UIViewController {
             if let displayName: String = UserDefaultsManager.get(by: .displayName) {
                 if let vc = self?.storyboard?.instantiateViewController(withIdentifier: Scene.chat.name) as? ChatViewController {
                     vc.viewModel = ChatViewModel(userChatName: displayName)
-                    self?.replaceRoot(vc: vc)
+                    let nav = UINavigationController(rootViewController: vc)
+                    self?.replaceRoot(vc: nav)
                 }
             } else {
                 if let vc = self?.storyboard?.instantiateViewController(withIdentifier: Scene.login.name) as? MainLoginViewController {
-                    self?.replaceRoot(vc: vc)
+                    let nav = UINavigationController(rootViewController: vc)
+                    self?.replaceRoot(vc: nav)
                 }
             }
         })

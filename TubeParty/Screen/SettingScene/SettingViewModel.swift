@@ -37,4 +37,26 @@ final class SettingViewModel: SettingViewModelType, SettingInputs, SettingOutput
     
     // Outputs
     
+    // Properties
+    private let bag = DisposeBag()
+    
+    init() {
+        
+        viewDidload.bind { [weak self] _ in
+            guard let self = self else { return }
+            
+        }.disposed(by: bag)
+        
+        didTapChangeImage.bind { [weak self] _ in
+            guard let self = self else { return }
+            
+        }.disposed(by: bag)
+        
+        didTapSaveButton.bind { [weak self] _ in
+            guard let self = self else { return }
+            
+        }.disposed(by: bag)
+        
+    }
+    
 }

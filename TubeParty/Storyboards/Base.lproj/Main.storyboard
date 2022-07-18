@@ -288,7 +288,7 @@
         <!--Setting View Controller-->
         <scene sceneID="TWc-8n-Vns">
             <objects>
-                <viewController id="BC6-Wj-eTC" customClass="SettingViewController" customModule="TubeParty" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SettingViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BC6-Wj-eTC" customClass="SettingViewController" customModule="TubeParty" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ojA-WG-Epr">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

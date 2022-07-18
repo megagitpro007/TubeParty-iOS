@@ -14,9 +14,14 @@ import FirebaseFirestore
 
 fileprivate let imageProfileURL = "https://assets.coingecko.com/coins/images/24155/large/zoro.png?1646565848"
 
+protocol ChatViewControllerDelegate {
+    func didTapSetingButton()
+}
+
 protocol ChatIOType {
     var input: ChatInput { get }
     var output: ChatOutput { get }
+    var delegate: ChatViewControllerDelegate? { get set }
 }
 
 protocol ChatInput {
@@ -34,6 +39,9 @@ protocol ChatOutput {
 }
 
 class ChatViewModel: ChatIOType, ChatInput, ChatOutput {
+    
+    // Delegate
+    var delegate: ChatViewControllerDelegate?
     
     // IO Type
     var input: ChatInput { return self }
@@ -91,8 +99,8 @@ class ChatViewModel: ChatIOType, ChatInput, ChatOutput {
         
         didTapSettingButton.bind { [weak self] _ in
             guard let self = self else { return }
-            print("didTapSettingButton")
-        }
+            self.delegate?.didTapSetingButton()
+        }.disposed(by: bag)
         
         getMessageUseCase
             .getMessageList()

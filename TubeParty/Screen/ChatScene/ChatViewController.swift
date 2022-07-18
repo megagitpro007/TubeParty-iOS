@@ -15,7 +15,7 @@ import FirebaseRemoteConfig
 fileprivate let senderTableViewCell = "SenderViewCell"
 fileprivate let receiverTableViewCell = "ReceiverViewCell"
 
-class ChatViewController: UIViewController {
+class ChatViewController: UIViewController, ChatViewControllerDelegate {
     
     @IBOutlet private var chatBGView: UIView!
     @IBOutlet private var sendButton: UIButton!
@@ -34,17 +34,19 @@ class ChatViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        bindViewModel()
-        setupUI()
-        registerCell()
+        self.bindViewModel()
+        self.setupUI()
+        self.registerCell()
+        self.viewModel.delegate = self
     }
     
     func registerCell() {
-        chatTableView.register(UINib(nibName: senderTableViewCell, bundle: nil), forCellReuseIdentifier: senderTableViewCell)
-        chatTableView.register(UINib(nibName: receiverTableViewCell, bundle: nil), forCellReuseIdentifier: receiverTableViewCell)
+        self.chatTableView.register(UINib(nibName: senderTableViewCell, bundle: nil), forCellReuseIdentifier: senderTableViewCell)
+        self.chatTableView.register(UINib(nibName: receiverTableViewCell, bundle: nil), forCellReuseIdentifier: receiverTableViewCell)
     }
     
     func setupUI() {
+        self.navigationController?.isNavigationBarHidden = true
         typingField.delegate = self
         
         bottomViewContainer.backgroundColor = .tpGunmetal
@@ -87,6 +89,7 @@ class ChatViewController: UIViewController {
     }
     
     func bindViewModel() {
+        
         //input
         typingField
             .rx
@@ -209,6 +212,13 @@ class ChatViewController: UIViewController {
             self.scrollToBottom()
             
         })
+    }
+    
+    func didTapSetingButton() {
+        if let vc = self.storyboard?.instantiateViewController(withIdentifier: Scene.setting.name) as? SettingViewController {
+            vc.viewModel = SettingViewModel()
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
     }
 
 }

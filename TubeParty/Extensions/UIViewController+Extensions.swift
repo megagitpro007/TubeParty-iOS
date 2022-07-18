@@ -20,11 +20,16 @@ enum Storyboard {
 enum Scene {
     case login
     case chat
+    case setting
     
     var name: String {
         switch self {
-        case .login: return "MainLoginViewController"
-        case .chat: return "ChatViewController"
+            case .login:
+                return "MainLoginViewController"
+            case .chat:
+                return "ChatViewController"
+            case .setting:
+                return "SettingViewController"
         }
     }
 }
