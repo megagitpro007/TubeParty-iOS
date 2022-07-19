@@ -14,18 +14,14 @@ import FirebaseFirestore
 
 fileprivate let imageProfileURL = "https://assets.coingecko.com/coins/images/24155/large/zoro.png?1646565848"
 
-protocol ChatViewControllerDelegate {
-    func didTapSetingButton()
-}
-
 protocol ChatIOType {
     var input: ChatInput { get }
     var output: ChatOutput { get }
-    var delegate: ChatViewControllerDelegate? { get set }
 }
 
 protocol ChatInput {
     var viewDidload: PublishRelay<Void> { get }
+    var viewWillAppear: PublishRelay<Void> { get }
     var isValidText: PublishRelay<Bool> { get }
     var messageInput: PublishRelay<String> { get }
     var didTabEnterButton: PublishRelay<Void> { get }
@@ -40,15 +36,13 @@ protocol ChatOutput {
 
 class ChatViewModel: ChatIOType, ChatInput, ChatOutput {
     
-    // Delegate
-    var delegate: ChatViewControllerDelegate?
-    
     // IO Type
     var input: ChatInput { return self }
     var output: ChatOutput { return self }
     
     // Inputs
     var viewDidload: PublishRelay<Void> = .init()
+    var viewWillAppear: PublishRelay<Void> = .init()
     var isValidText: PublishRelay<Bool> = .init()
     var messageInput: PublishRelay<String> = .init()
     var didTabEnterButton: PublishRelay<Void> = .init()
@@ -86,20 +80,15 @@ class ChatViewModel: ChatIOType, ChatInput, ChatOutput {
     
     private func binding() {
         
-        viewDidload.bind { [weak self] _ in
+        viewDidload.bind { _ in
+            
+        }.disposed(by: bag)
+        
+        viewWillAppear.bind { [weak self] _ in
             guard let self = self else { return }
             if let displayName: String = UserDefaultsManager.get(by:.displayName) {
                 self.currentName = displayName
             }
-        }.disposed(by: bag)
-        
-        /*
-            FIXME: What do you do ?
-            : view -> viewModel -> view ?
-        */
-        didTapSettingButton.bind { [weak self] _ in
-            guard let self = self else { return }
-            self.delegate?.didTapSetingButton()
         }.disposed(by: bag)
         
         getMessageUseCase

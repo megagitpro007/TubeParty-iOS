@@ -15,7 +15,7 @@ import FirebaseRemoteConfig
 fileprivate let senderTableViewCell = "SenderViewCell"
 fileprivate let receiverTableViewCell = "ReceiverViewCell"
 
-class ChatViewController: UIViewController, ChatViewControllerDelegate {
+class ChatViewController: UIViewController {
     
     @IBOutlet private var chatBGView: UIView!
     @IBOutlet private var sendButton: UIButton!
@@ -37,9 +37,11 @@ class ChatViewController: UIViewController, ChatViewControllerDelegate {
         self.bindViewModel()
         self.setupUI()
         self.registerCell()
-        
-        // Rx project shouldn't have `delegate`
-        self.viewModel.delegate = self
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.input.viewWillAppear.accept(())
     }
     
     func registerCell() {
@@ -111,12 +113,6 @@ class ChatViewController: UIViewController, ChatViewControllerDelegate {
                 self.scrollToBottom()
             })
             .bind(to: viewModel.input.messageInput)
-            .disposed(by: bag)
-                
-        settingButton
-            .rx
-            .tap
-            .bind(to: viewModel.input.didTapSettingButton)
             .disposed(by: bag)
         
         // output
@@ -209,7 +205,6 @@ class ChatViewController: UIViewController, ChatViewControllerDelegate {
         UIView.animate(withDuration: 0.3, animations: {
             self.bottomViewContainer.transform = .identity
             self.chatTableView.transform = .identity
-            
             self.chatTableView.contentInset = .init(top: 0, left: 0, bottom: 0, right: 0)
             self.view.endEditing(true)
             self.scrollToBottom()
@@ -217,7 +212,7 @@ class ChatViewController: UIViewController, ChatViewControllerDelegate {
         })
     }
     
-    func didTapSetingButton() {
+    @IBAction func didTapSettingButton(_ sender: Any) {
         if let vc = self.storyboard?.instantiateViewController(withIdentifier: Scene.setting.name) as? SettingViewController {
             vc.viewModel = SettingViewModel()
             self.navigationController?.pushViewController(vc, animated: true)

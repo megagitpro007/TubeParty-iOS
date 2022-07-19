@@ -23,6 +23,7 @@ class MainLoginViewController: UIViewController, MainViewControllerDelegate {
     }
     
     private func setupUI() {
+        self.navigationController?.isNavigationBarHidden = true
         warningLabel.isHidden = true
         submitButton.isEnabled = false
         self.logoImage.image = UIImage(systemName: "message.circle")?.withTintColor(.white, renderingMode: .alwaysOriginal)
@@ -54,7 +55,6 @@ class MainLoginViewController: UIViewController, MainViewControllerDelegate {
     }
     
     private func bindViewModel() {
-        
         nameTextfield
             .rx
             .text.orEmpty.map({ text in
@@ -90,7 +90,8 @@ class MainLoginViewController: UIViewController, MainViewControllerDelegate {
         
         // replace root
         vc.viewModel = vm
-        self.replaceRoot(vc: vc)
+        let nav = UINavigationController(rootViewController: vc)
+        self.replaceRoot(vc: nav)
     }
     
 }
