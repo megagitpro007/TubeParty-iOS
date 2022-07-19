@@ -3,13 +3,13 @@ import RxSwift
 
 final public class GetMessageUseCase: GetMesaageUseCaseDomain {
     
-    private let repo: TubePartyRepositories
+    private let repository: TubePartyRepository
     
-    init(repo: TubePartyRepositories) {
-        self.repo = repo
+    init(repository: TubePartyRepository = TubePartyRepositoryImpl()) {
+        self.repository = repository
     }
     
     public func getMessageList() -> Observable<[MessageModel]> {
-        repo.getMessageList()
+        repository.getMessageList()
     }
 }

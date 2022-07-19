@@ -9,12 +9,12 @@ import Foundation
 import RxSwift
 import FirebaseFirestore
 
-protocol TubePartyRepositories {
+protocol TubePartyRepository {
     func sendMessage(newMessage: MessageModel)
     func getMessageList() -> Observable<[MessageModel]>
 }
 
-public class TubePartyRepository: TubePartyRepositories {
+public class TubePartyRepositoryImpl: TubePartyRepository {
     
     private let fireStore: Firestore
     private var ref: DocumentReference? = nil
@@ -23,6 +23,7 @@ public class TubePartyRepository: TubePartyRepositories {
         self.fireStore = fireStore
     }
     
+    // TODO - need to return error state for handle on scene
     public func sendMessage(newMessage: MessageModel) {
         self.ref = self.fireStore.collection("message_list")
             .addDocument(data: newMessage.toJSON()) { error in

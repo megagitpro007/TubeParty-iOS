@@ -3,14 +3,14 @@ import RxSwift
 
 final public class SendMessageUseCase: SendMessageUseCaseDomain {
     
-    private let repo: TubePartyRepositories
+    private let repository: TubePartyRepository
     
-    init(repo: TubePartyRepositories) {
-        self.repo = repo
+    init(repository: TubePartyRepository = TubePartyRepositoryImpl()) {
+        self.repository = repository
     }
     
     public func sendMessage(newMessage: MessageModel) {
-        repo.sendMessage(newMessage: newMessage)
+        repository.sendMessage(newMessage: newMessage)
     }
 
 }

@@ -37,6 +37,8 @@ class ChatViewController: UIViewController, ChatViewControllerDelegate {
         self.bindViewModel()
         self.setupUI()
         self.registerCell()
+        
+        // Rx project shouldn't have `delegate`
         self.viewModel.delegate = self
     }
     
@@ -90,7 +92,7 @@ class ChatViewController: UIViewController, ChatViewControllerDelegate {
     
     func bindViewModel() {
         
-        //input
+        // input
         typingField
             .rx
             .text
@@ -117,7 +119,7 @@ class ChatViewController: UIViewController, ChatViewControllerDelegate {
             .bind(to: viewModel.input.didTapSettingButton)
             .disposed(by: bag)
         
-        //output
+        // output
         viewModel
             .output
             .isDisableSendButton
@@ -145,10 +147,11 @@ class ChatViewController: UIViewController, ChatViewControllerDelegate {
                 }
             }.disposed(by: bag)
         
+        // Do not implement configulation of view in binding function
         let tapGesture = UITapGestureRecognizer(target: self, action:#selector(dismissKeyboard))
         view.addGestureRecognizer(tapGesture)
         
-        //Datasource
+        // Datasource
         dataSource = RxTableViewSectionedReloadDataSource<SectionModel>(configureCell: { [weak self] (datasource, tableview, indexpath, item) -> UITableViewCell in
             guard let self = self else { return UITableViewCell() }
             switch item {

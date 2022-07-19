@@ -72,18 +72,14 @@ class ChatViewModel: ChatIOType, ChatInput, ChatOutput {
     // Properties
     private let _isDisableSendButton: BehaviorRelay<Bool> = .init(value: true)
     private let _getChatMessage: BehaviorRelay<[ChatItem]> = .init(value: [])
+    private let sendMessageUseCase: SendMessageUseCaseDomain
+    private let getMessageUseCase: GetMesaageUseCaseDomain
+    private let bag = DisposeBag()
     private var currentName: String = ""
     
-    // TODO - usecase
-    // new instance use case
-    let sendMessageUseCase: SendMessageUseCaseDomain
-    let getMessageUseCase: GetMesaageUseCaseDomain
-    
-    private let bag = DisposeBag()
-    
     init(userChatName: String) {
-        sendMessageUseCase = TubePartyUseCaseProvider(repo: TubePartyRepository()).makeSendMessageUseCaseDomain()
-        getMessageUseCase = TubePartyUseCaseProvider(repo: TubePartyRepository()).makeGetMessageUseCaseDomain()
+        sendMessageUseCase = TubePartyUseCaseProvider().makeSendMessageUseCaseDomain()
+        getMessageUseCase = TubePartyUseCaseProvider().makeGetMessageUseCaseDomain()
         
         self.binding()
     }
@@ -97,6 +93,10 @@ class ChatViewModel: ChatIOType, ChatInput, ChatOutput {
             }
         }.disposed(by: bag)
         
+        /*
+            FIXME: What do you do ?
+            : view -> viewModel -> view ?
+        */
         didTapSettingButton.bind { [weak self] _ in
             guard let self = self else { return }
             self.delegate?.didTapSetingButton()
@@ -108,7 +108,8 @@ class ChatViewModel: ChatIOType, ChatInput, ChatOutput {
                 return chatItem.map({
                     return $0.profileName == self.currentName ? .sender(model: $0) : .reciever(model: $0)
                 }).sorted(by: { $0.timestamp < $1.timestamp })
-            }.bind(to: _getChatMessage)
+            }
+            .bind(to: _getChatMessage)
             .disposed(by: bag)
         
         isValidText
