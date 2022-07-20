@@ -124,16 +124,9 @@ extension SettingViewController: UIImagePickerControllerDelegate {
     
     // MARK:- Image Picker Delegates
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        guard let image = info[.editedImage] as? UIImage else { return }
-        
+        guard let image = info[.originalImage] as? UIImage else { return }
         self.imageView.image = image
-        
-        let imageName = UUID().uuidString
-        let imagePath = getDocumentsDirectory().appendingPathComponent(imageName)
-        
-        if let jpegData = image.jpegData(compressionQuality: 0.8) {
-            try? jpegData.write(to: imagePath)
-        }
+        self.viewModel.input.uploadProfileIamge.accept(image)
         dismiss(animated: true, completion: nil)
     }
 

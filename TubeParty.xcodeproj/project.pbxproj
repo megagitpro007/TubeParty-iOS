@@ -40,6 +40,8 @@
 		E25EE480287DBC8600343221 /* GetMesaageUseCaseDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25EE47F287DBC8600343221 /* GetMesaageUseCaseDomain.swift */; };
 		E25EE482287DBCBE00343221 /* GetMessageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25EE481287DBCBE00343221 /* GetMessageUseCase.swift */; };
 		E260A30F287DCD580043632B /* ChatItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = E260A30E287DCD580043632B /* ChatItems.swift */; };
+		E284D1B7288855500057ECFC /* UploadImageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E284D1B6288855500057ECFC /* UploadImageUseCase.swift */; };
+		E284D1B9288857930057ECFC /* UploadImageUseCaseDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = E284D1B8288857930057ECFC /* UploadImageUseCaseDomain.swift */; };
 		E29DF3AD28733E9B0048FB34 /* MessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29DF3AC28733E9A0048FB34 /* MessageModel.swift */; };
 		E2B34E0128772B6B00B73069 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E2B34E0028772B6B00B73069 /* GoogleService-Info.plist */; };
 		E2B476032885AD4E00058B8C /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B476022885AD4E00058B8C /* SettingViewController.swift */; };
@@ -90,6 +92,8 @@
 		E25EE47F287DBC8600343221 /* GetMesaageUseCaseDomain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetMesaageUseCaseDomain.swift; sourceTree = "<group>"; };
 		E25EE481287DBCBE00343221 /* GetMessageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetMessageUseCase.swift; sourceTree = "<group>"; };
 		E260A30E287DCD580043632B /* ChatItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatItems.swift; sourceTree = "<group>"; };
+		E284D1B6288855500057ECFC /* UploadImageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadImageUseCase.swift; sourceTree = "<group>"; };
+		E284D1B8288857930057ECFC /* UploadImageUseCaseDomain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadImageUseCaseDomain.swift; sourceTree = "<group>"; };
 		E29DF3AC28733E9A0048FB34 /* MessageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageModel.swift; sourceTree = "<group>"; };
 		E2B34E0028772B6B00B73069 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E2B476022885AD4E00058B8C /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
@@ -186,9 +190,9 @@
 		E21051FA286753DF007AEC7B /* TubeParty */ = {
 			isa = PBXGroup;
 			children = (
+				E210521228675AA0007AEC7B /* Delegate */,
 				E210521328675ABA007AEC7B /* Storyboards */,
 				65150F36286F4024005B9AF3 /* Utilities */,
-				E210521228675AA0007AEC7B /* Delegate */,
 				E210521028675A74007AEC7B /* Screen */,
 				65150F3B286F4D0F005B9AF3 /* CustomViews */,
 				E2EDD3C4287C664C00FDBB07 /* Domain */,
@@ -304,6 +308,7 @@
 				E2EDD3C6287C686200FDBB07 /* TubePartyUseCaseProviderDomain.swift */,
 				E2EDD3C8287C686E00FDBB07 /* SendMessageUseCaseDomain.swift */,
 				E25EE47F287DBC8600343221 /* GetMesaageUseCaseDomain.swift */,
+				E284D1B8288857930057ECFC /* UploadImageUseCaseDomain.swift */,
 			);
 			path = Domain;
 			sourceTree = "<group>";
@@ -315,6 +320,7 @@
 				E2EDD3CA287C69F800FDBB07 /* TubePartyUseCaseProvider.swift */,
 				E2EDD3CC287C6AA600FDBB07 /* SendMessageUseCase.swift */,
 				E25EE481287DBCBE00343221 /* GetMessageUseCase.swift */,
+				E284D1B6288855500057ECFC /* UploadImageUseCase.swift */,
 			);
 			path = Platform;
 			sourceTree = "<group>";
@@ -446,6 +452,8 @@
 				E2B476052885AF6600058B8C /* SettingViewModel.swift in Sources */,
 				E2EDD3C9287C686E00FDBB07 /* SendMessageUseCaseDomain.swift in Sources */,
 				65150F34286F3045005B9AF3 /* DetermineViewController.swift in Sources */,
+				E284D1B7288855500057ECFC /* UploadImageUseCase.swift in Sources */,
+				E284D1B9288857930057ECFC /* UploadImageUseCaseDomain.swift in Sources */,
 				65AAC4EC28700B4400DB178E /* String+Extensions.swift in Sources */,
 				E212CBD22869E68D004AA7C7 /* SenderViewCell.swift in Sources */,
 				E2B476032885AD4E00058B8C /* SettingViewController.swift in Sources */,

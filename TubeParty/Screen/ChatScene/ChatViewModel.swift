@@ -11,6 +11,8 @@ import RxCocoa
 import RxDataSources
 import FirebaseRemoteConfig
 import FirebaseFirestore
+import FirebaseStorage
+import UIKit
 
 fileprivate let imageProfileURL = "https://assets.coingecko.com/coins/images/24155/large/zoro.png?1646565848"
 

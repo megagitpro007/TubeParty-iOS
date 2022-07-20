@@ -8,10 +8,12 @@
 import Foundation
 import RxSwift
 import FirebaseFirestore
+import FirebaseStorage
 
 protocol TubePartyRepository {
     func sendMessage(newMessage: MessageModel)
     func getMessageList() -> Observable<[MessageModel]>
+    func uploadFile(storageRef: StorageReference, image: UIImage, senderID: String) -> Observable<StorageUploadTask>
 }
 
 public class TubePartyRepositoryImpl: TubePartyRepository {
@@ -56,6 +58,23 @@ public class TubePartyRepositoryImpl: TubePartyRepository {
             return Disposables.create()
         }
     }
+    
+    func uploadFile(storageRef: StorageReference, image: UIImage, senderID: String) -> Observable<StorageUploadTask> {
+        
+        return Observable.create { observer -> Disposable in
+            guard let data = image.pngData() else { return Disposables.create() }
+            let riversRef = storageRef.child("images/\(senderID).jpg")
+            let uploadTask = riversRef.putData(data, metadata: nil) { (metadata, error) in
+                guard let metadata = metadata else { return }
+                riversRef.downloadURL { (url, error) in
+                    guard let downloadURL = url else { return }
+                }
+            }
+            observer.onNext(uploadTask)
+            return Disposables.create()
+        }
+    }
+    
 }
 
 

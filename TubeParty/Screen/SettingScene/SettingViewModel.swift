@@ -8,6 +8,7 @@
 import Foundation
 import RxSwift
 import RxCocoa
+import FirebaseStorage
 
 protocol SettingViewModelType {
     var input: SettingInputs { get }
@@ -19,6 +20,7 @@ protocol SettingInputs {
     var didNameChange: PublishRelay<String> { get }
     var didTapChangeImage: PublishRelay<Void> { get }
     var didTapSaveButton: PublishRelay<Void> { get }
+    var uploadProfileIamge: PublishRelay<UIImage> { get set }
 }
 
 protocol SettingOutputs {
@@ -37,6 +39,7 @@ final class SettingViewModel: SettingViewModelType, SettingInputs, SettingOutput
     var didTapChangeImage: PublishRelay<Void> = .init()
     var didTapSaveButton: PublishRelay<Void> = .init()
     var didNameChange: PublishRelay<String> = .init()
+    var uploadProfileIamge: PublishRelay<UIImage> = .init()
     
     // Outputs
     var getCurrentUsername: Driver<String> {
@@ -51,9 +54,12 @@ final class SettingViewModel: SettingViewModelType, SettingInputs, SettingOutput
     // Properties
     private let _getCurrentUsername: PublishRelay<String> = .init()
     private let _showAlertSaved: PublishRelay<Void> = .init()
+    private let getMessageUseCase: UploadImageUseCaseDomain
     private let bag = DisposeBag()
     
     init() {
+        
+        getMessageUseCase = TubePartyUseCaseProvider().makeUploadImageUseCaseDomain()
         
         viewDidload.map { _ -> String in
             var currentName = ""
@@ -78,6 +84,25 @@ final class SettingViewModel: SettingViewModelType, SettingInputs, SettingOutput
             }
         }.disposed(by: bag)
         
+        let uploadImage = uploadProfileIamge.flatMapLatest { [weak self] image -> Observable<StorageUploadTask> in
+            guard let self = self else { return .never() }
+            return self.getMessageUseCase.uploadFile(image: image, senderID: "")
+        }
+        
+        uploadImage.bind(onNext: { uploadTask in
+            uploadTask.observe(.progress) { snapshot in
+                if let totalUnitCount = snapshot.progress?.totalUnitCount,
+                   let completedUnitCount = snapshot.progress?.completedUnitCount {
+                    
+                    let onepercent = totalUnitCount / 100
+                    let percent = completedUnitCount / onepercent
+                    
+                    print("🔥 percent : \(percent)%")
+                    
+                }
+            }
+        }).disposed(by: bag)
+                    
     }
     
 }
