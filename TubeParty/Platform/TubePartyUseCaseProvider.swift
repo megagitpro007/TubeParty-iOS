@@ -16,4 +16,8 @@ final public class TubePartyUseCaseProvider: TubePartyUseCaseProviderDomain {
         return UploadImageUseCase()
     }
     
+    public func makeUpdateProfileUseCaseDomain() -> UpdateProfileUseCaseDomain {
+        return UpdateProfileUseCase()
+    }
+    
 }

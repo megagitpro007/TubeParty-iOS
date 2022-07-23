@@ -16,14 +16,15 @@ protocol TubePartyRepository {
     func sendMessage(newMessage: MessageModel)
     func getMessageList() -> Observable<[MessageModel]>
     func uploadProfileImage(image: UIImage, senderID: String) -> Observable<Percent>
+    func updateUserProfile(userProfile: UserProfile) -> Observable<Void>
 }
 
 public class TubePartyRepositoryImpl: TubePartyRepository {
     
-    private let fireStore: Firestore
-    private let firebaseStorage: Storage
-    private let storageRef: StorageReference
-    private var ref: DocumentReference? = nil
+    let fireStore: Firestore
+    let firebaseStorage: Storage
+    let storageRef: StorageReference
+    var ref: DocumentReference? = nil
     
     init(fireStore: Firestore = Firestore.firestore()) {
         self.fireStore = fireStore
@@ -31,7 +32,30 @@ public class TubePartyRepositoryImpl: TubePartyRepository {
         storageRef = firebaseStorage.reference()
     }
     
-    // TODO - need to return error state for handle on scene
+    func updateUserProfile(userProfile: UserProfile) -> Observable<Void> {
+        return Observable.create { [weak self] observer -> Disposable in
+            guard let self = self else { return Disposables.create() }
+            self.fireStore.collection("message_list")
+                .whereField("sender_id", isEqualTo: userProfile.senderID)
+                .getDocuments() { (querySnapshot, err) in
+                    
+                    if let error = err {
+                        observer.onError(error)
+                    }
+                    
+                    for exx in querySnapshot!.documents {
+                        print("🔥exx.documentID : \(exx.documentID)")
+                        exx.reference.updateData([
+                            "profile_name": userProfile.name,
+                            "profile_url": userProfile.profileURL
+                        ])
+                    }
+                    observer.onNext(())
+                }
+            return Disposables.create()
+        }
+    }
+    
     public func sendMessage(newMessage: MessageModel) {
         self.ref = self.fireStore.collection("message_list")
             .addDocument(data: newMessage.toJSON()) { error in
@@ -65,7 +89,7 @@ public class TubePartyRepositoryImpl: TubePartyRepository {
         }
     }
     
-    func uploadProfileImage(image: UIImage, senderID: String) -> Observable<Percent> {
+    public func uploadProfileImage(image: UIImage, senderID: String) -> Observable<Percent> {
         
         return Observable.create { [weak self] observer -> Disposable in
             guard let self = self, let data = image.pngData() else { return Disposables.create() }

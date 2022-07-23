@@ -41,6 +41,8 @@
 		E25EE482287DBCBE00343221 /* GetMessageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25EE481287DBCBE00343221 /* GetMessageUseCase.swift */; };
 		E260A30F287DCD580043632B /* ChatItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = E260A30E287DCD580043632B /* ChatItems.swift */; };
 		E26C9919288BEF3400D46E83 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26C9918288BEF3400D46E83 /* UserProfile.swift */; };
+		E26C991B288C211700D46E83 /* UpdateProfileUseCaseDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26C991A288C211700D46E83 /* UpdateProfileUseCaseDomain.swift */; };
+		E26C991D288C215200D46E83 /* UpdateProfileUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26C991C288C215200D46E83 /* UpdateProfileUseCase.swift */; };
 		E284D1B7288855500057ECFC /* UploadImageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E284D1B6288855500057ECFC /* UploadImageUseCase.swift */; };
 		E284D1B9288857930057ECFC /* UploadImageUseCaseDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = E284D1B8288857930057ECFC /* UploadImageUseCaseDomain.swift */; };
 		E29DF3AD28733E9B0048FB34 /* MessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29DF3AC28733E9A0048FB34 /* MessageModel.swift */; };
@@ -94,6 +96,8 @@
 		E25EE481287DBCBE00343221 /* GetMessageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetMessageUseCase.swift; sourceTree = "<group>"; };
 		E260A30E287DCD580043632B /* ChatItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatItems.swift; sourceTree = "<group>"; };
 		E26C9918288BEF3400D46E83 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
+		E26C991A288C211700D46E83 /* UpdateProfileUseCaseDomain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateProfileUseCaseDomain.swift; sourceTree = "<group>"; };
+		E26C991C288C215200D46E83 /* UpdateProfileUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateProfileUseCase.swift; sourceTree = "<group>"; };
 		E284D1B6288855500057ECFC /* UploadImageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadImageUseCase.swift; sourceTree = "<group>"; };
 		E284D1B8288857930057ECFC /* UploadImageUseCaseDomain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadImageUseCaseDomain.swift; sourceTree = "<group>"; };
 		E29DF3AC28733E9A0048FB34 /* MessageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageModel.swift; sourceTree = "<group>"; };
@@ -312,6 +316,7 @@
 				E2EDD3C8287C686E00FDBB07 /* SendMessageUseCaseDomain.swift */,
 				E25EE47F287DBC8600343221 /* GetMesaageUseCaseDomain.swift */,
 				E284D1B8288857930057ECFC /* UploadImageUseCaseDomain.swift */,
+				E26C991A288C211700D46E83 /* UpdateProfileUseCaseDomain.swift */,
 			);
 			path = Domain;
 			sourceTree = "<group>";
@@ -324,6 +329,7 @@
 				E2EDD3CC287C6AA600FDBB07 /* SendMessageUseCase.swift */,
 				E25EE481287DBCBE00343221 /* GetMessageUseCase.swift */,
 				E284D1B6288855500057ECFC /* UploadImageUseCase.swift */,
+				E26C991C288C215200D46E83 /* UpdateProfileUseCase.swift */,
 			);
 			path = Platform;
 			sourceTree = "<group>";
@@ -461,6 +467,7 @@
 				E212CBD22869E68D004AA7C7 /* SenderViewCell.swift in Sources */,
 				E2B476032885AD4E00058B8C /* SettingViewController.swift in Sources */,
 				E2105200286753DF007AEC7B /* MainLoginViewController.swift in Sources */,
+				E26C991D288C215200D46E83 /* UpdateProfileUseCase.swift in Sources */,
 				E21051FC286753DF007AEC7B /* AppDelegate.swift in Sources */,
 				65150F3D286F4D25005B9AF3 /* LoadingView.swift in Sources */,
 				E25EE480287DBC8600343221 /* GetMesaageUseCaseDomain.swift in Sources */,
@@ -474,6 +481,7 @@
 				E212CBD62869E71F004AA7C7 /* ReceiverViewCell.swift in Sources */,
 				E260A30F287DCD580043632B /* ChatItems.swift in Sources */,
 				E21051FE286753DF007AEC7B /* SceneDelegate.swift in Sources */,
+				E26C991B288C211700D46E83 /* UpdateProfileUseCaseDomain.swift in Sources */,
 				E210522628677337007AEC7B /* MainLoginViewModel.swift in Sources */,
 				650B35F12877343700FCD991 /* Date+Extensions.swift in Sources */,
 				E2EDD3C7287C686200FDBB07 /* TubePartyUseCaseProviderDomain.swift in Sources */,

@@ -60,12 +60,15 @@ final class SettingViewModel: SettingViewModelType, SettingInputs, SettingOutput
     private let _getCurrentProfile: PublishRelay<UserProfile> = .init()
     private let _showAlertSaved: PublishRelay<Void> = .init()
     private let _uploadPercentage: PublishRelay<Int> = .init()
-    private let getMessageUseCase: UploadImageUseCaseDomain
+    private let uploadImageUseCase: UploadImageUseCaseDomain
+    private let updateProfileUseCase: UpdateProfileUseCaseDomain
     private let bag = DisposeBag()
     
     init() {
         
-        getMessageUseCase = TubePartyUseCaseProvider().makeUploadImageUseCaseDomain()
+        let provider = TubePartyUseCaseProvider()
+        uploadImageUseCase = provider.makeUploadImageUseCaseDomain()
+        updateProfileUseCase = provider.makeUpdateProfileUseCaseDomain()
         
         viewDidload.map { _ -> UserProfile in
             if let profile: UserProfile = UserDefaultsManager.get(by:.userProfile) {
@@ -76,36 +79,33 @@ final class SettingViewModel: SettingViewModelType, SettingInputs, SettingOutput
         .bind(to: _getCurrentProfile)
         .disposed(by: bag)
         
-        didTapSaveButton.withLatestFrom(didNameChange).bind { [weak self] name in
-            guard let self = self else { return }
+        let updateProfile = didTapSaveButton.withLatestFrom(didNameChange).flatMapLatest { [weak self] name -> Observable<Event<Void>> in
+            guard let self = self else { return .never() }
+            var userprofile = UserProfile(name: "", profileURL: "", senderID: "")
             if name != "" {
-                
-                if var userProfile: UserProfile = UserDefaultsManager.get(by:.userProfile) {
-                    userProfile.name = name
-                    UserDefaultsManager.set(userProfile, by: .userProfile)
+                if var profile: UserProfile = UserDefaultsManager.get(by:.userProfile) {
+                    profile.name = name
+                    UserDefaultsManager.set(profile, by: .userProfile)
+                    userprofile = profile
                 }
-                
-                let firestore = Firestore.firestore()
-                
-                firestore.collection("message_list")
-                    .whereField("sender_id", isEqualTo: "Sjr4PMnyTVDyL7y")
-                    .getDocuments() { (querySnapshot, err) in
-                        for exx in querySnapshot!.documents {
-                            print("🔥exx.documentID : \(exx.documentID)")
-                            exx.reference.updateData([
-                                "profile_name": "test",
-                                "profile_url": "https://pbs.twimg.com/profile_images/1394650755189989377/mYp6yLy-_400x400.jpg"
-                            ])
-                        }
-                        self._showAlertSaved.accept(())
-                    }
-                
             }
+            return self.updateProfileUseCase.updateProfile(userProfile: userprofile).materialize()
+        }.share()
+        
+        let updateProfileSuccess = updateProfile.compactMap({$0.event.element})
+        let updateProfileFail = updateProfile.compactMap({$0.event.error})
+        
+        updateProfileSuccess
+            .bind(to: _showAlertSaved)
+            .disposed(by: bag)
+        
+        updateProfileFail.bind { error in
+            
         }.disposed(by: bag)
         
         let uploadImage = uploadProfileIamge.flatMapLatest { [weak self] image -> Observable<Event<Int>> in
             guard let self = self else { return .never() }
-            return self.getMessageUseCase.uploadProfileImage(image: image, senderID: "").materialize()
+            return self.uploadImageUseCase.uploadProfileImage(image: image, senderID: "").materialize()
         }
         
         let uploadImageSuccess = uploadImage.compactMap({$0.event.element})
