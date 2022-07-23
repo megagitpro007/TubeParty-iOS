@@ -8,6 +8,7 @@
 import Foundation
 import RxSwift
 import RxCocoa
+import FirebaseFirestore
 
 protocol SettingViewModelType {
     var input: SettingInputs { get }
@@ -83,8 +84,22 @@ final class SettingViewModel: SettingViewModelType, SettingInputs, SettingOutput
                     userProfile.name = name
                     UserDefaultsManager.set(userProfile, by: .userProfile)
                 }
-            
-                self._showAlertSaved.accept(())
+                
+                let firestore = Firestore.firestore()
+                
+                firestore.collection("message_list")
+                    .whereField("sender_id", isEqualTo: "Sjr4PMnyTVDyL7y")
+                    .getDocuments() { (querySnapshot, err) in
+                        for exx in querySnapshot!.documents {
+                            print("🔥exx.documentID : \(exx.documentID)")
+                            exx.reference.updateData([
+                                "profile_name": "test",
+                                "profile_url": "https://pbs.twimg.com/profile_images/1394650755189989377/mYp6yLy-_400x400.jpg"
+                            ])
+                        }
+                        self._showAlertSaved.accept(())
+                    }
+                
             }
         }.disposed(by: bag)
         
