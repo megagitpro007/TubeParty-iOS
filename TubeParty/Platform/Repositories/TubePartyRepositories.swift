@@ -13,7 +13,7 @@ import FirebaseStorage
 protocol TubePartyRepository {
     func sendMessage(newMessage: MessageModel)
     func getMessageList() -> Observable<[MessageModel]>
-    func uploadFile(storageRef: StorageReference, image: UIImage, senderID: String) -> Observable<StorageUploadTask>
+    func uploadFile(storageRef: StorageReference, image: UIImage, senderID: String) -> Observable<Percent>
 }
 
 public class TubePartyRepositoryImpl: TubePartyRepository {
@@ -59,7 +59,7 @@ public class TubePartyRepositoryImpl: TubePartyRepository {
         }
     }
     
-    func uploadFile(storageRef: StorageReference, image: UIImage, senderID: String) -> Observable<StorageUploadTask> {
+    func uploadFile(storageRef: StorageReference, image: UIImage, senderID: String) -> Observable<Percent> {
         
         return Observable.create { observer -> Disposable in
             guard let data = image.pngData() else { return Disposables.create() }
@@ -70,7 +70,20 @@ public class TubePartyRepositoryImpl: TubePartyRepository {
                     guard let downloadURL = url else { return }
                 }
             }
-            observer.onNext(uploadTask)
+            
+            uploadTask.observe(.progress) { snapshot in
+                if let totalUnitCount = snapshot.progress?.totalUnitCount,
+                   let completedUnitCount = snapshot.progress?.completedUnitCount {
+                    
+                    let onepercent = totalUnitCount / 100
+                    let percent = completedUnitCount / onepercent
+                    let ind = Percent(percent)
+                    
+                    observer.onNext(ind)
+                    
+                }
+            }
+            
             return Disposables.create()
         }
     }

@@ -21,10 +21,8 @@ final class UploadImageUseCase: UploadImageUseCaseDomain {
         storageRef = firebaseStorage.reference()
     }
     
-    func uploadFile(image: UIImage, senderID: String) -> Observable<StorageUploadTask> {
-        repository.uploadFile(storageRef: storageRef,
-                              image: image,
-                              senderID: senderID)
+    func uploadFile(image: UIImage, senderID: String) -> Observable<Percent> {
+        repository.uploadFile(storageRef: storageRef, image: image, senderID: senderID)
     }
     
 }

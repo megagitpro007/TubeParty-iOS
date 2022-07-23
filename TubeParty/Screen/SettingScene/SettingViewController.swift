@@ -75,6 +75,10 @@ class SettingViewController: UIViewController, UINavigationControllerDelegate {
             self.present(alert, animated: true, completion: nil)
         }).disposed(by: bag)
         
+        viewModel.output.uploadPercentage.drive(onNext: { percent in
+            print("🔥 Uploaded : \(percent)% 🔥")
+        }).disposed(by: bag)
+        
         // inputs
         profileNameField
             .rx

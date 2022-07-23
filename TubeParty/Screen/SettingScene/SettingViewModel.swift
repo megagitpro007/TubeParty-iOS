@@ -8,7 +8,6 @@
 import Foundation
 import RxSwift
 import RxCocoa
-import FirebaseStorage
 
 protocol SettingViewModelType {
     var input: SettingInputs { get }
@@ -26,6 +25,7 @@ protocol SettingInputs {
 protocol SettingOutputs {
     var getCurrentUsername: Driver<String> { get }
     var showAlertSaved: Driver<Void> { get }
+    var uploadPercentage: Driver<Int> { get }
 }
 
 final class SettingViewModel: SettingViewModelType, SettingInputs, SettingOutputs {
@@ -50,10 +50,15 @@ final class SettingViewModel: SettingViewModelType, SettingInputs, SettingOutput
         return _showAlertSaved
             .asDriver(onErrorDriveWith: .never())
     }
+    var uploadPercentage: Driver<Int> {
+        return _uploadPercentage
+            .asDriver(onErrorDriveWith: .never())
+    }
     
     // Properties
     private let _getCurrentUsername: PublishRelay<String> = .init()
     private let _showAlertSaved: PublishRelay<Void> = .init()
+    private let _uploadPercentage: PublishRelay<Int> = .init()
     private let getMessageUseCase: UploadImageUseCaseDomain
     private let bag = DisposeBag()
     
@@ -84,24 +89,14 @@ final class SettingViewModel: SettingViewModelType, SettingInputs, SettingOutput
             }
         }.disposed(by: bag)
         
-        let uploadImage = uploadProfileIamge.flatMapLatest { [weak self] image -> Observable<StorageUploadTask> in
+        let uploadImage = uploadProfileIamge.flatMapLatest { [weak self] image -> Observable<Int> in
             guard let self = self else { return .never() }
             return self.getMessageUseCase.uploadFile(image: image, senderID: "")
         }
         
-        uploadImage.bind(onNext: { uploadTask in
-            uploadTask.observe(.progress) { snapshot in
-                if let totalUnitCount = snapshot.progress?.totalUnitCount,
-                   let completedUnitCount = snapshot.progress?.completedUnitCount {
-                    
-                    let onepercent = totalUnitCount / 100
-                    let percent = completedUnitCount / onepercent
-                    
-                    print("🔥 percent : \(percent)%")
-                    
-                }
-            }
-        }).disposed(by: bag)
+        uploadImage
+            .bind(to: _uploadPercentage)
+            .disposed(by: bag)
                     
     }
     
