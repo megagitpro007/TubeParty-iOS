@@ -296,7 +296,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YLB-WN-0KL">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YLB-WN-0KL" userLabel="ContentView">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="F8d-h5-KrL" userLabel="navView">
@@ -419,6 +419,28 @@
                                     <constraint firstItem="kRk-UI-ADI" firstAttribute="top" secondItem="UBD-pF-7Al" secondAttribute="bottom" constant="31.333333333333314" id="s7o-lV-APW"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jSu-jo-9wD" userLabel="loadingView">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <subviews>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="ks4-Sg-eWs">
+                                        <rect key="frame" x="188.66666666666666" y="379.66666666666669" width="37" height="37"/>
+                                        <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </activityIndicatorView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Uploaded 100%" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DUH-lC-EV4">
+                                        <rect key="frame" x="129.66666666666669" y="426.66666666666669" width="154.66666666666669" height="31.666666666666686"/>
+                                        <fontDescription key="fontDescription" name="Mitr-Regular" family="Mitr" pointSize="20"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.5" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="ks4-Sg-eWs" firstAttribute="centerX" secondItem="jSu-jo-9wD" secondAttribute="centerX" id="AMD-4X-otV"/>
+                                    <constraint firstItem="DUH-lC-EV4" firstAttribute="centerX" secondItem="jSu-jo-9wD" secondAttribute="centerX" id="Flf-Tx-ycp"/>
+                                    <constraint firstItem="DUH-lC-EV4" firstAttribute="top" secondItem="ks4-Sg-eWs" secondAttribute="bottom" constant="10" id="obT-k1-Hh4"/>
+                                    <constraint firstItem="ks4-Sg-eWs" firstAttribute="centerY" secondItem="jSu-jo-9wD" secondAttribute="centerY" constant="-50" id="vwh-mb-im0"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="1wv-vS-vaK"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -426,6 +448,10 @@
                             <constraint firstItem="F8d-h5-KrL" firstAttribute="top" secondItem="1wv-vS-vaK" secondAttribute="top" id="87i-ff-vJA"/>
                             <constraint firstAttribute="trailing" secondItem="YLB-WN-0KL" secondAttribute="trailing" id="BZS-iK-mDv"/>
                             <constraint firstAttribute="bottom" secondItem="YLB-WN-0KL" secondAttribute="bottom" id="CfK-Mk-vBV"/>
+                            <constraint firstItem="jSu-jo-9wD" firstAttribute="top" secondItem="ojA-WG-Epr" secondAttribute="top" id="Q9B-oh-V5c"/>
+                            <constraint firstItem="jSu-jo-9wD" firstAttribute="leading" secondItem="1wv-vS-vaK" secondAttribute="leading" id="RVb-6k-zL4"/>
+                            <constraint firstAttribute="bottom" secondItem="jSu-jo-9wD" secondAttribute="bottom" id="cXj-4x-IIX"/>
+                            <constraint firstItem="1wv-vS-vaK" firstAttribute="trailing" secondItem="jSu-jo-9wD" secondAttribute="trailing" id="meO-ej-TWr"/>
                             <constraint firstItem="YLB-WN-0KL" firstAttribute="leading" secondItem="1wv-vS-vaK" secondAttribute="leading" id="mtY-sq-zXd"/>
                             <constraint firstItem="YLB-WN-0KL" firstAttribute="top" secondItem="ojA-WG-Epr" secondAttribute="top" id="neF-ds-Eht"/>
                         </constraints>
@@ -438,6 +464,8 @@
                         <outlet property="navTitle" destination="P1g-4V-yY8" id="YMY-Gs-79O"/>
                         <outlet property="profileNameField" destination="qjS-QR-QjM" id="mBr-ff-iCn"/>
                         <outlet property="saveButton" destination="kRk-UI-ADI" id="c4P-mu-LNE"/>
+                        <outlet property="uploadLabel" destination="DUH-lC-EV4" id="Bgw-tA-oxR"/>
+                        <outlet property="uploadView" destination="jSu-jo-9wD" id="s6H-vm-Qre"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0Km-VP-FT8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

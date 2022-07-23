@@ -19,6 +19,8 @@ class SettingViewController: UIViewController, UINavigationControllerDelegate {
     @IBOutlet private var saveButton: UIButton!
     @IBOutlet private var backButton: UIButton!
     @IBOutlet private var nameFieldContainer: UIView!
+    @IBOutlet private var uploadLabel: UILabel!
+    @IBOutlet private var uploadView: UIView!
     
     var viewModel: SettingViewModelType!
     
@@ -31,6 +33,7 @@ class SettingViewController: UIViewController, UINavigationControllerDelegate {
     }
     
     func setupUI() {
+        self.uploadView.isHidden = true
         self.imageView.contentMode = .scaleAspectFill
         self.imageView.layer.cornerRadius = imageView.frame.height/2
         self.imageView.layer.borderWidth = 2
@@ -80,8 +83,15 @@ class SettingViewController: UIViewController, UINavigationControllerDelegate {
             self.present(alert, animated: true, completion: nil)
         }).disposed(by: bag)
         
-        viewModel.output.uploadPercentage.drive(onNext: { percent in
-            print("🔥 Uploaded : \(percent)% 🔥")
+        viewModel.output.uploadPercentage.drive(onNext: { [weak self] percent in
+            guard let self = self else { return }
+            self.uploadView.isHidden = false
+            self.uploadLabel.text = "Uploaded \(String(percent))%"
+            if percent == 100 {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                    self.uploadView.isHidden = true
+                }
+            }
         }).disposed(by: bag)
         
         // inputs

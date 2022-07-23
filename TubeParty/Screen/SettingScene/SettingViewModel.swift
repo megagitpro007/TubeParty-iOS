@@ -75,11 +75,6 @@ final class SettingViewModel: SettingViewModelType, SettingInputs, SettingOutput
         .bind(to: _getCurrentProfile)
         .disposed(by: bag)
         
-        didTapChangeImage.bind { [weak self] _ in
-            guard let self = self else { return }
-            
-        }.disposed(by: bag)
-        
         didTapSaveButton.withLatestFrom(didNameChange).bind { [weak self] name in
             guard let self = self else { return }
             if name != "" {
