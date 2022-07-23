@@ -161,7 +161,6 @@ class ChatViewController: UIViewController {
                         timeStamp: model.timeStamp,
                         linkPreview: model.message.formatURL()
                     )
-                    
                 }
                 return cell
             case .reciever(model: let model):

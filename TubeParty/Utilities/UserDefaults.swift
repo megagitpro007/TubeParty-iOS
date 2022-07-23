@@ -11,12 +11,23 @@ import Foundation
 struct UserDefaultsManager {
     
     enum Keys {
-        case displayName
+        case userProfile
         var key: String {
             switch self {
-            case .displayName: return "USERDEFAULT_NAME_KEY"
+                case .userProfile: return "USERDEFAULT_USER_PROFILE_KEY"
             }
         }
+    }
+    
+    static func set<T: Codable>(_ value: T, by key: Keys) {
+        guard let data = try? JSONEncoder().encode(value) else { return }
+        UserDefaults.standard.set(data, forKey: key.key)
+    }
+    
+    static func get<T: Codable>(by key: Keys) -> T? {
+        guard let data = UserDefaults.standard.object(forKey: key.key) as? Data,
+              let object = try? JSONDecoder().decode(T.self, from: data) else { return nil }
+        return object
     }
     
     static func set<T: Hashable>(_ value: T, by key: Keys) {

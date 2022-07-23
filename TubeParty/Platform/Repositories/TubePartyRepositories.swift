@@ -10,19 +10,25 @@ import RxSwift
 import FirebaseFirestore
 import FirebaseStorage
 
+public typealias Percent = Int
+
 protocol TubePartyRepository {
     func sendMessage(newMessage: MessageModel)
     func getMessageList() -> Observable<[MessageModel]>
-    func uploadFile(storageRef: StorageReference, image: UIImage, senderID: String) -> Observable<Percent>
+    func uploadProfileImage(image: UIImage, senderID: String) -> Observable<Percent>
 }
 
 public class TubePartyRepositoryImpl: TubePartyRepository {
     
     private let fireStore: Firestore
+    private let firebaseStorage: Storage
+    private let storageRef: StorageReference
     private var ref: DocumentReference? = nil
     
     init(fireStore: Firestore = Firestore.firestore()) {
         self.fireStore = fireStore
+        firebaseStorage = Storage.storage()
+        storageRef = firebaseStorage.reference()
     }
     
     // TODO - need to return error state for handle on scene
@@ -59,28 +65,29 @@ public class TubePartyRepositoryImpl: TubePartyRepository {
         }
     }
     
-    func uploadFile(storageRef: StorageReference, image: UIImage, senderID: String) -> Observable<Percent> {
+    func uploadProfileImage(image: UIImage, senderID: String) -> Observable<Percent> {
         
-        return Observable.create { observer -> Disposable in
-            guard let data = image.pngData() else { return Disposables.create() }
-            let riversRef = storageRef.child("images/\(senderID).jpg")
+        return Observable.create { [weak self] observer -> Disposable in
+            guard let self = self, let data = image.pngData() else { return Disposables.create() }
+            
+            let riversRef = self.storageRef.child("images/\(senderID).jpg")
+            
             let uploadTask = riversRef.putData(data, metadata: nil) { (metadata, error) in
-                guard let metadata = metadata else { return }
                 riversRef.downloadURL { (url, error) in
-                    guard let downloadURL = url else { return }
+                    guard let downloadURL = url else { return observer.onError(error!) }
+                    if var userProfile: UserProfile = UserDefaultsManager.get(by: .userProfile) {
+                        userProfile.profileURL = downloadURL.absoluteString
+                        UserDefaultsManager.set(userProfile, by: .userProfile)
+                    }
                 }
             }
             
             uploadTask.observe(.progress) { snapshot in
                 if let totalUnitCount = snapshot.progress?.totalUnitCount,
                    let completedUnitCount = snapshot.progress?.completedUnitCount {
-                    
                     let onepercent = totalUnitCount / 100
                     let percent = completedUnitCount / onepercent
-                    let ind = Percent(percent)
-                    
-                    observer.onNext(ind)
-                    
+                    observer.onNext(Percent(percent))
                 }
             }
             

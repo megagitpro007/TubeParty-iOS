@@ -8,6 +8,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import Kingfisher
 
 class SettingViewController: UIViewController, UINavigationControllerDelegate {
 
@@ -64,9 +65,13 @@ class SettingViewController: UIViewController, UINavigationControllerDelegate {
         // output
         viewModel
             .output
-            .getCurrentUsername
-            .drive(profileNameField.rx.text)
-            .disposed(by: bag)
+            .getCurrentProfile.drive(onNext: { [weak self] userProfile in
+                guard let self = self else { return }
+                self.profileNameField.text = userProfile.name
+                if let url = URL(string: userProfile.profileURL) {
+                    self.imageView.kf.setImage(with: url)
+                }
+            }).disposed(by: bag)
         
         viewModel.output.showAlertSaved.drive(onNext: { [weak self] _ in
             guard let self = self else { return }

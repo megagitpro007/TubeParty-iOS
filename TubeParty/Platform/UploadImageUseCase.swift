@@ -12,17 +12,13 @@ import RxSwift
 final class UploadImageUseCase: UploadImageUseCaseDomain {
     
     private let repository: TubePartyRepository
-    private let firebaseStorage: Storage
-    private let storageRef: StorageReference
     
     init(repository: TubePartyRepository = TubePartyRepositoryImpl()) {
         self.repository = repository
-        firebaseStorage = Storage.storage()
-        storageRef = firebaseStorage.reference()
     }
     
-    func uploadFile(image: UIImage, senderID: String) -> Observable<Percent> {
-        repository.uploadFile(storageRef: storageRef, image: image, senderID: senderID)
+    func uploadProfileImage(image: UIImage, senderID: String) -> Observable<Percent> {
+        repository.uploadProfileImage(image: image, senderID: senderID)
     }
     
 }

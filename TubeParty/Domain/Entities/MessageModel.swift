@@ -14,6 +14,7 @@ public struct MessageModel: Codable {
     var message: String
     var linkPreView: URL?
     var timeStamp: Date
+    var senderID: String
     
     enum CodingKeys: String, CodingKey {
         case id = "id"
@@ -21,15 +22,17 @@ public struct MessageModel: Codable {
         case profileURL = "profile_url"
         case message = "message"
         case timeStamp = "time_stamp"
+        case senderID = "sender_id"
     }
     
-    init(profileName: String, profileURL: URL?, message: String, timeStamp: Date) {
+    init(profileName: String, profileURL: URL?, message: String, timeStamp: Date, senderID: String) {
         self.id = UUID()
         self.profileName = profileName
         self.message = message
         self.timeStamp = timeStamp
         self.profileURL = profileURL
         self.linkPreView = message.formatURL()
+        self.senderID = senderID
     }
     
     public func encode(to encoder: Encoder) throws {
@@ -39,6 +42,7 @@ public struct MessageModel: Codable {
         try container.encode(profileURL?.absoluteString ?? "", forKey: .profileURL)
         try container.encode(message, forKey: .message)
         try container.encode(Double(timeStamp.timeIntervalSince1970), forKey: .timeStamp)
+        try container.encode(senderID, forKey: .senderID)
     }
     
     public init(from decoder: Decoder) throws {
@@ -65,6 +69,8 @@ public struct MessageModel: Codable {
         timeStamp = Date(timeIntervalSince1970: _timeStamp)
         
         linkPreView = message.formatURL()
+        
+        senderID = try container.decode(String.self, forKey: .senderID)
         
     }
     

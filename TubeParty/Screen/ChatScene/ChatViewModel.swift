@@ -71,7 +71,7 @@ class ChatViewModel: ChatIOType, ChatInput, ChatOutput {
     private let sendMessageUseCase: SendMessageUseCaseDomain
     private let getMessageUseCase: GetMesaageUseCaseDomain
     private let bag = DisposeBag()
-    private var currentName: String = ""
+    private var currentUserProfile: UserProfile?
     
     init(userChatName: String) {
         sendMessageUseCase = TubePartyUseCaseProvider().makeSendMessageUseCaseDomain()
@@ -88,8 +88,8 @@ class ChatViewModel: ChatIOType, ChatInput, ChatOutput {
         
         viewWillAppear.bind { [weak self] _ in
             guard let self = self else { return }
-            if let displayName: String = UserDefaultsManager.get(by:.displayName) {
-                self.currentName = displayName
+            if let userProfile: UserProfile = UserDefaultsManager.get(by:.userProfile) {
+                self.currentUserProfile = userProfile
             }
         }.disposed(by: bag)
         
@@ -97,7 +97,7 @@ class ChatViewModel: ChatIOType, ChatInput, ChatOutput {
             .getMessageList()
             .map { chatItem -> [ChatItem] in
                 return chatItem.map({
-                    return $0.profileName == self.currentName ? .sender(model: $0) : .reciever(model: $0)
+                    return $0.senderID == self.currentUserProfile?.senderID ? .sender(model: $0) : .reciever(model: $0)
                 }).sorted(by: { $0.timestamp < $1.timestamp })
             }
             .bind(to: _getChatMessage)
@@ -115,11 +115,11 @@ class ChatViewModel: ChatIOType, ChatInput, ChatOutput {
                 }
                 
                 let newMessage = MessageModel(
-                    // TODO - profile url need to save to user default, maybe create profile settings scene
-                    profileName: self.currentName,
-                    profileURL: URL(string: imageProfileURL),
+                    profileName: self.currentUserProfile?.name ?? ""  ,
+                    profileURL: URL(string: self.currentUserProfile?.profileURL ?? "" ),
                     message: text,
-                    timeStamp: Date()
+                    timeStamp: Date(),
+                    senderID: self.currentUserProfile?.senderID ?? ""
                 )
                 
                 self.sendMessageUseCase.sendMessage(newMessage: newMessage)

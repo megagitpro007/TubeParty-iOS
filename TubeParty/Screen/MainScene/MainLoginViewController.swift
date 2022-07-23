@@ -86,7 +86,13 @@ class MainLoginViewController: UIViewController, MainViewControllerDelegate {
         let vm = ChatViewModel(userChatName: displayName)
         
         // set userDefaults
-        UserDefaultsManager.set(displayName, by: .displayName)
+        let userProfile = UserProfile(
+            name: displayName,
+            profileURL: "https://firebasestorage.googleapis.com/v0/b/tubeparty-e17b1.appspot.com/o/userprofileIMG.png?alt=media&token=ed406a1c-c6fc-4bcd-8588-239acdf655d7",
+            senderID: String().randomString()
+        )
+
+        UserDefaultsManager.set(userProfile, by: .userProfile)
         
         // replace root
         vc.viewModel = vm

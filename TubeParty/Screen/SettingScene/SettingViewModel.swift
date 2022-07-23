@@ -23,7 +23,7 @@ protocol SettingInputs {
 }
 
 protocol SettingOutputs {
-    var getCurrentUsername: Driver<String> { get }
+    var getCurrentProfile: Driver<UserProfile> { get }
     var showAlertSaved: Driver<Void> { get }
     var uploadPercentage: Driver<Int> { get }
 }
@@ -42,8 +42,8 @@ final class SettingViewModel: SettingViewModelType, SettingInputs, SettingOutput
     var uploadProfileIamge: PublishRelay<UIImage> = .init()
     
     // Outputs
-    var getCurrentUsername: Driver<String> {
-        return _getCurrentUsername
+    var getCurrentProfile: Driver<UserProfile> {
+        return _getCurrentProfile
             .asDriver(onErrorDriveWith: .never())
     }
     var showAlertSaved: Driver<Void> {
@@ -56,7 +56,7 @@ final class SettingViewModel: SettingViewModelType, SettingInputs, SettingOutput
     }
     
     // Properties
-    private let _getCurrentUsername: PublishRelay<String> = .init()
+    private let _getCurrentProfile: PublishRelay<UserProfile> = .init()
     private let _showAlertSaved: PublishRelay<Void> = .init()
     private let _uploadPercentage: PublishRelay<Int> = .init()
     private let getMessageUseCase: UploadImageUseCaseDomain
@@ -66,14 +66,13 @@ final class SettingViewModel: SettingViewModelType, SettingInputs, SettingOutput
         
         getMessageUseCase = TubePartyUseCaseProvider().makeUploadImageUseCaseDomain()
         
-        viewDidload.map { _ -> String in
-            var currentName = ""
-            if let displayName: String = UserDefaultsManager.get(by:.displayName) {
-                currentName = displayName
+        viewDidload.map { _ -> UserProfile in
+            if let profile: UserProfile = UserDefaultsManager.get(by:.userProfile) {
+                return profile
             }
-            return currentName
+            return UserProfile.init(name: "", profileURL: "", senderID: "")
         }
-        .bind(to: _getCurrentUsername)
+        .bind(to: _getCurrentProfile)
         .disposed(by: bag)
         
         didTapChangeImage.bind { [weak self] _ in
@@ -84,19 +83,31 @@ final class SettingViewModel: SettingViewModelType, SettingInputs, SettingOutput
         didTapSaveButton.withLatestFrom(didNameChange).bind { [weak self] name in
             guard let self = self else { return }
             if name != "" {
-                UserDefaultsManager.set(name, by: .displayName)
+                
+                if var userProfile: UserProfile = UserDefaultsManager.get(by:.userProfile) {
+                    userProfile.name = name
+                    UserDefaultsManager.set(userProfile, by: .userProfile)
+                }
+            
                 self._showAlertSaved.accept(())
             }
         }.disposed(by: bag)
         
-        let uploadImage = uploadProfileIamge.flatMapLatest { [weak self] image -> Observable<Int> in
+        let uploadImage = uploadProfileIamge.flatMapLatest { [weak self] image -> Observable<Event<Int>> in
             guard let self = self else { return .never() }
-            return self.getMessageUseCase.uploadFile(image: image, senderID: "")
+            return self.getMessageUseCase.uploadProfileImage(image: image, senderID: "").materialize()
         }
         
-        uploadImage
+        let uploadImageSuccess = uploadImage.compactMap({$0.event.element})
+        let uploadImageFail = uploadImage.compactMap({$0.event.error})
+        
+        uploadImageSuccess
             .bind(to: _uploadPercentage)
             .disposed(by: bag)
+        
+        uploadImageFail.bind { error in
+            print(error.localizedDescription)
+        }.disposed(by: bag)
                     
     }
     

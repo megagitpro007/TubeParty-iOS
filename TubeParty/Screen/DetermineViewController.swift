@@ -20,9 +20,9 @@ class DetermineViewController: UIViewController {
         self.prepare()
     
         DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: { [weak self] in
-            if let displayName: String = UserDefaultsManager.get(by: .displayName) {
+            if let userProfile: UserProfile = UserDefaultsManager.get(by: .userProfile) {
                 if let vc = self?.storyboard?.instantiateViewController(withIdentifier: Scene.chat.name) as? ChatViewController {
-                    vc.viewModel = ChatViewModel(userChatName: displayName)
+                    vc.viewModel = ChatViewModel(userChatName: userProfile.name)
                     let nav = UINavigationController(rootViewController: vc)
                     self?.replaceRoot(vc: nav)
                 }

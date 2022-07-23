@@ -10,8 +10,6 @@ import UIKit
 import LinkPresentation
 import RxSwift
 
-public typealias Percent = Int
-
 extension UIImageView {
     func makeRounded(radius: CGFloat) {
         layer.cornerRadius = radius
