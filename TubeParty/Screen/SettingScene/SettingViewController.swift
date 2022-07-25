@@ -95,22 +95,26 @@ class SettingViewController: UIViewController, UINavigationControllerDelegate {
         }).disposed(by: bag)
         
         // inputs
-        profileNameField
-            .rx
-            .text
-            .orEmpty
-            .bind(to: viewModel.input.didNameChange)
-            .disposed(by: bag)
+//        profileNameField
+//            .rx
+//            .text
+//            .orEmpty
+//            .bind(to: viewModel.input.didNameChange)
+//            .disposed(by: bag)
         
-        imageChangeButton.rx.tap.bind { [weak self] _ in
-            guard let self = self else { return }
-            self.pickImage(type: .photoLibrary)
-        }.disposed(by: bag)
+        imageChangeButton
+            .rx
+            .tap
+            .bind { [weak self] _ in
+                guard let self = self else { return }
+                self.pickImage(type: .photoLibrary)
+            }.disposed(by: bag)
         
         saveButton
             .rx
             .tap
-            .bind(to: viewModel.input.didTapSaveButton)
+            .map { self.profileNameField.text ?? "" }
+            .bind(to: viewModel.input.didNameChange)
             .disposed(by: bag)
         
         viewModel

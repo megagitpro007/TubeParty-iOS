@@ -11,12 +11,14 @@ import FirebaseFirestore
 import FirebaseStorage
 
 public typealias Percent = Int
+public typealias ImageURL = URL
+public typealias UploadImageResponse = (Percent, ImageURL?)
 
 protocol TubePartyRepository {
     func sendMessage(newMessage: MessageModel) -> Observable<Void>
     func getMessageList() -> Observable<[MessageModel]>
-    func uploadProfileImage(image: UIImage, senderID: String) -> Observable<Percent>
-    func updateUserProfile(userProfile: UserProfile) -> Observable<Void>
+    func uploadProfileImage(image: UIImage, senderID: String) -> Observable<UploadImageResponse>
+    func updateUserProfile(userProfile: UserProfile) -> Single<Void>
 }
 
 public class TubePartyRepositoryImpl: TubePartyRepository {
@@ -32,25 +34,28 @@ public class TubePartyRepositoryImpl: TubePartyRepository {
         storageRef = firebaseStorage.reference()
     }
     
-    func updateUserProfile(userProfile: UserProfile) -> Observable<Void> {
-        return Observable.create { [weak self] observer -> Disposable in
-            guard let self = self else { return Disposables.create() }
-            self.fireStore.collection("message_list")
+    // should to be Single<T>
+    func updateUserProfile(userProfile: UserProfile) -> Single<Void> {
+        return Single.create { [weak self] prom in
+            self?.fireStore.collection("message_list")
                 .whereField("sender_id", isEqualTo: userProfile.senderID)
                 .getDocuments() { (querySnapshot, err) in
-                    
-                    if let error = err {
-                        observer.onError(error)
+                    guard let querySnapshot = querySnapshot, err == nil else {
+                        if let error = err {
+                            prom(.failure(error))
+                        }
+                        return
                     }
                     
-                    for exx in querySnapshot!.documents {
+                    for exx in querySnapshot.documents {
                         print("🔥exx.documentID : \(exx.documentID)")
                         exx.reference.updateData([
                             "profile_name": userProfile.name,
                             "profile_url": userProfile.profileURL
                         ])
                     }
-                    observer.onNext(())
+                    
+                    prom(.success(()))
                 }
             return Disposables.create()
         }
@@ -92,32 +97,25 @@ public class TubePartyRepositoryImpl: TubePartyRepository {
         }
     }
     
-    public func uploadProfileImage(image: UIImage, senderID: String) -> Observable<Percent> {
-        
+    public func uploadProfileImage(image: UIImage, senderID: String) -> Observable<UploadImageResponse> {
         return Observable.create { [weak self] observer -> Disposable in
             guard let self = self, let data = image.pngData() else { return Disposables.create() }
-            
             let riversRef = self.storageRef.child("images/\(senderID).jpg")
-            
+            var percent: Int64 = 0
             let uploadTask = riversRef.putData(data, metadata: nil) { (metadata, error) in
                 riversRef.downloadURL { (url, error) in
                     guard let downloadURL = url else { return observer.onError(error!) }
-                    if var userProfile: UserProfile = UserDefaultsManager.get(by: .userProfile) {
-                        userProfile.profileURL = downloadURL.absoluteString
-                        UserDefaultsManager.set(userProfile, by: .userProfile)
-                    }
+                    observer.onNext((Percent(percent), downloadURL))
                 }
             }
-            
             uploadTask.observe(.progress) { snapshot in
-                if let totalUnitCount = snapshot.progress?.totalUnitCount,
-                   let completedUnitCount = snapshot.progress?.completedUnitCount {
-                    let onepercent = totalUnitCount / 100
-                    let percent = completedUnitCount / onepercent
-                    observer.onNext(Percent(percent))
-                }
+                guard
+                    let total = snapshot.progress?.totalUnitCount,
+                    let completed = snapshot.progress?.completedUnitCount
+                else { return }
+                percent = completed * 100 / total
+                observer.onNext((Percent(percent), nil))
             }
-            
             return Disposables.create()
         }
     }

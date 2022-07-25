@@ -16,7 +16,7 @@ final public class UpdateProfileUseCase: UpdateProfileUseCaseDomain {
         self.repository = repository
     }
     
-    public func updateProfile(userProfile: UserProfile) -> Observable<Void> {
+    public func updateProfile(userProfile: UserProfile) -> Single<Void> {
         return repository.updateUserProfile(userProfile: userProfile)
     }
     

@@ -38,4 +38,16 @@ public struct UserProfile: Codable {
         senderID = try container.decode(String.self, forKey: .senderID)
     }
     
+    public mutating func replaceName(_ name: String) {
+        self.name = name
+    }
+    
+    public mutating func replaceURL(_ url: URL) {
+        self.profileURL = url.absoluteString
+    }
+    
+    
+    static func empty() -> UserProfile {
+        return self.init(name: "", profileURL: "", senderID: "")
+    }
 }

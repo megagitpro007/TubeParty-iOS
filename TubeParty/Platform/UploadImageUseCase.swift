@@ -17,7 +17,7 @@ final class UploadImageUseCase: UploadImageUseCaseDomain {
         self.repository = repository
     }
     
-    func uploadProfileImage(image: UIImage, senderID: String) -> Observable<Percent> {
+    func uploadProfileImage(image: UIImage, senderID: String) -> Observable<UploadImageResponse> {
         repository.uploadProfileImage(image: image, senderID: senderID)
     }
     

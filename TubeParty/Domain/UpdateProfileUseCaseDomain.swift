@@ -8,5 +8,5 @@
 import RxSwift
 
 public protocol UpdateProfileUseCaseDomain {
-    func updateProfile(userProfile: UserProfile) -> Observable<Void>
+    func updateProfile(userProfile: UserProfile) -> Single<Void>
 }
