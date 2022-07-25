@@ -100,7 +100,7 @@ final class SettingViewModel: SettingViewModelType, SettingInputs, SettingOutput
             .disposed(by: bag)
         
         updateProfileFail.bind { error in
-            
+            // TODO : - Todo handle error fail state
         }.disposed(by: bag)
         
         let uploadImage = uploadProfileIamge.flatMapLatest { [weak self] image -> Observable<Event<Int>> in

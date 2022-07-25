@@ -50,7 +50,7 @@ class MainLoginViewController: UIViewController, MainViewControllerDelegate {
             end: .bottomRight,
             colors: [UIColor.tpMainGreen.cgColor, UIColor.tpMainBlue.cgColor]
         )
-        gradient.frame = mainView.layer.frame
+        gradient.frame = self.view.layer.frame
         mainView.layer.insertSublayer(gradient, at: 0)
     }
     
@@ -88,7 +88,7 @@ class MainLoginViewController: UIViewController, MainViewControllerDelegate {
         // set userDefaults
         let userProfile = UserProfile(
             name: displayName,
-            profileURL: "https://firebasestorage.googleapis.com/v0/b/tubeparty-e17b1.appspot.com/o/userprofileIMG.png?alt=media&token=ed406a1c-c6fc-4bcd-8588-239acdf655d7",
+            profileURL: "",
             senderID: String().randomString()
         )
 

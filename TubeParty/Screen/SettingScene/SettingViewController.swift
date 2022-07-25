@@ -72,7 +72,7 @@ class SettingViewController: UIViewController, UINavigationControllerDelegate {
                 guard let self = self else { return }
                 self.profileNameField.text = userProfile.name
                 if let url = URL(string: userProfile.profileURL) {
-                    self.imageView.kf.setImage(with: url)
+                    self.imageView.kf.setImage(with: url, placeholder: profilePlaceHolder)
                 }
             }).disposed(by: bag)
         

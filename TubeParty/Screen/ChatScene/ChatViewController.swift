@@ -99,7 +99,6 @@ class ChatViewController: UIViewController {
             guard let self = self else { return }
             switch state {
                 case .success:
-                    self.typingField.text = ""
                     self.scrollToBottom()
                 case .failure:
                     // TODO: - handle error logic
@@ -189,6 +188,9 @@ class ChatViewController: UIViewController {
             .rx
             .tap
             .map { self.typingField.text ?? "" }
+            .do(onNext: { _ in
+                self.typingField.text = ""
+            })
             .bind(to: viewModel.input.messageInput)
             .disposed(by: bag)
         

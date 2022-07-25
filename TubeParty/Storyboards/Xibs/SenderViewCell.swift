@@ -50,7 +50,7 @@ class SenderViewCell: UITableViewCell {
         self.name.text = name
         self.message.text = text
         self.timeStamp.text = timeStamp.chatTimeFormat()
-        self.profileImage.kf.setImage(with: url)
+        self.profileImage.kf.setImage(with: url, placeholder: profilePlaceHolder)
         self.linkContainerView.isHidden = linkPreview == nil
     
         if let lplink = linkPreview {

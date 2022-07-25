@@ -10,6 +10,8 @@ import UIKit
 import LinkPresentation
 import RxSwift
 
+let profilePlaceHolder = UIImage(named: "profilePlaceHolder")
+
 extension UIImageView {
     func makeRounded(radius: CGFloat) {
         layer.cornerRadius = radius

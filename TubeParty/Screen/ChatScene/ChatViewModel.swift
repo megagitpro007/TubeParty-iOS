@@ -121,13 +121,12 @@ class ChatViewModel: ChatIOType, ChatInput, ChatOutput {
             .disposed(by: bag)
         
         let sendMessage = messageInput.flatMapLatest { [weak self] text -> Observable<Event<Void>> in
-            guard let self = self else { return .never() }
-            let newMessage = MessageModel( profileName: self.currentUserProfile?.name ?? ""  ,
+            guard let self = self, text != "" else { return .never() }
+            let newMessage = MessageModel( profileName: self.currentUserProfile?.name ?? "",
                                            profileURL: URL(string: self.currentUserProfile?.profileURL ?? "" ),
                                            message: text,
                                            timeStamp: Date(),
-                                           senderID: self.currentUserProfile?.senderID ?? "" )
-            
+                                           senderID: self.currentUserProfile?.senderID ?? "")
             return self.sendMessageUseCase.sendMessage(newMessage: newMessage).materialize()
         }.share()
         
