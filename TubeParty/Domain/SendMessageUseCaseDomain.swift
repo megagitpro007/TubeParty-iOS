@@ -1,6 +1,6 @@
 import RxSwift
 
 public protocol SendMessageUseCaseDomain {
-    func sendMessage(newMessage: MessageModel)
+    func sendMessage(newMessage: MessageModel) -> Observable<Void>
 }
 

@@ -16,6 +16,11 @@ import UIKit
 
 fileprivate let imageProfileURL = "https://assets.coingecko.com/coins/images/24155/large/zoro.png?1646565848"
 
+enum SendMessageState {
+    case success
+    case failure
+}
+
 protocol ChatIOType {
     var input: ChatInput { get }
     var output: ChatOutput { get }
@@ -34,6 +39,7 @@ protocol ChatOutput {
     var isDisableSendButton: Driver<Bool> { get }
     var getChatMessage: Driver<[SectionModel]> { get }
     var getChatCount: Int { get }
+    var getSendMessageState: Driver<SendMessageState> { get }
 }
 
 class ChatViewModel: ChatIOType, ChatInput, ChatOutput {
@@ -61,6 +67,11 @@ class ChatViewModel: ChatIOType, ChatInput, ChatOutput {
                 .asDriver(onErrorDriveWith: .never())
     }
     
+    var getSendMessageState: Driver<SendMessageState> {
+        return _getSendMessageState
+            .asDriver(onErrorDriveWith: .never())
+    }
+    
     var getChatCount: Int {
         return _getChatMessage.value.count
     }
@@ -68,6 +79,7 @@ class ChatViewModel: ChatIOType, ChatInput, ChatOutput {
     // Properties
     private let _isDisableSendButton: BehaviorRelay<Bool> = .init(value: true)
     private let _getChatMessage: BehaviorRelay<[ChatItem]> = .init(value: [])
+    private let _getSendMessageState: PublishRelay<SendMessageState> = .init()
     private let sendMessageUseCase: SendMessageUseCaseDomain
     private let getMessageUseCase: GetMesaageUseCaseDomain
     private let bag = DisposeBag()
@@ -108,27 +120,37 @@ class ChatViewModel: ChatIOType, ChatInput, ChatOutput {
             .bind(to: _isDisableSendButton)
             .disposed(by: bag)
         
-        messageInput
-            .map { [weak self] text -> [ChatItem] in
-                guard let self = self, !text.isEmpty else {
-                    return self?._getChatMessage.value ?? []
-                }
-                
-                let newMessage = MessageModel(
-                    profileName: self.currentUserProfile?.name ?? ""  ,
-                    profileURL: URL(string: self.currentUserProfile?.profileURL ?? "" ),
-                    message: text,
-                    timeStamp: Date(),
-                    senderID: self.currentUserProfile?.senderID ?? ""
-                )
-                
-                self.sendMessageUseCase.sendMessage(newMessage: newMessage)
-                
-                var newInstance = self._getChatMessage.value
-                newInstance.append(.sender(model: newMessage))
-                return newInstance
-            }
-            .bind(to: _getChatMessage)
+        let sendMessage = messageInput.flatMapLatest { [weak self] text -> Observable<Event<Void>> in
+            guard let self = self else { return .never() }
+            let newMessage = MessageModel( profileName: self.currentUserProfile?.name ?? ""  ,
+                                           profileURL: URL(string: self.currentUserProfile?.profileURL ?? "" ),
+                                           message: text,
+                                           timeStamp: Date(),
+                                           senderID: self.currentUserProfile?.senderID ?? "" )
+            
+            return self.sendMessageUseCase.sendMessage(newMessage: newMessage).materialize()
+        }.share()
+        
+        let sendMessageSuccess = sendMessage.compactMap({ $0.event.element })
+        let sendMessageFail = sendMessage.compactMap({ $0.event.error })
+        
+        sendMessageSuccess.withLatestFrom(getMessageUseCase .getMessageList()).map { chatItem -> [ChatItem] in
+            return chatItem.map({
+                return $0.senderID == self.currentUserProfile?.senderID ? .sender(model: $0) : .reciever(model: $0)
+            }).sorted(by: { $0.timestamp < $1.timestamp })
+        }
+        .bind(to: _getChatMessage)
+        .disposed(by: bag)
+        
+        sendMessageSuccess
+            .map({ _ in SendMessageState.success })
+            .bind(to: _getSendMessageState)
             .disposed(by: bag)
+        
+        sendMessageFail
+            .map({ _ in SendMessageState.failure })
+            .bind(to: _getSendMessageState)
+            .disposed(by: bag)
+        
     }
 }

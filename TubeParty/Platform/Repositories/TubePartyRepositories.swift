@@ -13,7 +13,7 @@ import FirebaseStorage
 public typealias Percent = Int
 
 protocol TubePartyRepository {
-    func sendMessage(newMessage: MessageModel)
+    func sendMessage(newMessage: MessageModel) -> Observable<Void>
     func getMessageList() -> Observable<[MessageModel]>
     func uploadProfileImage(image: UIImage, senderID: String) -> Observable<Percent>
     func updateUserProfile(userProfile: UserProfile) -> Observable<Void>
@@ -56,15 +56,18 @@ public class TubePartyRepositoryImpl: TubePartyRepository {
         }
     }
     
-    public func sendMessage(newMessage: MessageModel) {
-        self.ref = self.fireStore.collection("message_list")
-            .addDocument(data: newMessage.toJSON()) { error in
-                if let error = error  {
-                    print("🔥 \(error.localizedDescription)")
-                } else {
-                    print("🔥 update success")
+    public func sendMessage(newMessage: MessageModel) -> Observable<Void> {
+        return Observable.create { observer -> Disposable in
+            self.ref = self.fireStore.collection("message_list")
+                .addDocument(data: newMessage.toJSON()) { error in
+                    if let error = error  {
+                        observer.onError(error)
+                    } else {
+                        observer.onNext(())
+                    }
                 }
-            }
+            return Disposables.create()
+        }
     }
     
     public func getMessageList() -> Observable<[MessageModel]> {

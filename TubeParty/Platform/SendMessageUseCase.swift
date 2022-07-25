@@ -9,7 +9,7 @@ final public class SendMessageUseCase: SendMessageUseCaseDomain {
         self.repository = repository
     }
     
-    public func sendMessage(newMessage: MessageModel) {
+    public func sendMessage(newMessage: MessageModel) -> Observable<Void> {
         repository.sendMessage(newMessage: newMessage)
     }
 

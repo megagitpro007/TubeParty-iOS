@@ -94,28 +94,19 @@ class ChatViewController: UIViewController {
     
     func bindViewModel() {
         
-        // input
-        typingField
-            .rx
-            .text
-            .orEmpty
-            .map({ text in
-                return !text.isEmpty
-            })
-            .bind(to: viewModel.input.isValidText).disposed(by: bag)
-        
-        sendButton
-            .rx
-            .tap
-            .map { self.typingField.text ?? "" }
-            .do(onNext: { _ in
-                self.typingField.text = ""
-                self.scrollToBottom()
-            })
-            .bind(to: viewModel.input.messageInput)
-            .disposed(by: bag)
-        
         // output
+        viewModel.output.getSendMessageState.drive(onNext: { [weak self] state in
+            guard let self = self else { return }
+            switch state {
+                case .success:
+                    self.typingField.text = ""
+                    self.scrollToBottom()
+                case .failure:
+                    // TODO: - handle error logic
+                    return
+            }
+        }).disposed(by: bag)
+        
         viewModel
             .output
             .isDisableSendButton
@@ -182,6 +173,23 @@ class ChatViewController: UIViewController {
             .output
             .getChatMessage
             .drive(chatTableView.rx.items(dataSource: dataSource))
+            .disposed(by: bag)
+        
+        // input
+        typingField
+            .rx
+            .text
+            .orEmpty
+            .map({ text in
+                return !text.isEmpty
+            })
+            .bind(to: viewModel.input.isValidText).disposed(by: bag)
+        
+        sendButton
+            .rx
+            .tap
+            .map { self.typingField.text ?? "" }
+            .bind(to: viewModel.input.messageInput)
             .disposed(by: bag)
         
         viewModel
