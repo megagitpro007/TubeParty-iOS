@@ -48,7 +48,6 @@ public class TubePartyRepositoryImpl: TubePartyRepository {
                     }
                     
                     for exx in querySnapshot.documents {
-                        print("🔥exx.documentID : \(exx.documentID)")
                         exx.reference.updateData([
                             "profile_name": userProfile.name,
                             "profile_url": userProfile.profileURL
@@ -82,15 +81,25 @@ public class TubePartyRepositoryImpl: TubePartyRepository {
                 if let error = error {
                     observer.onError(error)
                 } else {
-                    var messageList: [MessageModel] = []
-                    for document in query!.documents {
-                        let dict = document.data()
-                        let decoder = JSONDecoder()
-                        guard let jsonData = try? JSONSerialization.data(withJSONObject: dict, options: .prettyPrinted),
-                              let newObject = try? decoder.decode(MessageModel.self, from: jsonData) else { return }
-                        messageList.append(newObject)
+                    
+// TODO: - convert for to map
+//                    var messageList: [MessageModel] = []
+//                    for document in query!.documents {
+//                        let dict = document.data()
+//                        let decoder = JSONDecoder()
+//                        guard let jsonData = try? JSONSerialization.data(withJSONObject: dict, options: .prettyPrinted),
+//                              let newObject = try? decoder.decode(MessageModel.self, from: jsonData) else { return }
+//                        messageList.append(newObject)
+//                    }
+                    
+                    guard let document = query?.documents else { return }
+                    let newData: [MessageModel] = document.compactMap {
+                        guard let jsonData = try? JSONSerialization.data(withJSONObject: $0.data(), options: .prettyPrinted),
+                              let newObject = try? JSONDecoder().decode(MessageModel.self, from: jsonData) else { return nil }
+                        return newObject
                     }
-                    observer.onNext(messageList)
+                    
+                    observer.onNext(newData)
                 }
             }
             return Disposables.create()
