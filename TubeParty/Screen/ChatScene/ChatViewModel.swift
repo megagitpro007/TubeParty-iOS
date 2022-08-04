@@ -18,7 +18,7 @@ fileprivate let imageProfileURL = "https://assets.coingecko.com/coins/images/241
 
 enum SendMessageState {
     case success
-    case failure
+    case failure(String)
 }
 
 protocol ChatIOType {
@@ -39,7 +39,7 @@ protocol ChatOutput {
     var isDisableSendButton: Driver<Bool> { get }
     var getChatMessage: Driver<[SectionModel]> { get }
     var getChatCount: Int { get }
-    var getSendMessageState: Driver<SendMessageState> { get }
+    var sendMessageState: Driver<SendMessageState> { get }
 }
 
 class ChatViewModel: ChatIOType, ChatInput, ChatOutput {
@@ -67,7 +67,7 @@ class ChatViewModel: ChatIOType, ChatInput, ChatOutput {
                 .asDriver(onErrorDriveWith: .never())
     }
     
-    var getSendMessageState: Driver<SendMessageState> {
+    var sendMessageState: Driver<SendMessageState> {
         return _getSendMessageState
             .asDriver(onErrorDriveWith: .never())
     }
@@ -147,7 +147,7 @@ class ChatViewModel: ChatIOType, ChatInput, ChatOutput {
             .disposed(by: bag)
         
         sendMessageFail
-            .map({ _ in SendMessageState.failure })
+            .map({ _ in SendMessageState.failure("Send Message Fail.") })
             .bind(to: _getSendMessageState)
             .disposed(by: bag)
         

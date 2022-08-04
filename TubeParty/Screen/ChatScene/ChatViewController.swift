@@ -15,7 +15,7 @@ import FirebaseRemoteConfig
 fileprivate let senderTableViewCell = "SenderViewCell"
 fileprivate let receiverTableViewCell = "ReceiverViewCell"
 
-class ChatViewController: UIViewController {
+class ChatViewController: BaseViewController {
     
     @IBOutlet private var chatBGView: UIView!
     @IBOutlet private var sendButton: UIButton!
@@ -98,14 +98,13 @@ class ChatViewController: UIViewController {
         // TODO:
         // - get or send ? variable name should to be change
         // - useless stream should to be remove it
-        viewModel.output.getSendMessageState.drive(onNext: { [weak self] state in
+        viewModel.output.sendMessageState.drive(onNext: { [weak self] state in
             guard let self = self else { return }
             switch state {
                 case .success:
                     self.scrollToBottom()
-                case .failure:
-                    // TODO: - handle error logic
-                    return
+                case .failure(let message):
+                    self.showAlert(message: message)
             }
         }).disposed(by: bag)
         

@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 import Kingfisher
 
-class SettingViewController: UIViewController, UINavigationControllerDelegate {
+class SettingViewController: BaseViewController, UINavigationControllerDelegate {
 
     @IBOutlet private var navTitle: UILabel!
     @IBOutlet private var imageView: UIImageView!
@@ -84,17 +84,20 @@ class SettingViewController: UIViewController, UINavigationControllerDelegate {
         
         viewModel.output.showAlertSaved.drive(onNext: { [weak self] _ in
             guard let self = self else { return }
-            let alert = UIAlertController(title: "", message: "Profile has Saved.", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
+            self.showAlert(message: "Profile has Saved.")
         }).disposed(by: bag)
         
-        viewModel.output.uploadPercentage.drive(onNext: { [weak self] percent in
+        viewModel.output.uploadState.drive(onNext: { [weak self] state in
             guard let self = self else { return }
-            self.uploadView.isHidden = false
-            self.uploadLabel.text = "Uploaded \(String(percent))%"
-            if percent == 100 {
-                self.uploadView.isHidden = true
+            switch state {
+            case .process(let percent):
+                self.uploadView.isHidden = false
+                self.uploadLabel.text = "Uploaded \(String(percent))%"
+                if percent == 100 {
+                    self.uploadView.isHidden = true
+                }
+            case .error(let message):
+                self.showAlert(message: message)
             }
         }).disposed(by: bag)
         

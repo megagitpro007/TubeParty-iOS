@@ -2,7 +2,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class MainLoginViewController: UIViewController, MainViewControllerDelegate {
+class MainLoginViewController: BaseViewController, MainViewControllerDelegate {
     
     @IBOutlet private var mainView: UIView!
     @IBOutlet private var logoImage: UIImageView!

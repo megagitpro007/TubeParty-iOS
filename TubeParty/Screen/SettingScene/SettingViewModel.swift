@@ -11,6 +11,11 @@ import RxCocoa
 import FirebaseFirestore
 import UIKit
 
+enum UploadImageState {
+    case process(Percent)
+    case error(String)
+}
+
 protocol SettingViewModelType {
     var input: SettingInputs { get }
     var output: SettingOutputs { get }
@@ -27,14 +32,8 @@ protocol SettingInputs {
 protocol SettingOutputs {
     var getCurrentProfile: Driver<UserProfile> { get }
     var showAlertSaved: Driver<Void> { get }
-    var uploadPercentage: Driver<Int> { get }
+    var uploadState: Driver<UploadImageState> { get }
     var uploadedPhoto: Driver<UIImage> { get }
-}
-
-enum UploadImageState {
-    case normal
-    case process
-    case finish
 }
 
 final class SettingViewModel: SettingViewModelType, SettingInputs, SettingOutputs {
@@ -59,26 +58,21 @@ final class SettingViewModel: SettingViewModelType, SettingInputs, SettingOutput
         return _showAlertSaved
             .asDriver(onErrorDriveWith: .never())
     }
-    var uploadPercentage: Driver<Int> {
-        return _uploadPercentage
-            .asDriver(onErrorDriveWith: .never())
-    }
     
     var uploadedPhoto: Driver<UIImage> {
         return _uploadedPhoto
             .asDriver(onErrorDriveWith: .never())
     }
-    
-    // upload percent state
+
     var uploadState: Driver<UploadImageState> {
-        return _uploadPercentage.map { $0 == 0 ? .normal : ($0 == 100 ? .finish : .process) }
-            .asDriver(onErrorJustReturn: .normal)
+        return _uploadState
+            .asDriver(onErrorJustReturn: .error(""))
     }
     
     // Properties
     private let _getCurrentProfile: PublishRelay<UserProfile> = .init()
     private let _showAlertSaved: PublishRelay<Void> = .init()
-    private let _uploadPercentage: PublishRelay<Int> = .init()
+    private let _uploadState: PublishRelay<UploadImageState> = .init()
     private let _uploadedPhoto: PublishRelay<UIImage> = .init()
     private let uploadImageUseCase: UploadImageUseCaseDomain
     private let updateProfileUseCase: UpdateProfileUseCaseDomain
@@ -122,19 +116,20 @@ final class SettingViewModel: SettingViewModelType, SettingInputs, SettingOutput
     private func updateProfileImage(_ image: UIImage, senderId: String) {
         self.uploadImageUseCase
             .uploadProfileImage(image: image, senderID: senderId)
-            .subscribe(onNext: { (percent, imageUrl) in
-                self._uploadPercentage.accept(percent)
+            .subscribe(onNext: { [weak self] (percent, imageUrl) in
+                guard let self = self else { return }
+                self._uploadState.accept(.process(percent))
                 if let imageUrl = imageUrl {
                     let userProfile: UserProfile = self.getUserProfile(imageUrl: imageUrl)
                     UserDefaultsManager.set(userProfile, by: .userProfile)
                 }
-                
                 // set image view after upload success
                 if percent == 100 {
                     self._uploadedPhoto.accept(image)
                 }
-            }, onError: { error in
-                NSLog("updateProfile: onError")
+            }, onError: { [weak self] error in
+                guard let self = self else { return }
+                self._uploadState.accept(.error("Upload Profile image Fail.\n Please Try again."))
             })
             .disposed(by: self.bag)
     }
