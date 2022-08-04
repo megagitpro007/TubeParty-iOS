@@ -9,6 +9,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 import FirebaseFirestore
+import UIKit
 
 protocol SettingViewModelType {
     var input: SettingInputs { get }
@@ -27,6 +28,7 @@ protocol SettingOutputs {
     var getCurrentProfile: Driver<UserProfile> { get }
     var showAlertSaved: Driver<Void> { get }
     var uploadPercentage: Driver<Int> { get }
+    var uploadedPhoto: Driver<UIImage> { get }
 }
 
 enum UploadImageState {
@@ -62,6 +64,11 @@ final class SettingViewModel: SettingViewModelType, SettingInputs, SettingOutput
             .asDriver(onErrorDriveWith: .never())
     }
     
+    var uploadedPhoto: Driver<UIImage> {
+        return _uploadedPhoto
+            .asDriver(onErrorDriveWith: .never())
+    }
+    
     // upload percent state
     var uploadState: Driver<UploadImageState> {
         return _uploadPercentage.map { $0 == 0 ? .normal : ($0 == 100 ? .finish : .process) }
@@ -72,6 +79,7 @@ final class SettingViewModel: SettingViewModelType, SettingInputs, SettingOutput
     private let _getCurrentProfile: PublishRelay<UserProfile> = .init()
     private let _showAlertSaved: PublishRelay<Void> = .init()
     private let _uploadPercentage: PublishRelay<Int> = .init()
+    private let _uploadedPhoto: PublishRelay<UIImage> = .init()
     private let uploadImageUseCase: UploadImageUseCaseDomain
     private let updateProfileUseCase: UpdateProfileUseCaseDomain
     private let bag = DisposeBag()
@@ -120,9 +128,12 @@ final class SettingViewModel: SettingViewModelType, SettingInputs, SettingOutput
                     let userProfile: UserProfile = self.getUserProfile(imageUrl: imageUrl)
                     UserDefaultsManager.set(userProfile, by: .userProfile)
                 }
+                
                 // set image view after upload success
+                if percent == 100 {
+                    self._uploadedPhoto.accept(image)
+                }
             }, onError: { error in
-                // should to be show error
                 NSLog("updateProfile: onError")
             })
             .disposed(by: self.bag)

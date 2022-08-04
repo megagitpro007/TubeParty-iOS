@@ -68,6 +68,12 @@ class SettingViewController: UIViewController, UINavigationControllerDelegate {
         // output
         viewModel
             .output
+            .uploadedPhoto
+            .drive(imageView.rx.image)
+            .disposed(by: bag)
+        
+        viewModel
+            .output
             .getCurrentProfile.drive(onNext: { [weak self] userProfile in
                 guard let self = self else { return }
                 self.profileNameField.text = userProfile.name
@@ -88,20 +94,11 @@ class SettingViewController: UIViewController, UINavigationControllerDelegate {
             self.uploadView.isHidden = false
             self.uploadLabel.text = "Uploaded \(String(percent))%"
             if percent == 100 {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                    self.uploadView.isHidden = true
-                }
+                self.uploadView.isHidden = true
             }
         }).disposed(by: bag)
         
         // inputs
-//        profileNameField
-//            .rx
-//            .text
-//            .orEmpty
-//            .bind(to: viewModel.input.didNameChange)
-//            .disposed(by: bag)
-        
         imageChangeButton
             .rx
             .tap
@@ -148,7 +145,7 @@ extension SettingViewController: UIImagePickerControllerDelegate {
     // MARK:- Image Picker Delegates
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let image = info[.originalImage] as? UIImage else { return }
-        self.imageView.image = image
+//        self.imageView.image = image
         self.viewModel.input.uploadProfileIamge.accept(image)
         dismiss(animated: true, completion: nil)
     }

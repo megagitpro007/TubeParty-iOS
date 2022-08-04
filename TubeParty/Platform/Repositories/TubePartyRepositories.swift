@@ -109,10 +109,10 @@ public class TubePartyRepositoryImpl: TubePartyRepository {
     public func uploadProfileImage(image: UIImage, senderID: String) -> Observable<UploadImageResponse> {
         return Observable.create { [weak self] observer -> Disposable in
             guard let self = self, let data = image.pngData() else { return Disposables.create() }
-            let riversRef = self.storageRef.child("images/\(senderID).jpg")
+            let storageRef = self.storageRef.child("images/\(senderID).jpg")
             var percent: Int64 = 0
-            let uploadTask = riversRef.putData(data, metadata: nil) { (metadata, error) in
-                riversRef.downloadURL { (url, error) in
+            let uploadTask = storageRef.putData(data, metadata: nil) { (metadata, error) in
+                storageRef.downloadURL { (url, error) in
                     guard let downloadURL = url else { return observer.onError(error!) }
                     observer.onNext((Percent(percent), downloadURL))
                 }
@@ -125,6 +125,8 @@ public class TubePartyRepositoryImpl: TubePartyRepository {
                 percent = completed * 100 / total
                 observer.onNext((Percent(percent), nil))
             }
+            
+//            observer.onCompleted()
             return Disposables.create()
         }
     }
