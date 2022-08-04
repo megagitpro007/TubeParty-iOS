@@ -95,7 +95,7 @@ class ChatViewModel: ChatIOType, ChatInput, ChatOutput {
     private func binding() {
         
         viewDidload.bind { _ in
-            
+            // TODO:  if not used, should to remove it.
         }.disposed(by: bag)
         
         viewWillAppear.bind { [weak self] _ in

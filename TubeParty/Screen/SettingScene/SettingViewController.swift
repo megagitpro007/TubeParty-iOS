@@ -137,12 +137,12 @@ extension SettingViewController: UIImagePickerControllerDelegate {
         present(imagePicker, animated: true, completion: nil)
     }
     
+    // TODO: if not use should to remove it
     func getDocumentsDirectory() -> URL {
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         return paths[0]
     }
     
-    // MARK:- Image Picker Delegates
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let image = info[.originalImage] as? UIImage else { return }
 //        self.imageView.image = image
@@ -151,7 +151,7 @@ extension SettingViewController: UIImagePickerControllerDelegate {
     }
 
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-      dismiss(animated: true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
 }

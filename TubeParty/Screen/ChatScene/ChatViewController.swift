@@ -95,6 +95,9 @@ class ChatViewController: UIViewController {
     func bindViewModel() {
         
         // output
+        // TODO:
+        // - get or send ? variable name should to be change
+        // - useless stream should to be remove it
         viewModel.output.getSendMessageState.drive(onNext: { [weak self] state in
             guard let self = self else { return }
             switch state {
@@ -174,7 +177,6 @@ class ChatViewController: UIViewController {
             .drive(chatTableView.rx.items(dataSource: dataSource))
             .disposed(by: bag)
         
-        // input
         typingField
             .rx
             .text
@@ -182,7 +184,8 @@ class ChatViewController: UIViewController {
             .map({ text in
                 return !text.isEmpty
             })
-            .bind(to: viewModel.input.isValidText).disposed(by: bag)
+            .bind(to: viewModel.input.isValidText)
+            .disposed(by: bag)
         
         sendButton
             .rx
@@ -203,6 +206,7 @@ class ChatViewController: UIViewController {
     
     func scrollToBottom(isAnimated: Bool = true){
         DispatchQueue.main.async {
+            // TODO: weak self
             guard self.viewModel.output.getChatCount > 0 else { return }
             let indexPath = IndexPath(row: self.viewModel.output.getChatCount - 1, section: 0)
             self.chatTableView.scrollToRow(at: indexPath, at: .bottom, animated: isAnimated)
@@ -212,6 +216,7 @@ class ChatViewController: UIViewController {
     @objc func dismissKeyboard() {
         guard self.isTextFieldSelected else { return }
         UIView.animate(withDuration: 0.3, animations: {
+            // TODO: weak self
             self.bottomViewContainer.transform = .identity
             self.chatTableView.transform = .identity
             self.chatTableView.contentInset = .init(top: 0, left: 0, bottom: 0, right: 0)
