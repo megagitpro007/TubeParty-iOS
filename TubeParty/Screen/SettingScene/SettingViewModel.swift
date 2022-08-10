@@ -14,7 +14,6 @@ import UIKit
 enum UploadImageState {
     case process(Percent)
     case finish
-    case error(String)
 }
 
 protocol SettingViewModelType {
@@ -30,15 +29,16 @@ protocol SettingInputs {
     var uploadProfileIamge: PublishRelay<UIImage> { get set }
 }
 
-protocol SettingOutputs {
+protocol SettingOutputs: BaseOutput {
     var getCurrentProfile: Driver<UserProfile> { get }
     var showAlertSaved: Driver<Void> { get }
     var uploadState: Driver<UploadImageState> { get }
     var uploadedPhoto: Driver<UIImage> { get }
+    var error: Driver<Error> { get }
 }
 
 final class SettingViewModel: SettingViewModelType, SettingInputs, SettingOutputs {
-    
+
     // IOType
     var input: SettingInputs { return self }
     var output: SettingOutputs { return self }
@@ -67,7 +67,12 @@ final class SettingViewModel: SettingViewModelType, SettingInputs, SettingOutput
 
     var uploadState: Driver<UploadImageState> {
         return _uploadState
-            .asDriver(onErrorJustReturn: .error(""))
+            .asDriver(onErrorDriveWith: .never())
+    }
+    
+    var error: Driver<Error> {
+        return _error
+            .asDriver(onErrorDriveWith: .never())
     }
     
     // Properties
@@ -75,6 +80,7 @@ final class SettingViewModel: SettingViewModelType, SettingInputs, SettingOutput
     private let _showAlertSaved: PublishRelay<Void> = .init()
     private let _uploadState: PublishRelay<UploadImageState> = .init()
     private let _uploadedPhoto: PublishRelay<UIImage> = .init()
+    private let _error: PublishRelay<Error> = .init()
     private let uploadImageUseCase: UploadImageUseCaseDomain
     private let updateProfileUseCase: UpdateProfileUseCaseDomain
     private let bag = DisposeBag()
@@ -107,9 +113,9 @@ final class SettingViewModel: SettingViewModelType, SettingInputs, SettingOutput
                 self._showAlertSaved.accept(())
                 UserDefaultsManager.set(userProfile, by: .userProfile)
                 NSLog("updateProfile: onSuccess")
-            }, onFailure: { error in
-                // should to be show error
-                NSLog("updateProfile: onError")
+            }, onFailure: { [weak self] error in
+                guard let self = self else { return }
+                self._error.accept(error)
             })
             .disposed(by: self.bag)
     }
@@ -124,13 +130,9 @@ final class SettingViewModel: SettingViewModelType, SettingInputs, SettingOutput
                     let userProfile: UserProfile = self.getUserProfile(imageUrl: imageUrl)
                     UserDefaultsManager.set(userProfile, by: .userProfile)
                 }
-                // set image view after upload success
-//                if percent == 100 {
-//                    self._uploadedPhoto.accept(image)
-//                }
             }, onError: { [weak self] error in
                 guard let self = self else { return }
-                self._uploadState.accept(.error("Upload Profile image Fail.\n Please Try again."))
+                self._error.accept(error)
             }, onCompleted: { 
                 self._uploadState.accept(.finish)
                 self._uploadedPhoto.accept(image)

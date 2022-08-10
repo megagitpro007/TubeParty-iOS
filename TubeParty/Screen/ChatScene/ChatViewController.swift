@@ -95,14 +95,9 @@ class ChatViewController: BaseViewController {
     func bindViewModel() {
         
         // output
-        viewModel.output.sendMessageState.drive(onNext: { [weak self] state in
+        viewModel.output.error.drive(onNext: { [weak self] error in
             guard let self = self else { return }
-            switch state {
-                case .success:
-                    self.scrollToBottom()
-                case .failure(let message):
-                    self.showAlert(message: message)
-            }
+            self.showAlert(message: error.localizedDescription)
         }).disposed(by: bag)
         
         viewModel
@@ -170,6 +165,10 @@ class ChatViewController: BaseViewController {
         viewModel
             .output
             .getChatMessage
+            .do(afterNext: { [weak self] _ in
+                guard let self = self else { return }
+                self.scrollToBottom()
+            })
             .drive(chatTableView.rx.items(dataSource: dataSource))
             .disposed(by: bag)
         
@@ -211,14 +210,13 @@ class ChatViewController: BaseViewController {
     
     @objc func dismissKeyboard() {
         guard self.isTextFieldSelected else { return }
-        UIView.animate(withDuration: 0.3, animations: {
-            // TODO: weak self
+        UIView.animate(withDuration: 0.3, animations: { [weak self] in
+            guard let self = self else { return }
             self.bottomViewContainer.transform = .identity
             self.chatTableView.transform = .identity
             self.chatTableView.contentInset = .init(top: 0, left: 0, bottom: 0, right: 0)
             self.view.endEditing(true)
             self.scrollToBottom()
-            
         })
     }
     

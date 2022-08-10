@@ -95,10 +95,13 @@ class SettingViewController: BaseViewController, UINavigationControllerDelegate 
                 self.uploadLabel.text = "Uploaded \(String(percent))%"
             case .finish:
                 self.uploadView.isHidden = true
-            case .error(let message):
-                self.uploadView.isHidden = true
-                self.showAlert(message: message)
             }
+        }).disposed(by: bag)
+        
+        viewModel.output.error.drive(onNext: { [weak self] error in
+            guard let self = self else { return }
+            self.uploadView.isHidden = true
+            self.showAlert(message: error.localizedDescription)
         }).disposed(by: bag)
         
         // inputs

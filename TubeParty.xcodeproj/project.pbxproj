@@ -51,6 +51,7 @@
 		E2BA1E4D28747C9B0067AFCB /* SectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BA1E4C28747C9B0067AFCB /* SectionModel.swift */; };
 		E2D2B5B028A3F82B002308BE /* DateSectionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2D2B5AF28A3F82B002308BE /* DateSectionView.xib */; };
 		E2D2B5B228A3FC49002308BE /* DateSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D2B5B128A3FC49002308BE /* DateSectionView.swift */; };
+		E2D2B5B428A40847002308BE /* BaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D2B5B328A40847002308BE /* BaseViewModel.swift */; };
 		E2DACD98289C0E3D00A89069 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DACD97289C0E3D00A89069 /* BaseViewController.swift */; };
 		E2EDD3C7287C686200FDBB07 /* TubePartyUseCaseProviderDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EDD3C6287C686200FDBB07 /* TubePartyUseCaseProviderDomain.swift */; };
 		E2EDD3C9287C686E00FDBB07 /* SendMessageUseCaseDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EDD3C8287C686E00FDBB07 /* SendMessageUseCaseDomain.swift */; };
@@ -108,6 +109,7 @@
 		E2BA1E4C28747C9B0067AFCB /* SectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionModel.swift; sourceTree = "<group>"; };
 		E2D2B5AF28A3F82B002308BE /* DateSectionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DateSectionView.xib; sourceTree = "<group>"; };
 		E2D2B5B128A3FC49002308BE /* DateSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateSectionView.swift; sourceTree = "<group>"; };
+		E2D2B5B328A40847002308BE /* BaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewModel.swift; sourceTree = "<group>"; };
 		E2DACD97289C0E3D00A89069 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		E2EDD3C6287C686200FDBB07 /* TubePartyUseCaseProviderDomain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TubePartyUseCaseProviderDomain.swift; sourceTree = "<group>"; };
 		E2EDD3C8287C686E00FDBB07 /* SendMessageUseCaseDomain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMessageUseCaseDomain.swift; sourceTree = "<group>"; };
@@ -235,6 +237,7 @@
 			isa = PBXGroup;
 			children = (
 				E2DACD97289C0E3D00A89069 /* BaseViewController.swift */,
+				E2D2B5B328A40847002308BE /* BaseViewModel.swift */,
 				65150F33286F3045005B9AF3 /* DetermineViewController.swift */,
 				E20285E62868545C0006806B /* MainScene */,
 				E20285E1286854210006806B /* ChatScene */,
@@ -483,6 +486,7 @@
 				E2BA1E4D28747C9B0067AFCB /* SectionModel.swift in Sources */,
 				E2EDD3CB287C69F800FDBB07 /* TubePartyUseCaseProvider.swift in Sources */,
 				E26C9919288BEF3400D46E83 /* UserProfile.swift in Sources */,
+				E2D2B5B428A40847002308BE /* BaseViewModel.swift in Sources */,
 				E29DF3AD28733E9B0048FB34 /* MessageModel.swift in Sources */,
 				E20285E3286854430006806B /* ChatViewController.swift in Sources */,
 				E25EE47E287DB8A100343221 /* TubePartyRepositories.swift in Sources */,

@@ -16,11 +16,6 @@ import UIKit
 
 fileprivate let imageProfileURL = "https://assets.coingecko.com/coins/images/24155/large/zoro.png?1646565848"
 
-enum SendMessageState {
-    case success
-    case failure(String)
-}
-
 protocol ChatIOType {
     var input: ChatInput { get }
     var output: ChatOutput { get }
@@ -35,11 +30,11 @@ protocol ChatInput {
     var didTapSettingButton: PublishRelay<Void> { get }
 }
 
-protocol ChatOutput {
+protocol ChatOutput: BaseOutput {
     var isDisableSendButton: Driver<Bool> { get }
     var getChatMessage: Driver<[SectionModel]> { get }
     var getChatCount: Int { get }
-    var sendMessageState: Driver<SendMessageState> { get }
+    var error: Driver<Error> { get }
 }
 
 class ChatViewModel: ChatIOType, ChatInput, ChatOutput {
@@ -67,8 +62,8 @@ class ChatViewModel: ChatIOType, ChatInput, ChatOutput {
                 .asDriver(onErrorDriveWith: .never())
     }
     
-    var sendMessageState: Driver<SendMessageState> {
-        return _getSendMessageState
+    var error: Driver<Error> {
+        return _error
             .asDriver(onErrorDriveWith: .never())
     }
     
@@ -79,7 +74,7 @@ class ChatViewModel: ChatIOType, ChatInput, ChatOutput {
     // Properties
     private let _isDisableSendButton: BehaviorRelay<Bool> = .init(value: true)
     private let _getChatMessage: BehaviorRelay<[ChatItem]> = .init(value: [])
-    private let _getSendMessageState: PublishRelay<SendMessageState> = .init()
+    private let _error: PublishRelay<Error> = .init()
     private let sendMessageUseCase: SendMessageUseCaseDomain
     private let getMessageUseCase: GetMesaageUseCaseDomain
     private let bag = DisposeBag()
@@ -118,8 +113,7 @@ class ChatViewModel: ChatIOType, ChatInput, ChatOutput {
         .disposed(by: bag)
         
         getMessageListFail
-            .map({ _ in SendMessageState.failure("Get Message Fail.") })
-            .bind(to: _getSendMessageState)
+            .bind(to: _error)
             .disposed(by: bag)
         
         isValidText
@@ -148,14 +142,8 @@ class ChatViewModel: ChatIOType, ChatInput, ChatOutput {
         .bind(to: _getChatMessage)
         .disposed(by: bag)
         
-        sendMessageSuccess
-            .map({ _ in SendMessageState.success })
-            .bind(to: _getSendMessageState)
-            .disposed(by: bag)
-        
         sendMessageFail
-            .map({ _ in SendMessageState.failure("Send Message Fail.") })
-            .bind(to: _getSendMessageState)
+            .bind(to: _error)
             .disposed(by: bag)
         
     }
