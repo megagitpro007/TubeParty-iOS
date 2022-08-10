@@ -14,11 +14,16 @@ public typealias Percent = Int
 public typealias ImageURL = URL
 public typealias UploadImageResponse = (Percent, ImageURL?)
 
+public enum UploadImageType: String {
+    case profile = "avatars"
+    case fromchat = "chatroom"
+}
+
 protocol TubePartyRepository {
     func sendMessage(newMessage: MessageModel) -> Observable<Void>
     func getMessageList() -> Observable<[MessageModel]>
-    func uploadProfileImage(image: UIImage, senderID: String) -> Observable<UploadImageResponse>
     func updateUserProfile(userProfile: UserProfile) -> Single<Void>
+    func uploadImage(image: UIImage, senderID: String, type: UploadImageType) -> Observable<UploadImageResponse>
 }
 
 public class TubePartyRepositoryImpl: TubePartyRepository {
@@ -106,10 +111,12 @@ public class TubePartyRepositoryImpl: TubePartyRepository {
         }
     }
     
-    public func uploadProfileImage(image: UIImage, senderID: String) -> Observable<UploadImageResponse> {
+    public func uploadImage(image: UIImage, senderID: String, type: UploadImageType) -> Observable<UploadImageResponse> {
         return Observable.create { [weak self] observer -> Disposable in
+            
             guard let self = self, let data = image.pngData() else { return Disposables.create() }
-            let storageRef = self.storageRef.child("images/\(senderID).jpg")
+            
+            let storageRef = self.storageRef.child("\(type.rawValue)/\(senderID).jpg")
             var percent: Int64 = 0
             let uploadTask = storageRef.putData(data, metadata: nil) { (metadata, error) in
                 storageRef.downloadURL { (url, error) in
@@ -119,15 +126,20 @@ public class TubePartyRepositoryImpl: TubePartyRepository {
             }
             
             uploadTask.observe(.progress) { snapshot in
-                guard
-                    let total = snapshot.progress?.totalUnitCount,
-                    let completed = snapshot.progress?.completedUnitCount
-                else { return }
+                guard let total = snapshot.progress?.totalUnitCount,
+                      let completed = snapshot.progress?.completedUnitCount else { return }
                 percent = completed * 100 / total
                 observer.onNext((Percent(percent), nil))
+                if percent == 100 {
+                    observer.onCompleted()
+                }
             }
             
-//            observer.onCompleted()
+            uploadTask.observe(.failure) { error in
+                guard let error = error.error else { return }
+                observer.onError(error)
+            }
+            
             return Disposables.create()
         }
     }

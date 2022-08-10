@@ -13,6 +13,7 @@ import UIKit
 
 enum UploadImageState {
     case process(Percent)
+    case finish
     case error(String)
 }
 
@@ -115,7 +116,7 @@ final class SettingViewModel: SettingViewModelType, SettingInputs, SettingOutput
     
     private func updateProfileImage(_ image: UIImage, senderId: String) {
         self.uploadImageUseCase
-            .uploadProfileImage(image: image, senderID: senderId)
+            .uploadImage(image: image, senderID: senderId, type: .profile)
             .subscribe(onNext: { [weak self] (percent, imageUrl) in
                 guard let self = self else { return }
                 self._uploadState.accept(.process(percent))
@@ -124,12 +125,15 @@ final class SettingViewModel: SettingViewModelType, SettingInputs, SettingOutput
                     UserDefaultsManager.set(userProfile, by: .userProfile)
                 }
                 // set image view after upload success
-                if percent == 100 {
-                    self._uploadedPhoto.accept(image)
-                }
+//                if percent == 100 {
+//                    self._uploadedPhoto.accept(image)
+//                }
             }, onError: { [weak self] error in
                 guard let self = self else { return }
                 self._uploadState.accept(.error("Upload Profile image Fail.\n Please Try again."))
+            }, onCompleted: { 
+                self._uploadState.accept(.finish)
+                self._uploadedPhoto.accept(image)
             })
             .disposed(by: self.bag)
     }

@@ -9,5 +9,5 @@ import RxSwift
 import FirebaseStorage
 
 public protocol UploadImageUseCaseDomain {
-    func uploadProfileImage(image: UIImage, senderID: String) -> Observable<UploadImageResponse>
+    func uploadImage(image: UIImage, senderID: String, type: UploadImageType) -> Observable<UploadImageResponse>
 }

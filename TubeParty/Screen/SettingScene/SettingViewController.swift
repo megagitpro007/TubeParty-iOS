@@ -93,9 +93,8 @@ class SettingViewController: BaseViewController, UINavigationControllerDelegate 
             case .process(let percent):
                 self.uploadView.isHidden = false
                 self.uploadLabel.text = "Uploaded \(String(percent))%"
-                if percent == 100 {
-                    self.uploadView.isHidden = true
-                }
+            case .finish:
+                self.uploadView.isHidden = true
             case .error(let message):
                 self.uploadView.isHidden = true
                 self.showAlert(message: message)
