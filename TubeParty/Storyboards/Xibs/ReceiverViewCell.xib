@@ -20,17 +20,17 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="ReceiverViewCell" customModule="TubeParty" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="419" height="370"/>
+            <rect key="frame" x="0.0" y="0.0" width="419" height="383"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kiv-pv-vsV">
-                    <rect key="frame" x="0.0" y="4" width="419" height="362"/>
+                    <rect key="frame" x="0.0" y="4" width="419" height="375"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="yib-fr-R6O">
-                            <rect key="frame" x="16" y="4" width="403" height="354"/>
+                            <rect key="frame" x="16" y="4" width="403" height="367"/>
                             <subviews>
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="U0q-3t-ljL">
-                                    <rect key="frame" x="0.0" y="0.0" width="403" height="96"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="403" height="109"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="DNt-yc-tCP">
                                             <rect key="frame" x="0.0" y="0.0" width="150" height="50"/>
@@ -54,13 +54,13 @@
                                             </subviews>
                                         </stackView>
                                         <stackView opaque="NO" contentMode="scaleToFill" alignment="bottom" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="43T-hr-3sa">
-                                            <rect key="frame" x="0.0" y="54" width="387" height="42"/>
+                                            <rect key="frame" x="0.0" y="54" width="387" height="55"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9B2-VD-jTO" userLabel="SenderMSGView">
-                                                    <rect key="frame" x="0.0" y="0.0" width="333" height="42"/>
+                                                    <rect key="frame" x="0.0" y="5" width="333" height="50"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sender Message" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FS0-Bd-thN">
-                                                            <rect key="frame" x="8" y="8" width="317" height="26"/>
+                                                            <rect key="frame" x="8" y="8" width="317" height="34"/>
                                                             <fontDescription key="fontDescription" name="Mitr-Regular" family="Mitr" pointSize="14"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -75,7 +75,7 @@
                                                     </constraints>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12:12" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="if0-1K-xUR">
-                                                    <rect key="frame" x="337" y="23" width="50" height="19"/>
+                                                    <rect key="frame" x="337" y="36" width="50" height="19"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="50" id="GVM-Ox-eai"/>
                                                     </constraints>
@@ -92,7 +92,7 @@
                                     </constraints>
                                 </stackView>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sMv-Qd-Ugf">
-                                    <rect key="frame" x="0.0" y="104" width="250" height="250"/>
+                                    <rect key="frame" x="0.0" y="117" width="250" height="250"/>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="250" id="eH3-4U-N7o"/>
@@ -128,7 +128,7 @@
                 <outlet property="timeStamp" destination="if0-1K-xUR" id="O3c-EY-tyS"/>
                 <outlet property="view" destination="9B2-VD-jTO" id="LBb-RQ-UAn"/>
             </connections>
-            <point key="canvasLocation" x="141.30434782608697" y="-27.455357142857142"/>
+            <point key="canvasLocation" x="141.30434782608697" y="-23.102678571428569"/>
         </view>
     </objects>
     <resources>

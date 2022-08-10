@@ -95,9 +95,6 @@ class ChatViewController: BaseViewController {
     func bindViewModel() {
         
         // output
-        // TODO:
-        // - get or send ? variable name should to be change
-        // - useless stream should to be remove it
         viewModel.output.sendMessageState.drive(onNext: { [weak self] state in
             guard let self = self else { return }
             switch state {
