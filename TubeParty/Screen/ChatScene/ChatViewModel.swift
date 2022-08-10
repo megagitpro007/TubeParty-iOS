@@ -94,10 +94,6 @@ class ChatViewModel: ChatIOType, ChatInput, ChatOutput {
     
     private func binding() {
         
-        viewDidload.bind { _ in
-            // TODO:  if not used, should to remove it.
-        }.disposed(by: bag)
-        
         viewWillAppear.bind { [weak self] _ in
             guard let self = self else { return }
             if let userProfile: UserProfile = UserDefaultsManager.get(by:.userProfile) {
@@ -105,14 +101,25 @@ class ChatViewModel: ChatIOType, ChatInput, ChatOutput {
             }
         }.disposed(by: bag)
         
-        getMessageUseCase
-            .getMessageList()
-            .map { chatItem -> [ChatItem] in
-                return chatItem.map({
-                    return $0.senderID == self.currentUserProfile?.senderID ? .sender(model: $0) : .reciever(model: $0)
-                }).sorted(by: { $0.timestamp < $1.timestamp })
-            }
-            .bind(to: _getChatMessage)
+        let getMessageList = viewDidload.flatMapLatest { [weak self] _ -> Observable<Event<[MessageModel]>> in
+            guard let self = self else { return .never()}
+            return self.getMessageUseCase.getMessageList().materialize()
+        }.share()
+        
+        let getMessageListSuccess = getMessageList.compactMap({ $0.element })
+        let getMessageListFail = getMessageList.compactMap({ $0.error })
+        
+        getMessageListSuccess.map { chatItem -> [ChatItem] in
+            return chatItem.map({
+                return $0.senderID == self.currentUserProfile?.senderID ? .sender(model: $0) : .reciever(model: $0)
+            }).sorted(by: { $0.timestamp < $1.timestamp })
+        }
+        .bind(to: _getChatMessage)
+        .disposed(by: bag)
+        
+        getMessageListFail
+            .map({ _ in SendMessageState.failure("Get Message Fail.") })
+            .bind(to: _getSendMessageState)
             .disposed(by: bag)
         
         isValidText

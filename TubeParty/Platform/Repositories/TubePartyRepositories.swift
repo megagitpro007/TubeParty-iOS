@@ -117,6 +117,7 @@ public class TubePartyRepositoryImpl: TubePartyRepository {
                     observer.onNext((Percent(percent), downloadURL))
                 }
             }
+            
             uploadTask.observe(.progress) { snapshot in
                 guard
                     let total = snapshot.progress?.totalUnitCount,

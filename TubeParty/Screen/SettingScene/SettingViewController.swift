@@ -97,6 +97,7 @@ class SettingViewController: BaseViewController, UINavigationControllerDelegate 
                     self.uploadView.isHidden = true
                 }
             case .error(let message):
+                self.uploadView.isHidden = true
                 self.showAlert(message: message)
             }
         }).disposed(by: bag)
