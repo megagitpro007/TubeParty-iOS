@@ -122,7 +122,7 @@ final class SettingViewModel: SettingViewModelType, SettingInputs, SettingOutput
     
     private func updateProfileImage(_ image: UIImage, senderId: String) {
         self.uploadImageUseCase
-            .uploadImage(image: image, senderID: senderId, type: .profile)
+            .uploadImage(type: .profile(image: image, senderID: senderId))
             .subscribe(onNext: { [weak self] (percent, imageUrl) in
                 guard let self = self else { return }
                 self._uploadState.accept(.process(percent))

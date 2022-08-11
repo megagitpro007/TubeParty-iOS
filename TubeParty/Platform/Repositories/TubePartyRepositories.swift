@@ -14,16 +14,39 @@ public typealias Percent = Int
 public typealias ImageURL = URL
 public typealias UploadImageResponse = (Percent, ImageURL?)
 
-public enum UploadImageType: String {
-    case profile = "avatars"
-    case fromchat = "chatroom"
+public enum UploadImageType {
+    
+    case profile(image: UIImage, senderID: String)
+    case chatRoom(image: UIImage, senderID: String)
+    
+    var image: UIImage {
+        switch self {
+            case .profile(let image, _): return image
+            case .chatRoom(let image, _): return image
+        }
+    }
+    
+    var imageName: String {
+        switch self {
+            case .profile(_, let senderID): return senderID
+            case .chatRoom(_, let senderID): return senderID
+        }
+    }
+    
+    var path: String {
+        switch self {
+            case .profile: return "avatars"
+            case .chatRoom: return "chatRoom"
+        }
+    }
+    
 }
 
 protocol TubePartyRepository {
     func sendMessage(newMessage: MessageModel) -> Observable<Void>
     func getMessageList() -> Observable<[MessageModel]>
     func updateUserProfile(userProfile: UserProfile) -> Single<Void>
-    func uploadImage(image: UIImage, senderID: String, type: UploadImageType) -> Observable<UploadImageResponse>
+    func uploadImage(type: UploadImageType) -> Observable<UploadImageResponse>
 }
 
 public class TubePartyRepositoryImpl: TubePartyRepository {
@@ -111,12 +134,12 @@ public class TubePartyRepositoryImpl: TubePartyRepository {
         }
     }
     
-    public func uploadImage(image: UIImage, senderID: String, type: UploadImageType) -> Observable<UploadImageResponse> {
+    public func uploadImage(type: UploadImageType) -> Observable<UploadImageResponse> {
         return Observable.create { [weak self] observer -> Disposable in
             
-            guard let self = self, let data = image.pngData() else { return Disposables.create() }
+            guard let self = self, let data = type.image.pngData() else { return Disposables.create() }
             
-            let storageRef = self.storageRef.child("\(type.rawValue)/\(senderID).jpg")
+            let storageRef = self.storageRef.child("\(type.path)/\(type.imageName).jpg")
             var percent: Int64 = 0
             let uploadTask = storageRef.putData(data, metadata: nil) { (metadata, error) in
                 storageRef.downloadURL { (url, error) in

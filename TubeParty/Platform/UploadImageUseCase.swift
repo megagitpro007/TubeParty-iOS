@@ -17,8 +17,8 @@ final class UploadImageUseCase: UploadImageUseCaseDomain {
         self.repository = repository
     }
     
-    func uploadImage(image: UIImage, senderID: String, type: UploadImageType) -> Observable<UploadImageResponse> {
-        repository.uploadImage(image: image, senderID: senderID, type: type)
+    func uploadImage(type: UploadImageType) -> Observable<UploadImageResponse> {
+        repository.uploadImage(type: type)
     }
     
 }
