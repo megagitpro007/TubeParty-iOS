@@ -10,11 +10,21 @@ import Foundation
 extension Date {
     
     private static let hh_mm_a: String = "hh:mm a"
+    private static let d_mmm_yyyy: String = "d MMM yyyy"
     
-    func chatTimeFormat() -> String {
+    private func dateFormater(format: String) -> String {
         let formatter = DateFormatter()
         formatter.locale = Locale.current
-        formatter.dateFormat = Date.hh_mm_a
+        formatter.dateFormat = format
         return formatter.string(from: self)
     }
+    
+    func chatTimeFormat() -> String {
+        return dateFormater(format: Date.hh_mm_a)
+    }
+    
+    func dateForHeader() -> String{
+        return dateFormater(format: Date.d_mmm_yyyy)
+    }
+    
 }

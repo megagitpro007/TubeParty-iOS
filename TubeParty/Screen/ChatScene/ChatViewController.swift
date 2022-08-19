@@ -14,6 +14,7 @@ import FirebaseRemoteConfig
 
 fileprivate let senderTableViewCell = "SenderViewCell"
 fileprivate let receiverTableViewCell = "ReceiverViewCell"
+fileprivate let sectionDate = "DateSectionView"
 
 class ChatViewController: BaseViewController {
     
@@ -47,11 +48,13 @@ class ChatViewController: BaseViewController {
     func registerCell() {
         self.chatTableView.register(UINib(nibName: senderTableViewCell, bundle: nil), forCellReuseIdentifier: senderTableViewCell)
         self.chatTableView.register(UINib(nibName: receiverTableViewCell, bundle: nil), forCellReuseIdentifier: receiverTableViewCell)
+        self.chatTableView.register(UINib(nibName: sectionDate, bundle: nil), forHeaderFooterViewReuseIdentifier: sectionDate)
     }
     
     func setupUI() {
         self.navigationController?.isNavigationBarHidden = true
         typingField.delegate = self
+        chatTableView.delegate = self
         
         bottomViewContainer.backgroundColor = .tpGunmetal
         chatBGView.backgroundColor = .tpGunmetal
@@ -200,12 +203,12 @@ class ChatViewController: BaseViewController {
     }
     
     func scrollToBottom(isAnimated: Bool = true){
-        DispatchQueue.main.async {
-            // TODO: weak self
-            guard self.viewModel.output.getChatCount > 0 else { return }
-            let indexPath = IndexPath(row: self.viewModel.output.getChatCount - 1, section: 0)
-            self.chatTableView.scrollToRow(at: indexPath, at: .bottom, animated: isAnimated)
-        }
+//        DispatchQueue.main.async {
+//            // TODO: weak self
+//            guard self.viewModel.output.getChatCount > 0 else { return }
+//            let indexPath = IndexPath(row: self.viewModel.output.getChatCount - 1, section: 0)
+//            self.chatTableView.scrollToRow(at: indexPath, at: .bottom, animated: isAnimated)
+//        }
     }
     
     @objc func dismissKeyboard() {
@@ -237,6 +240,20 @@ extension ChatViewController: UITextFieldDelegate {
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         isTextFieldSelected = false
+    }
+    
+}
+
+extension ChatViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: sectionDate) as! DateSectionView
+        header.setupUI()
+        viewModel.output.getChatMessage.drive(onNext: { data in
+            header.configDate(date: data[section].header)
+        }).disposed(by: bag)
+        
+        return header
     }
     
 }

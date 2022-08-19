@@ -8,7 +8,7 @@
 import Foundation
 import RxDataSources
 
-struct SectionModel {
+struct SectionModel: Hashable {
     var header: String
     var items: [ChatItem]
 }

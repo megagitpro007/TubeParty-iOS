@@ -56,10 +56,18 @@ class ChatViewModel: ChatIOType, ChatInput, ChatOutput {
         return _isDisableSendButton.asDriver(onErrorJustReturn: true)
     }
     
+//    var getChatMessage: Driver<[SectionModel]> {
+//        return _getChatMessage
+//                .map({ [SectionModel(header: "10 August 1900", items: $0)] })
+//                .asDriver(onErrorDriveWith: .never())
+//    }
+    
     var getChatMessage: Driver<[SectionModel]> {
         return _getChatMessage
-                .map({ [SectionModel(header: "ChatMessageHeader", items: $0)] })
-                .asDriver(onErrorDriveWith: .never())
+            .map { chatItems -> [SectionModel] in
+                return self.sortingSectionDate(chatItems: chatItems)
+            }
+            .asDriver(onErrorDriveWith: .never())
     }
     
     var error: Driver<Error> {
@@ -146,5 +154,43 @@ class ChatViewModel: ChatIOType, ChatInput, ChatOutput {
             .bind(to: _error)
             .disposed(by: bag)
         
+    }
+    
+    private func sortingSectionDate(chatItems: [ChatItem]) -> [SectionModel] {
+        var tempList = [SectionModel]()
+        
+        for data in chatItems {
+            tempList.append(SectionModel(header: data.timestamp.dateForHeader(), items: []))
+        }
+        
+        var sectionList = tempList.removingDuplicates()
+        
+        for (index, element) in sectionList.enumerated() {
+            
+            for data in chatItems {
+                if element.header == data.timestamp.dateForHeader() {
+                    sectionList[index].items.append(data)
+                }
+            }
+            
+        }
+        
+        return sectionList
+    }
+    
+}
+
+
+extension Array where Element: Hashable {
+    func removingDuplicates() -> [Element] {
+        var addedDict = [Element: Bool]()
+
+        return filter {
+            addedDict.updateValue(true, forKey: $0) == nil
+        }
+    }
+
+    mutating func removeDuplicates() {
+        self = self.removingDuplicates()
     }
 }

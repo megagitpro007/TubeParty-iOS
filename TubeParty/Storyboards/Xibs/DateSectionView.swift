@@ -7,9 +7,13 @@
 
 import UIKit
 
-class DateSectionView: UIView {
+class DateSectionView: UITableViewHeaderFooterView {
 
     @IBOutlet private var date: UILabel!
+    
+    func setupUI() {
+        self.backgroundView = UIView()
+    }
     
     func configDate(date: String) {
         self.date.text = date
