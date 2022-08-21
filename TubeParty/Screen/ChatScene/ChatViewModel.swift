@@ -64,8 +64,18 @@ class ChatViewModel: ChatIOType, ChatInput, ChatOutput {
     
     var getChatMessage: Driver<[SectionModel]> {
         return _getChatMessage
+//            .map { chatItems -> [SectionModel] in
+//                return self.sortingSectionDate(chatItems: chatItems)
+//            }
             .map { chatItems -> [SectionModel] in
-                return self.sortingSectionDate(chatItems: chatItems)
+                return chatItems.reduce([]) { pre, next in
+                    var _pre = pre
+                    if let index = _pre.firstIndex(where: { $0.header == next.timestamp.dateForHeader() }) {
+                        _pre[index].items.append(next)
+                        return _pre
+                    }
+                    return _pre + [SectionModel(header: next.timestamp.dateForHeader(), items: [next])]
+                }
             }
             .asDriver(onErrorDriveWith: .never())
     }
@@ -157,6 +167,10 @@ class ChatViewModel: ChatIOType, ChatInput, ChatOutput {
     }
     
     private func sortingSectionDate(chatItems: [ChatItem]) -> [SectionModel] {
+        // `Set<SectionModel>` it's correct
+        // A lot of spacing in current function
+        // Header should to be `Date` type
+        // `dateForHeader() is invalid function name format`
         var tempList = [SectionModel]()
         
         for data in chatItems {
