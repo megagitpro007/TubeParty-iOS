@@ -56,12 +56,6 @@ class ChatViewModel: ChatIOType, ChatInput, ChatOutput {
         return _isDisableSendButton.asDriver(onErrorJustReturn: true)
     }
     
-//    var getChatMessage: Driver<[SectionModel]> {
-//        return _getChatMessage
-//                .map({ [SectionModel(header: "10 August 1900", items: $0)] })
-//                .asDriver(onErrorDriveWith: .never())
-//    }
-    
     var getChatMessage: Driver<[SectionModel]> {
         return _getChatMessage
 //            .map { chatItems -> [SectionModel] in
@@ -74,7 +68,8 @@ class ChatViewModel: ChatIOType, ChatInput, ChatOutput {
                         _pre[index].items.append(next)
                         return _pre
                     }
-                    return _pre + [SectionModel(header: next.timestamp.dateForHeader(), items: [next])]
+                    _pre.append(SectionModel(header: next.timestamp.dateForHeader(), items: [next]))
+                    return _pre
                 }
             }
             .asDriver(onErrorDriveWith: .never())
