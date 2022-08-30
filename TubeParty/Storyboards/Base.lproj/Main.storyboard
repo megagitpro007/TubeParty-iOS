@@ -260,14 +260,32 @@
                                     <constraint firstItem="bEk-aC-lAA" firstAttribute="leading" secondItem="xwR-7C-Bbq" secondAttribute="leading" id="beE-8W-VkM"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d8u-5B-7cW" customClass="YouTubePlayerView" customModule="YouTubePlayer">
+                                <rect key="frame" x="57" y="94" width="300" height="150"/>
+                                <subviews>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="tSv-dj-Zd1">
+                                        <rect key="frame" x="131.66666666666666" y="56.666666666666657" width="37" height="37"/>
+                                        <color key="color" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                    </activityIndicatorView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="0.30146863622572817" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="tSv-dj-Zd1" firstAttribute="centerX" secondItem="d8u-5B-7cW" secondAttribute="centerX" id="356-bI-pZe"/>
+                                    <constraint firstItem="tSv-dj-Zd1" firstAttribute="centerY" secondItem="d8u-5B-7cW" secondAttribute="centerY" id="3Sk-rJ-jQt"/>
+                                    <constraint firstAttribute="height" constant="150" id="OWN-Nc-L7q"/>
+                                    <constraint firstAttribute="width" constant="300" id="aup-PV-yhi"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="i4L-Lz-yD5"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="xwR-7C-Bbq" firstAttribute="top" secondItem="0Ix-1T-e0j" secondAttribute="top" id="5Gz-h9-FtH"/>
                             <constraint firstItem="i4L-Lz-yD5" firstAttribute="bottom" secondItem="gVW-0A-IfL" secondAttribute="bottom" id="5gd-2D-lEZ"/>
+                            <constraint firstItem="d8u-5B-7cW" firstAttribute="centerX" secondItem="0Ix-1T-e0j" secondAttribute="centerX" id="Fum-Bd-6vj"/>
                             <constraint firstItem="xwR-7C-Bbq" firstAttribute="leading" secondItem="i4L-Lz-yD5" secondAttribute="leading" id="ISE-sS-yxN"/>
                             <constraint firstItem="i4L-Lz-yD5" firstAttribute="trailing" secondItem="xwR-7C-Bbq" secondAttribute="trailing" id="Iz9-1v-9Jh"/>
+                            <constraint firstItem="d8u-5B-7cW" firstAttribute="top" secondItem="71g-OX-2iX" secondAttribute="bottom" id="c9O-kF-3dt"/>
                             <constraint firstAttribute="bottom" secondItem="xwR-7C-Bbq" secondAttribute="bottom" id="iZd-Xw-SYZ"/>
                             <constraint firstItem="i4L-Lz-yD5" firstAttribute="top" secondItem="71g-OX-2iX" secondAttribute="top" id="lq6-7E-1rv"/>
                         </constraints>
@@ -282,6 +300,7 @@
                         <outlet property="settingButton" destination="iyT-Gr-gWK" id="iCX-cC-Dg4"/>
                         <outlet property="textFieldContainer" destination="pec-BO-4eq" id="3a2-AW-OLe"/>
                         <outlet property="typingField" destination="E4n-zh-D8y" id="zWV-Ii-sDE"/>
+                        <outlet property="videoPlayer" destination="d8u-5B-7cW" id="202-wG-I5H"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ilq-yq-thX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

@@ -35,6 +35,7 @@ protocol ChatOutput: BaseOutput {
     var getChatMessage: Driver<[SectionModel]> { get }
     var getChatCount: Int { get }
     var error: Driver<Error> { get }
+    var openYoutubePlayer: Driver<URL> { get }
 }
 
 class ChatViewModel: ChatIOType, ChatInput, ChatOutput {
@@ -58,9 +59,6 @@ class ChatViewModel: ChatIOType, ChatInput, ChatOutput {
     
     var getChatMessage: Driver<[SectionModel]> {
         return _getChatMessage
-//            .map { chatItems -> [SectionModel] in
-//                return self.sortingSectionDate(chatItems: chatItems)
-//            }
             .map { chatItems -> [SectionModel] in
                 return chatItems.reduce([]) { pre, next in
                     var _pre = pre
@@ -72,6 +70,11 @@ class ChatViewModel: ChatIOType, ChatInput, ChatOutput {
                     return _pre
                 }
             }
+            .asDriver(onErrorDriveWith: .never())
+    }
+    
+    var openYoutubePlayer: Driver<URL> {
+        return _youtubeURL
             .asDriver(onErrorDriveWith: .never())
     }
     
@@ -92,6 +95,7 @@ class ChatViewModel: ChatIOType, ChatInput, ChatOutput {
     private let getMessageUseCase: GetMesaageUseCaseDomain
     private let bag = DisposeBag()
     private var currentUserProfile: UserProfile?
+    private var _youtubeURL: PublishRelay<URL> = .init()
     
     init(userChatName: String) {
         sendMessageUseCase = TubePartyUseCaseProvider().makeSendMessageUseCaseDomain()
@@ -122,6 +126,23 @@ class ChatViewModel: ChatIOType, ChatInput, ChatOutput {
                 return $0.senderID == self.currentUserProfile?.senderID ? .sender(model: $0) : .reciever(model: $0)
             }).sorted(by: { $0.timestamp < $1.timestamp })
         }
+        .do(onNext: { [weak self] chatItems in
+            guard let self = self else { return }
+            switch chatItems.last {
+                case .reciever(let message):
+                    if message.message.contains("youtube") {
+                        let url = message.linkPreView
+                        self._youtubeURL.accept(url!)
+                    }
+                case .sender(let message):
+                    if message.message.contains("youtube") {
+                        let url = message.linkPreView
+                        self._youtubeURL.accept(url!)
+                    }
+                default:
+                    break
+            }
+        })
         .bind(to: _getChatMessage)
         .disposed(by: bag)
         
@@ -152,6 +173,23 @@ class ChatViewModel: ChatIOType, ChatInput, ChatOutput {
                 return $0.senderID == self.currentUserProfile?.senderID ? .sender(model: $0) : .reciever(model: $0)
             }).sorted(by: { $0.timestamp < $1.timestamp })
         }
+        .do(onNext: { [weak self] chatItems in
+            guard let self = self else { return }
+            switch chatItems.last {
+                case .reciever(let message):
+                    if message.message.contains("youtube") {
+                        let url = message.linkPreView
+                        self._youtubeURL.accept(url!)
+                    }
+                case .sender(let message):
+                    if message.message.contains("youtube") {
+                        let url = message.linkPreView
+                        self._youtubeURL.accept(url!)
+                    }
+                default:
+                    break
+            }
+        })
         .bind(to: _getChatMessage)
         .disposed(by: bag)
         
@@ -159,32 +197,6 @@ class ChatViewModel: ChatIOType, ChatInput, ChatOutput {
             .bind(to: _error)
             .disposed(by: bag)
         
-    }
-    
-    private func sortingSectionDate(chatItems: [ChatItem]) -> [SectionModel] {
-        // `Set<SectionModel>` it's correct
-        // A lot of spacing in current function
-        // Header should to be `Date` type
-        // `dateForHeader() is invalid function name format`
-        var tempList = [SectionModel]()
-        
-        for data in chatItems {
-            tempList.append(SectionModel(header: data.timestamp.dateForHeader(), items: []))
-        }
-        
-        var sectionList = tempList.removingDuplicates()
-        
-        for (index, element) in sectionList.enumerated() {
-            
-            for data in chatItems {
-                if element.header == data.timestamp.dateForHeader() {
-                    sectionList[index].items.append(data)
-                }
-            }
-            
-        }
-        
-        return sectionList
     }
     
 }

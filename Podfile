@@ -15,5 +15,7 @@ target 'TubeParty' do
   pod 'Firebase/RemoteConfig', '9.2.0'
   pod 'FirebaseFirestore', '9.2.0'
   pod 'FirebaseStorage', '9.3.0'
+  
+  pod 'YouTubePlayer'
 
 end

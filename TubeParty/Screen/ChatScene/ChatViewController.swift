@@ -11,6 +11,7 @@ import RxCocoa
 import RxDataSources
 import LinkPresentation
 import FirebaseRemoteConfig
+import YouTubePlayer
 
 fileprivate let senderTableViewCell = "SenderViewCell"
 fileprivate let receiverTableViewCell = "ReceiverViewCell"
@@ -26,6 +27,8 @@ class ChatViewController: BaseViewController {
     @IBOutlet private var textFieldContainer: UIView!
     @IBOutlet private var bottomViewContainer: UIView!
     @IBOutlet private var settingButton: UIButton!
+    
+    @IBOutlet private var videoPlayer: YouTubePlayerView!
     
     var isTextFieldSelected: Bool = false
     
@@ -53,8 +56,12 @@ class ChatViewController: BaseViewController {
     
     func setupUI() {
         self.navigationController?.isNavigationBarHidden = true
+        
+        self.videoPlayer.isHidden = true
+        
         typingField.delegate = self
         chatTableView.delegate = self
+        videoPlayer.delegate = self
         
         bottomViewContainer.backgroundColor = .tpGunmetal
         chatBGView.backgroundColor = .tpGunmetal
@@ -129,6 +136,11 @@ class ChatViewController: BaseViewController {
                     self.scrollToBottom()
                 }
             }.disposed(by: bag)
+        
+        viewModel.output.openYoutubePlayer.drive(onNext: { [weak self] url in
+            guard let self = self else { return }
+            self.videoPlayer.loadVideoURL(url)
+        }).disposed(by: bag)
         
         // Do not implement configulation of view in binding function
         let tapGesture = UITapGestureRecognizer(target: self, action:#selector(dismissKeyboard))
@@ -254,6 +266,26 @@ extension ChatViewController: UITableViewDelegate {
         }).disposed(by: bag)
         
         return header
+    }
+    
+}
+
+extension ChatViewController: YouTubePlayerDelegate {
+    
+    func playerReady(_ videoPlayer: YouTubePlayerView) {
+        videoPlayer.isHidden = false
+        videoPlayer.play()
+    }
+    
+    func playerStateChanged(_ videoPlayer: YouTubePlayerView, playerState: YouTubePlayerState) {
+        
+        switch playerState {
+            case .Ended:
+                videoPlayer.isHidden = true
+            default:
+                break
+        }
+        
     }
     
 }

@@ -746,6 +746,7 @@ PODS:
   - RxRelay (6.5.0):
     - RxSwift (= 6.5.0)
   - RxSwift (6.5.0)
+  - YouTubePlayer (0.7.2)
 
 DEPENDENCIES:
   - Firebase/RemoteConfig (= 9.2.0)
@@ -755,6 +756,7 @@ DEPENDENCIES:
   - RxCocoa (= 6.5.0)
   - RxDataSources (~> 5.0)
   - RxSwift (= 6.5.0)
+  - YouTubePlayer
 
 SPEC REPOS:
   trunk:
@@ -788,6 +790,7 @@ SPEC REPOS:
     - RxDataSources
     - RxRelay
     - RxSwift
+    - YouTubePlayer
 
 SPEC CHECKSUMS:
   abseil: ebe5b5529fb05d93a8bdb7951607be08b7fa71bc
@@ -820,7 +823,8 @@ SPEC CHECKSUMS:
   RxDataSources: aa47cc1ed6c500fa0dfecac5c979b723542d79cf
   RxRelay: 1de1523e604c72b6c68feadedd1af3b1b4d0ecbd
   RxSwift: 5710a9e6b17f3c3d6e40d6e559b9fa1e813b2ef8
+  YouTubePlayer: 2b5f2830d8f9b2cde942083211291e382c9e6bd5
 
-PODFILE CHECKSUM: 7b3841d5c1f000194c577db38a3095cb9a76ab27
+PODFILE CHECKSUM: 1e4d1ab90c91821f6ccc17abea6d06e0d398d962
 
 COCOAPODS: 1.11.3
