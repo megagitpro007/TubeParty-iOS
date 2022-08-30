@@ -11,5 +11,11 @@ target 'TubeParty' do
   pod 'RxCocoa', '6.5.0'
 	pod 'RxDataSources', '~> 5.0'
   pod 'Kingfisher', '~> 7.0'
+  
+  pod 'Firebase/RemoteConfig', '9.2.0'
+  pod 'FirebaseFirestore', '9.2.0'
+  pod 'FirebaseStorage', '9.3.0'
+  
+  pod 'YouTubePlayer'
 
 end

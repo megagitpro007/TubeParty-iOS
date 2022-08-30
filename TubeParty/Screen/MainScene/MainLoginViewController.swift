@@ -2,14 +2,14 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class MainLoginViewController: UIViewController, MainViewControllerDelegate {
+class MainLoginViewController: BaseViewController, MainViewControllerDelegate {
     
-    @IBOutlet weak var mainView: UIView!
-    @IBOutlet weak var logoImage: UIImageView!
-    @IBOutlet weak var nameTextfield: UITextField!
-    @IBOutlet weak var loginView: UIView!
-    @IBOutlet weak var submitButton: UIButton!
-    @IBOutlet weak var warningLabel: UILabel!
+    @IBOutlet private var mainView: UIView!
+    @IBOutlet private var logoImage: UIImageView!
+    @IBOutlet private var nameTextfield: UITextField!
+    @IBOutlet private var loginView: UIView!
+    @IBOutlet private var submitButton: UIButton!
+    @IBOutlet private var warningLabel: UILabel!
     
     private var viewModel: MainLoginIOType = MainLoginViewModel()
     private let bag = DisposeBag()
@@ -23,6 +23,7 @@ class MainLoginViewController: UIViewController, MainViewControllerDelegate {
     }
     
     private func setupUI() {
+        self.navigationController?.isNavigationBarHidden = true
         warningLabel.isHidden = true
         submitButton.isEnabled = false
         self.logoImage.image = UIImage(systemName: "message.circle")?.withTintColor(.white, renderingMode: .alwaysOriginal)
@@ -49,12 +50,11 @@ class MainLoginViewController: UIViewController, MainViewControllerDelegate {
             end: .bottomRight,
             colors: [UIColor.tpMainGreen.cgColor, UIColor.tpMainBlue.cgColor]
         )
-        gradient.frame = mainView.layer.frame
+        gradient.frame = self.view.layer.frame
         mainView.layer.insertSublayer(gradient, at: 0)
     }
     
     private func bindViewModel() {
-        
         nameTextfield
             .rx
             .text.orEmpty.map({ text in
@@ -77,13 +77,27 @@ class MainLoginViewController: UIViewController, MainViewControllerDelegate {
     }
     
     func didTapEnterButton() {
-        if let registerVC = self.storyboard?.instantiateViewController(withIdentifier: "ChatViewController") as? ChatViewController {
-            let vm = ChatViewModel(userChatName: nameTextfield.text ?? "")
-            registerVC.viewModel = vm
-            registerVC.modalPresentationStyle = .overFullScreen
-            registerVC.modalTransitionStyle = .coverVertical
-            self.present(registerVC, animated: true)
-        }
+        guard
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "ChatViewController") as? ChatViewController,
+            let displayName = nameTextfield.text,
+            !displayName.isEmpty
+        else { return }
+        // make viewModel
+        let vm = ChatViewModel(userChatName: displayName)
+        
+        // set userDefaults
+        let userProfile = UserProfile(
+            name: displayName,
+            profileURL: "",
+            senderID: String().randomString()
+        )
+
+        UserDefaultsManager.set(userProfile, by: .userProfile)
+        
+        // replace root
+        vc.viewModel = vm
+        let nav = UINavigationController(rootViewController: vc)
+        self.replaceRoot(vc: nav)
     }
     
 }
